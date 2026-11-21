@@ -1,0 +1,4 @@
+# Optional readers and official COCO evaluator
+pandas>=2
+pyarrow>=14
+pycocotools>=2.0.7
