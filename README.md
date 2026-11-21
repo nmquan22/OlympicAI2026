@@ -1,16 +1,33 @@
 # Olympic AI 2026 · Sổ tay thực hành 5 tiếng
 
-**90 bài luyện, 3 mảng, code Python và giải thích tiếng Việt.** Mỗi bài có nguồn dữ liệu, đầu vào/đầu ra, metric, cách rút gọn trong 5 tiếng, hình cắt từ paper, sơ đồ kiến trúc và một phép thử giúp quyết định bước nâng cấp tiếp theo.
+**5 mảng, 90 bài nền tảng, phân tích 6 đề IOAI 2026 và 39 hướng từ 27 workshop/sự kiện 2026.** Code Python tiếng Anh, giải thích tiếng Việt. Bổ sung ngày **22/11/2026**: ML bảng, time series, audio, suy luận tương tác, robustness và các khối đa phương thức.
+
+Mở [danh mục workshop 2026](docs/WORKSHOPS_2026.md), [đề IOAI và syllabus mới](docs/IOAI_2026.md), [bản đồ khối code](docs/BLOCKS.md), [18 buổi luyện 5 tiếng](docs/PRACTICE_PLAN.md) và [phạm vi kiểm thử](docs/VALIDATION.md). Mỗi hướng mới có baseline, nâng cấp, phép thử quyết định và link code; các bài nền tảng giữ hình paper và sơ đồ sẵn có.
 
 | Mảng | Bắt đầu bằng | Khi đã có baseline |
 |---|---|---|
 | [NLP · 30 bài](nlp/README.md) | UIT-VSFC, PhoATIS, CoNLL-2003 | QA tiếng Việt, retrieval, fact verification, decoder-only và text-to-SQL |
 | [Computer Vision · 30 bài](vision/README.md) | Oxford-IIIT Pet, Pascal VOC, VisDrone | Thermal/UAV có thể dùng lại các khối bbox và multi-scale; tiếp tục với tracking, restoration và point cloud |
 | [CV + ML và đa phương thức · 30 bài](vision_ml/README.md) | MVTec LOCO AD, MVTec AD, VisA | Few-shot, domain shift, image–text retrieval, grounding và audio–video |
+| [ML bảng, chuỗi thời gian và suy luận](ml/README.md) | Linear/tree pipeline, seasonal naive, ridge lag | Graph, behavior cloning, semantic comparison search; RL mở rộng 2027 |
+| [Audio](audio/README.md) | WAV/log-mel, sound CNN, CTC decoding | Audio anomaly, audio QA, temporal grounding, continual learning |
+
+Ưu tiên A/B/C trong danh mục là **đánh giá ôn tập**, không phải xác suất ra đề. Nhiều hướng thuộc cùng một workshop; chỉ ghi “lần đầu” khi nguồn xác nhận. Syllabus ở URL `2026/11` thực tế mang tên **IOAI 2027**. VAND 4.0 năm 2026 dùng **MVTec AD 2/Kaputt 2**, phân biệt với bài LOCO/VAND 3.0 năm 2025.
+
+## Các hướng nên thêm vào lịch ôn
+
+| Chưa quen dạng nào | Mở bài nào | Khối bắt đầu |
+|---|---|---|
+| ML có cấu trúc và leakage | [TSALM](docs/workshops/tsalm.md), [TS4H](docs/workshops/ts4h.md) | [tabular](ml/tabular.py), [forecast](ml/forecast.py) |
+| Tối ưu thứ tự/ranh giới | [Find the Order, Ghost](docs/IOAI_2026.md) | [ordering](nlp/blocks/ordering.py), [changepoint](nlp/blocks/changepoint.py) |
+| Suy luận chống shortcut | [SemEval 11](docs/workshops/semeval11.md), [DCASE 5](docs/workshops/dcase5.md) | Entity-swap, silence/shuffle control |
+| Audio không cần ASR | [DCASE 1/2/6](audio/README.md) | [log-mel + CNN](audio/classify.py), [interval decoder](audio/blocks/temporal.py) |
+| Thiếu modality và domain shift | [PBVS EO–SAR](docs/workshops/pbvs-eo-sar.md), [UG2+](docs/workshops/ug2-weather.md) | [masked fusion](vision_ml/blocks/multimodal.py), group split |
+| Tương tác và tối ưu theo metric | [Potato, Double Agent, IOAI Field](docs/IOAI_2026.md) | Query selection, selective gradients, coordinate field |
 
 Thứ tự trong từng mảng là ưu tiên ôn tập do người biên soạn chọn. Bài đứng đầu có baseline dễ kiểm tra, có lỗi điển hình nhìn thấy được và có một cải tiến vừa sức thử trong buổi thi. Một số mục là shared task có xếp hạng chính thức; số khác là benchmark học thuật được chuyển thành đề luyện. Mỗi trang ghi điều kiện của mốc nghiên cứu. Thứ hạng và kết quả của paper gắn với thời điểm tác giả công bố.
 
-## Ba bài nên mở đầu tiên
+## Ba bài nền tảng gốc
 
 - [VisDrone-DET](vision/challenges/03-visdrone.md) — Xem bbox của vật thể nhỏ sau resize, rồi so inference nguyên khung với cắt tile. [Code đọc và augment bbox](vision/blocks/data.py)
 - [MVTec LOCO AD](vision_ml/challenges/01-loco.md) — So local patch score với histogram toàn ảnh để phát hiện trường hợp mọi chi tiết trông bình thường nhưng sản phẩm thiếu một món. [Code patch memory](vision_ml/blocks/anomaly.py)
@@ -18,7 +35,7 @@ Thứ tự trong từng mảng là ưu tiên ôn tập do người biên soạn 
 
 ## Chạy từ thư mục gốc
 
-Đã kiểm tra với Python 3.12, PyTorch 2.5.1 CPU và torchvision 0.20.1 CPU. Khi dùng GPU, cài cặp torch/torchvision tương thích với CUDA của máy. Nếu thi offline, chuẩn bị wheel và dataset trước buổi thi.
+Các baseline gốc từng được kiểm tra với Python 3.12, PyTorch 2.5.1 CPU và torchvision 0.20.1 CPU. Phiên bản kiểm tra đợt mở rộng nằm trong [VALIDATION.md](docs/VALIDATION.md). Khi dùng GPU, cài cặp torch/torchvision tương thích với CUDA của máy. Nếu thi offline, chuẩn bị wheel và dataset trước buổi thi.
 
 ```bash
 python -m pip install -r requirements.txt
@@ -28,9 +45,25 @@ python -m vision.detect --out runs/detection
 python -m vision.segment --out runs/segment
 python -m vision_ml.retrieve --out runs/retrieval
 python -m vision_ml.anomaly --out runs/anomaly
+python -m ml.tabular --out runs/tabular
+python -m ml.forecast --out runs/forecast
+python -m audio.classify --out runs/audio
+python -m nlp.boundary --out runs/boundary
+python -m nlp.order --out runs/order/answers.json
+python -m vision.restore --out runs/restoration
+python -m ml.q_learning
+python -m catalog.search --priority A
 ```
 
-Các lệnh trên tự tạo hoặc dùng fixture nhỏ và chạy được khi đã ngắt mạng. Tham số cho dữ liệu thật và định dạng input nằm ở README của từng mảng. Với Parquet hoặc evaluator COCO, cài thêm `python -m pip install -r requirements-extras.txt`. Mỗi `blocks/` chứa các thành phần tái sử dụng; mỗi `challenges/` chứa 30 đề và hướng giải.
+Các lệnh trên tự tạo hoặc dùng fixture nhỏ và chạy được khi đã ngắt mạng. **Điểm fixture chỉ kiểm tra đường chạy, không phải kết quả benchmark.** Tham số cho dữ liệu thật và định dạng input nằm ở README của từng mảng. Với Parquet hoặc evaluator COCO, cài thêm `python -m pip install -r requirements-extras.txt`. Ba mảng gốc có `challenges/` với 30 bài/mảng; hướng mới tập trung ở `docs/workshops/`, tra được offline qua registry JSON.
+
+```bash
+python tools/check_repo.py
+python -m unittest discover -s tests -v
+python tools/smoke_recipes.py
+```
+
+Khối mới được ghi rõ là chương trình trọn luồng, thành phần cần adapter hay hướng đọc thêm trong [BLOCKS.md](docs/BLOCKS.md). Chưa tái lập leaderboard/SOTA của 39 hướng workshop. Baseline mới không tự tải weights hay dataset; cần chuẩn bị wheel/data/weights hợp lệ trước khi thi offline.
 
 ## Kết quả đã chạy trên CPU bằng dữ liệu thật
 

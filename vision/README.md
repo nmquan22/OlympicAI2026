@@ -1,5 +1,18 @@
 # Computer Vision · 30 bài luyện
 
+## Bổ sung workshop 2026 và dạng đề mới
+
+[Danh mục 2026](../docs/WORKSHOPS_2026.md#vision) bao gồm NTIRE, PBVS, UG2+, LoViF và GenRecon3D; xem thêm [IOAI Double Agent/Field](../docs/IOAI_2026.md).
+
+| Khối mới | Mục đích |
+|---|---|
+| [Restoration, guided SR và tile có halo](blocks/restoration.py) | Residual CNN, gated RGB→thermal guidance; runner `python -m vision.restore` cho RGB pairs |
+| [Selective perturbation](blocks/robustness.py) | Giữ một classifier đúng và làm model kia sai; cần official preprocessing/scorer |
+| [Contrastive loss và EMA](blocks/self_supervised.py) | Học từ hai views, cập nhật teacher và buffers |
+| [Coordinate Fourier field](blocks/fields.py) | Xấp xỉ hàm tọa độ, kiểm soát số tham số; chưa có stochastic IOAI Field solver |
+
+Runner restoration dùng CSV `id,degraded,target`, paths tương đối với CSV. `--scale` upsample input theo hệ số cố định, target chỉ dùng loss/eval. Train/valid phải khác scene. Khi SR thermal một kênh hoặc hyperspectral, đổi loader và model channels theo track; không dùng RGB normalization mặc định.
+
 Ba bài đầu cho ba kiểu nhãn thường gặp. Oxford-IIIT Pet dùng mask có lớp border. VOC lưu hộp theo hai góc. VisDrone lưu hộp theo góc trên trái và kích thước, kèm thông tin vùng bỏ qua. Đọc hình dự đoán trong hệ tọa độ gốc trước khi so model.
 
 ## Học code theo thứ tự

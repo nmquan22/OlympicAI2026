@@ -1,5 +1,11 @@
 # CV + ML và đa phương thức · 30 bài luyện
 
+## Bổ sung 2026: fusion, evidence và độ bền
+
+[Danh mục mới](../docs/WORKSHOPS_2026.md#vision_ml) thêm PBVS EO–SAR/Mars, VAND 4.0, DataCV, GRAIL-V, EgoVis, MAGMaR, ALVR và hiệu quả inference. [MaskedFusion và ridge few-shot](blocks/multimodal.py) xử lý modality thiếu hoặc cached support/query; [calibration/ensemble](../common/ensemble.py) và [group/time split](../ml/blocks/validation.py) hỗ trợ đánh giá.
+
+Phân biệt **LOCO/VAND 3.0 năm 2025** ở bài gốc với **VAND 4.0 năm 2026 dùng MVTec AD 2/Kaputt 2**. Không chuyển trực tiếp score giữa hai bộ. Với video/audio grounding, dùng [interval decoder chung](../audio/blocks/temporal.py) nhưng giữ timestamp và evaluator đúng track.
+
 Bắt đầu từ một ảnh tạo ra một vector, một lưới patch hoặc một tập vector vùng. Khi đã cache đúng đơn vị, có thể thử kNN, prototypes, ridge, dual encoder và cross-attention trên CPU hoặc một GPU nhỏ. Với video, cache thêm frame index hoặc timestamp; với ảnh–text, giữ image ID cho từng caption.
 
 ## Học code theo thứ tự

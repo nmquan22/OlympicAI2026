@@ -1,5 +1,18 @@
 # NLP · 30 bài luyện
 
+## Bổ sung IOAI/workshop 2026
+
+[Danh mục 2026](../docs/WORKSHOPS_2026.md#nlp) thêm narrative similarity, logic chống content bias, conversational retrieval, discourse, structured data và annotation noise. [IOAI 2026](../docs/IOAI_2026.md) có bài thứ tự hội thoại và ranh giới người/máy viết.
+
+| Khối mới | Cách mở |
+|---|---|
+| [Sparse retrieval, RRF, nDCG](blocks/retrieval.py) | TF-IDF control → fusion sparse/dense → rerank |
+| [PairScorer và beam ordering](blocks/ordering.py) | `python -m nlp.order`; ma trận next-turn score → ranks JSON |
+| [Changepoint và original offsets](blocks/changepoint.py) | `python -m nlp.boundary`; TF-IDF sentence classifier + single-change decoder |
+| [Span/token output](blocks/structured.py) | Masked loss, constrained span và token→character offset |
+
+Đây là baseline/khối tự biên soạn để luyện, không phải giải pháp thắng của các shared task. [Schema thật và giới hạn](../docs/IOAI_2026.md).
+
 Bắt đầu với UIT-VSFC để tự viết một pipeline phân loại. Chuyển sang PhoATIS khi cần một nhãn mỗi từ, rồi sang SQuAD khi đầu ra là hai vị trí trong văn bản. WikiText-2 dùng cùng tokenizer nhưng thay cả attention mask, target và metric.
 
 ## Học code theo thứ tự
