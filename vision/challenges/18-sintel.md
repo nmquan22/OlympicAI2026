@@ -4,7 +4,7 @@ Hai frame liên tiếp → vector u,v cho từng pixel.
 
 **Metric** · Mean endpoint error ↓, tách clean/final
 
-**Đề luyện 5 tiếng** · Chọn vài sequence train, giữ cả clean/final của cùng scene trong cùng split. [Dữ liệu và điều kiện truy cập](https://sintel.is.tue.mpg.de/hero).
+**Đề luyện 5 tiếng** · Chọn vài sequence train, giữ cả clean/final của cùng scene trong cùng split. [Dữ liệu và điều kiện truy cập](https://sintel.is.tue.mpg.de/downloads).
 
 ![Hình 3, flow predictions](../figures/sintel.webp)
 
