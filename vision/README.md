@@ -1,5 +1,9 @@
 # Computer Vision · 30 bài luyện
 
+## 16 chủ đề nâng cao, học theo từng cell
+
+[Bắt đầu tại đây](curriculum/README.md): object-centric learning, visual reasoning, few-shot segmentation, compositional generalization, rPPG, test-time adaptation, VQ tokenization, flow matching, image forensics, restoration, correspondence, amodal masks, point tracking, open vocabulary, world models và unlearning. Mỗi bài có notebook chạy CPU, code module và diễn giải tiếng Việt. [CV01: 11 cell chi tiết](curriculum/CV01_CELL_BY_CELL_VI.md) · [CV02–CV16: từng cell](curriculum/CELL_BY_CELL_VI.md).
+
 ## Bổ sung workshop 2026 và dạng đề mới
 
 [Danh mục 2026](../docs/WORKSHOPS_2026.md#vision) bao gồm NTIRE, PBVS, UG2+, LoViF và GenRecon3D; xem thêm [IOAI Double Agent/Field](../docs/IOAI_2026.md).

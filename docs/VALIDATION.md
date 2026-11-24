@@ -1,5 +1,21 @@
 # Phạm vi kiểm tra đợt mở rộng 2026
 
+## Bổ sung Vision ngày 24/11/2026
+
+[Curriculum Vision](../vision/curriculum/README.md) được chạy trên Python **3.12**, PyTorch **2.5.1+cpu**, torchvision **0.20.1+cpu**:
+
+- **16 notebook, 86 cell code** chạy tuần tự từ đầu; bao gồm forward, loss/backward/update, baseline controls và chẩn đoán. Không cần Jupyter/transformers cho script kiểm tra.
+- Smoke test của **16 module** chạy các biến thể baseline/nâng cấp trên tensor tổng hợp, gồm RGB/feature reconstruction, reasoning, prototypes/cross-attention, TENT, VQ, flow và các hướng còn lại. Random feature teacher là control kiểm tra code, không phải pretrained DINOSAUR.
+- **27 test** hiện có và **12 fixture entry points** của repo đều pass; kiểm tra syntax, Markdown local links, diff whitespace và render registry nhất quán đều pass.
+- Chưa train/eval dataset thật cho 16 chủ đề; chưa kiểm tra GPU, optional transformers loaders hoặc tái lập kết quả paper/SOTA. Một bước gradient trên fixture không chứng minh model tốt hơn baseline.
+
+```bash
+python -m vision.curriculum.smoke_test
+python tools/check_curriculum_notebooks.py
+```
+
+## Đợt mở rộng trước
+
 Kiểm tra trên CPU, Python 3.12, PyTorch **2.15.0+cpu**, torchvision **0.29.2+cpu**, scikit-learn **1.8.0**. Không có GPU trong phiên chạy này. Dữ liệu fixture tổng hợp chỉ kiểm tra code; chưa đo leaderboard hoặc hiệu năng T4/H100 MIG.
 
 | Kiểm tra | Nội dung |

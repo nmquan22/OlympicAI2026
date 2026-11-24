@@ -1,5 +1,7 @@
 # Olympic AI 2026 · Sổ tay thực hành 5 tiếng
 
+**Mới 24/11: [16 bài Vision nâng cao](vision/curriculum/README.md)** — notebook có giải thích tiếng Việt theo từng cell. Bắt đầu bằng [Slot Attention, 11 cell](vision/curriculum/CV01_CELL_BY_CELL_VI.md); tiếp tục với [CV02–CV16](vision/curriculum/CELL_BY_CELL_VI.md). Dùng torchvision/PyTorch cho các khối có sẵn; fixture chỉ kiểm tra cơ chế, chưa phải benchmark/SOTA.
+
 **5 mảng, 90 bài nền tảng, phân tích 6 đề IOAI 2026 và 39 hướng từ 27 workshop/sự kiện 2026.** Code Python tiếng Anh, giải thích tiếng Việt. Bổ sung ngày **22/11/2026**: ML bảng, time series, audio, suy luận tương tác, robustness và các khối đa phương thức.
 
 Mở [danh mục workshop 2026](docs/WORKSHOPS_2026.md), [đề IOAI và syllabus mới](docs/IOAI_2026.md), [bản đồ khối code](docs/BLOCKS.md), [18 buổi luyện 5 tiếng](docs/PRACTICE_PLAN.md) và [phạm vi kiểm thử](docs/VALIDATION.md). Mỗi hướng mới có baseline, nâng cấp, phép thử quyết định và link code; các bài nền tảng giữ hình paper và sơ đồ sẵn có.
