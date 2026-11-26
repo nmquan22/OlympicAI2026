@@ -140,9 +140,16 @@
         {
           "run_id": "R03",
           "idea": "Nhánh thống kê số fit trên train",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 3,
+          "metric": {
+            "metric": "MAE",
+            "value": 37.66858673095703,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R03/report.json"
         },
         {
           "run_id": "R04",
