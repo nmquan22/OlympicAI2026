@@ -79,14 +79,21 @@
       "competition_slug": "lost-interpreter-aicc-round-5",
       "rules_accepted": true,
       "source_notebook": "round-5/lost-interpreter.ipynb",
-      "status": "recovering_draft_save_error",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
           "idea": "BPE Transformer + mean/max + MAE",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 1,
+          "metric": {
+            "metric": "MAE",
+            "value": 36.260257720947266,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R01/report.json"
         },
         {
           "run_id": "R02",
@@ -131,7 +138,7 @@
           "metric": null
         }
       ],
-      "last_error": "Failed to save draft. No version created; not counted as a run."
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-lost-interpreter-learning-experiments"
     },
     {
       "order": 3,
