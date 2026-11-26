@@ -10,9 +10,9 @@
 
 **Lời giải mạnh phát triển ra sao:** BTC chấm trực tiếp chuỗi combining a and b creates r bằng BERT cross-encoder; train CE trên một pool kết quả, augment hoán đổi a/b, trung bình score hai chiều và dùng Hungarian assignment. Đề ghi reference khoảng 0.41; notebook code không có leaderboard score nên không gán một score khác cho nó.
 
-**Mình phát triển tiếp:** Giữ candidate-aware scoring và matching toàn cục. Thử negative khó, symmetry consistency, loss cho toàn candidate list, mức freeze và calibration. Tách việc model chấm điểm tốt hơn khỏi việc decoder tận dụng ràng buộc một-một.
+**Mình phát triển tiếp:** Giữ candidate-aware scoring và matching toàn cục. Thử negative khó, symmetry consistency, loss cho toàn candidate list, độ sâu scratch encoder và Sinkhorn. Tách việc model chấm điểm tốt hơn khỏi việc decoder tận dụng ràng buộc một-một.
 
-**Weights/tokenizer:** Đề chỉ cho phép bert-base-uncased. Nhánh đúng checkpoint dùng tokenizer đi kèm (WordPiece), không tự thay thành BPE; mọi nhánh scratch cần ghi riêng điều kiện và không so ngang một cách gây hiểu nhầm.
+**Weights/tokenizer:** Đề cho phép bert-base-uncased nhưng không bắt buộc. Theo yêu cầu người học, cả bảy lượt dùng random initialization và BPE fit trên train fold. Chỉ chuyển idea của reference; không coi điểm pretrained là đối chứng ngang điều kiện.
 
 ## Bảy lượt T4 đã định nghĩa
 
@@ -21,12 +21,14 @@
 | R01 | Cross-encoder + symmetry consistency | planned |
 | R02 | Hard negative mining từ train | planned |
 | R03 | Candidate-list CE thay sampled negatives | planned |
-| R04 | Trainable final layers: 3 thay 5 | planned |
-| R05 | Hai chiều inference + temperature calibration | planned |
-| R06 | Hungarian so với independent/greedy cùng score matrix | planned |
-| R07 | Kết hợp hard negatives + symmetry + matching | planned |
+| R04 | Bốn scratch encoder layers thay hai | planned |
+| R05 | Trung bình xác suất hai thứ tự thay trung bình logits | planned |
+| R06 | Sinkhorn training + đối chiếu Hungarian/greedy/independent | planned |
+| R07 | Kết hợp hard negatives + full-list CE + probability averaging | planned |
 
 Mỗi lượt là một Kaggle Save & Run All riêng. Tối đa 2 version chạy đồng thời. Không tính đổi seed đơn thuần là idea mới; không tính run lỗi hoặc synthetic smoke là một lượt hoàn tất. Không chạy lại baseline thấp để đủ số lượt. Sau mỗi lượt xong: ghi metric, runtime, peak VRAM, config, lỗi điển hình và câu trả lời “idea này có ích gì”; commit log để đọc ngay. Nếu một giả thuyết bị dữ liệu/evaluator bác bỏ, ghi rõ và thay bằng giả thuyết có căn cứ trước khi chạy.
 
 **Trạng thái hiện tại:** đã đọc và phân tích nguồn; chưa có số thực nghiệm mới trong trang này.
 
+
+Temperature chung hoặc trừ một hằng số mỗi hàng không đổi nghiệm Hungarian. Vì vậy R05 kiểm tra trung bình **xác suất hai thứ tự**, một phép biến đổi thực sự có thể đổi assignment. R06 thêm loss toàn cục, không chỉ chạy lại cùng model để đủ số lượt.

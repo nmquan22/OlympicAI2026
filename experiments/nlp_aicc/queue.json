@@ -306,33 +306,34 @@
         },
         {
           "run_id": "R04",
-          "idea": "Trainable final layers: 3 thay 5",
+          "idea": "Bốn encoder layers từ đầu thay vì hai",
           "status": "planned",
           "notebook_version": null,
           "metric": null
         },
         {
           "run_id": "R05",
-          "idea": "Hai chiều inference + temperature calibration",
+          "idea": "Trung bình xác suất hai thứ tự thay trung bình logits",
           "status": "planned",
           "notebook_version": null,
           "metric": null
         },
         {
           "run_id": "R06",
-          "idea": "Hungarian so với independent/greedy cùng score matrix",
+          "idea": "Sinkhorn loss để học cạnh tranh toàn cục trước Hungarian",
           "status": "planned",
           "notebook_version": null,
           "metric": null
         },
         {
           "run_id": "R07",
-          "idea": "Kết hợp hard negatives + symmetry + matching",
+          "idea": "Kết hợp hard negatives + full-list CE + probability averaging",
           "status": "planned",
           "notebook_version": null,
           "metric": null
         }
-      ]
+      ],
+      "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory."
     }
   ]
 }
