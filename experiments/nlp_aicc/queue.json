@@ -44,9 +44,16 @@
         {
           "run_id": "R03",
           "idea": "Thêm positional Transformer ở mức sự kiện",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 3,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6043437204910292,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R03/report.json"
         },
         {
           "run_id": "R04",
