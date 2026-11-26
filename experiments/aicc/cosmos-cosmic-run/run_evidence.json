@@ -1,0 +1,10 @@
+{
+  "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-cosmos-smoke-baseline-and-biome-validation?scriptVersionId=374506205",
+  "version": 1,
+  "run_status": "completed",
+  "report_source": "Executed notebook stdout: SMOKE_RESULT_JSON",
+  "public_score": 0.72343,
+  "private_score": 0.71387,
+  "phase": "smoke",
+  "unattended_service_installed": false
+}

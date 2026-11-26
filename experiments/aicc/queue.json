@@ -1,0 +1,122 @@
+{
+  "mode": "post_contest_practice",
+  "max_concurrent_runs": 2,
+  "minimum_challenges": 10,
+  "items": [
+    {
+      "order": 1,
+      "id": "cosmos-cosmic-run",
+      "title": "Cosmos Cosmic Run",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r11-cosmos-cosmic-run",
+      "status": "completed",
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-cosmos-smoke-baseline-and-biome-validation?scriptVersionId=374506205",
+      "version": 1,
+      "rules_accepted": true,
+      "leaderboard_score": 0.71387,
+      "competition_slug": "cosmos-cosmic-run-aicc-round-11",
+      "phase": "smoke",
+      "public_score": 0.72343,
+      "private_score": 0.71387,
+      "report_path": "cosmos-cosmic-run/REPORT.md"
+    },
+    {
+      "order": 2,
+      "id": "guessing-animals-again",
+      "title": "Guessing Animals Again",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r11-guessing-animals-again",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 3,
+      "id": "tally",
+      "title": "Tally",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r11-tally",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 4,
+      "id": "inverse-translation",
+      "title": "Inverse Translation",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r10-inverse-translation",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 5,
+      "id": "moment-match",
+      "title": "Moment Match",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r10-moment-match",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 6,
+      "id": "what-i-want",
+      "title": "What I Want and What I Don't",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r10-what-i-want-and-what-i-don-t",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 7,
+      "id": "buried-fault",
+      "title": "Buried Fault",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r9-buried-fault",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 8,
+      "id": "shuffled",
+      "title": "Shuffled",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r9-shuffled",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 9,
+      "id": "word-lookups",
+      "title": "Word Lookups",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r9-word-lookups",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    },
+    {
+      "order": 10,
+      "id": "archivists-cards",
+      "title": "Archivist's Cards",
+      "source_url": "https://ioai.artix.tech/problems/aicc-2026-r8-archivist-s-cards",
+      "status": "queued",
+      "notebook_url": null,
+      "version": null,
+      "rules_accepted": false,
+      "leaderboard_score": null
+    }
+  ]
+}
