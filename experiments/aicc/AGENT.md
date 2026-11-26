@@ -21,3 +21,7 @@ Kaggle có thể yêu cầu chấp nhận quy định từng cuộc thi. Nếu c
 
 Smoke test hiện tại chỉ dành cho Cosmos. Chín mục còn lại là hàng đợi, chưa có thí nghiệm hay điểm số. Việc tiếp tục chạy phụ thuộc phiên trợ lý/trình duyệt còn hoạt động; chưa cài lịch chạy nền.
 
+
+## Ưu tiên mới của người dùng
+
+Học được idea là tiêu chí số một. Ưu tiên hàng đợi `../nlp_aicc/queue.json`: 5 bài NLP, ít nhất 7 lượt T4 thành công mỗi bài, tối đa 2 saved versions đồng thời. Không chạy lại baseline thấp nếu đã hiểu từ nguồn; phân tích baseline có gì, reference phát triển ra sao rồi thử kiến trúc/loss/decoding có căn cứ. Mặc định BPE fit train và random initialization; checkpoint/tokenizer bắt buộc của đề là ngoại lệ phải ghi rõ. Sau mỗi lượt hoàn tất, commit log, metric và nhận xét để người dùng đọc ngay. Không gọi code BTC là SOTA nếu chưa xác minh thứ hạng.

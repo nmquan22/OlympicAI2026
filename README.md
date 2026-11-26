@@ -1,5 +1,7 @@
 # Olympic AI 2026 · Sổ tay thực hành 5 tiếng
 
+**Ưu tiên hiện tại: [5 bài NLP AICC để học idea](experiments/nlp_aicc/README.md)** — đọc reference trước, 7 thí nghiệm T4/bài, BPE và model scratch theo điều kiện đề, tối đa 2 version cùng chạy. Có phân tích baseline → reference → giả thuyết mới; kế hoạch chưa phải kết quả đã chạy.
+
 **AICC đã chạy thử trên Kaggle:** [Cosmos Cosmic Run](experiments/aicc/cosmos-cosmic-run/REPORT.md) — public **0.72343**, private **0.71387**, luyện tập sau cuộc thi. Có notebook, log, ablation và [hàng đợi 10 bài](experiments/aicc/queue.json), giới hạn 2 phiên đồng thời; mới hoàn tất smoke test 1 bài.
 
 **Mới 24/11: [16 bài Vision nâng cao](vision/curriculum/README.md)** — notebook có giải thích tiếng Việt theo từng cell. Bắt đầu bằng [Slot Attention, 11 cell](vision/curriculum/CV01_CELL_BY_CELL_VI.md); tiếp tục với [CV02–CV16](vision/curriculum/CELL_BY_CELL_VI.md). Dùng torchvision/PyTorch cho các khối có sẵn; fixture chỉ kiểm tra cơ chế, chưa phải benchmark/SOTA.

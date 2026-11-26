@@ -1,0 +1,309 @@
+{
+  "priority": "learning_ideas",
+  "minimum_successful_t4_runs_per_task": 7,
+  "max_concurrent_versions": 2,
+  "weak_baseline_reruns": false,
+  "items": [
+    {
+      "order": 1,
+      "id": "moment-match",
+      "title": "Moment Match",
+      "competition_slug": "moment-match-aicc-round-10",
+      "rules_accepted": true,
+      "source_notebook": "round-10/moment-match.ipynb",
+      "status": "prepared",
+      "runs": [
+        {
+          "run_id": "R01",
+          "idea": "BPE + soft late interaction",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R02",
+          "idea": "Thêm Transformer ở mức token",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R03",
+          "idea": "Thêm positional Transformer ở mức sự kiện",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R04",
+          "idea": "IDF weighting cho alignment",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R05",
+          "idea": "Giảm nhiệt độ soft alignment",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R06",
+          "idea": "Chỉ giữ sự kiện trung tâm để đo vai trò ngữ cảnh",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R07",
+          "idea": "Kết hợp event attention + IDF",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "id": "lost-interpreter",
+      "title": "Lost Interpreter",
+      "competition_slug": "lost-interpreter-aicc-round-5",
+      "rules_accepted": true,
+      "source_notebook": "round-5/lost-interpreter.ipynb",
+      "status": "prepared",
+      "runs": [
+        {
+          "run_id": "R01",
+          "idea": "BPE Transformer + mean/max + MAE",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R02",
+          "idea": "Thêm separator lệnh và marker số",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R03",
+          "idea": "Nhánh thống kê số fit trên train",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R04",
+          "idea": "Learned query attention pooling",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R05",
+          "idea": "Auxiliary loss dự đoán số lệnh",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R06",
+          "idea": "Signed-log target để kiểm tra outlier",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R07",
+          "idea": "Kết hợp structure + numeric + query + auxiliary",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "id": "word-lookups",
+      "title": "Word Lookups",
+      "competition_slug": "aicc-round-9-word-lookups",
+      "rules_accepted": true,
+      "source_notebook": "round-9/word-lookups.ipynb",
+      "status": "prepared",
+      "runs": [
+        {
+          "run_id": "R01",
+          "idea": "Transformer surprisal với offset-safe BPE",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R02",
+          "idea": "Surprisal hai chiều",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R03",
+          "idea": "Chuẩn hóa surprisal theo vị trí/độ dài",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R04",
+          "idea": "Kết hợp cohesion n-gram học từ train",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R05",
+          "idea": "DP với prior độ dài từ",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R06",
+          "idea": "Punctuation-aware BMES constraints",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R07",
+          "idea": "Kết hợp hai chiều + cohesion + DP",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "id": "inverse-translation",
+      "title": "Inverse Translation",
+      "competition_slug": "inverse-translation-aicc-round-10",
+      "rules_accepted": true,
+      "source_notebook": "round-10/inverse-translation.ipynb",
+      "status": "prepared",
+      "runs": [
+        {
+          "run_id": "R01",
+          "idea": "Probe streaming giữ top-32, margin search",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R02",
+          "idea": "Top-8 để đo recall–cost",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R03",
+          "idea": "Top-16 để đo recall–cost",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R04",
+          "idea": "Cross-entropy thay margin, cùng candidate budget",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R05",
+          "idea": "Coarse-to-fine top-8→32",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R06",
+          "idea": "Coordinate sweep thay full replacement grid",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R07",
+          "idea": "Restart chỉ cho case chưa exact, đo tổng chi phí",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "id": "alchemy",
+      "title": "Alchemy",
+      "competition_slug": "alchemy-aicc-round-4",
+      "rules_accepted": true,
+      "source_notebook": "round-4/alchemy.ipynb",
+      "status": "prepared",
+      "runs": [
+        {
+          "run_id": "R01",
+          "idea": "Cross-encoder + symmetry consistency",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R02",
+          "idea": "Hard negative mining từ train",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R03",
+          "idea": "Candidate-list CE thay sampled negatives",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R04",
+          "idea": "Trainable final layers: 3 thay 5",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R05",
+          "idea": "Hai chiều inference + temperature calibration",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R06",
+          "idea": "Hungarian so với independent/greedy cùng score matrix",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R07",
+          "idea": "Kết hợp hard negatives + symmetry + matching",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        }
+      ]
+    }
+  ]
+}
+

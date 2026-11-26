@@ -1,0 +1,38 @@
+[
+  {
+    "task": "moment-match",
+    "repository": "AI-Community-Contest/solutions",
+    "path": "round-10/moment-match.ipynb",
+    "blob_sha": "80e6b415ed9072ec758addef5cf6a56c332278dc",
+    "role": "organizer_reference_not_verified_SOTA"
+  },
+  {
+    "task": "lost-interpreter",
+    "repository": "AI-Community-Contest/solutions",
+    "path": "round-5/lost-interpreter.ipynb",
+    "blob_sha": "e719fade182dae75071e0f5f7bd54d77c18e16a2",
+    "role": "organizer_reference_not_verified_SOTA"
+  },
+  {
+    "task": "word-lookups",
+    "repository": "AI-Community-Contest/solutions",
+    "path": "round-9/word-lookups.ipynb",
+    "blob_sha": "a3f0b007abfb6d539c920f4e3569386d890a39e2",
+    "role": "organizer_reference_not_verified_SOTA"
+  },
+  {
+    "task": "inverse-translation",
+    "repository": "AI-Community-Contest/solutions",
+    "path": "round-10/inverse-translation.ipynb",
+    "blob_sha": "7bb6db261afad9ba935212f7313aa8ed610e0de8",
+    "role": "organizer_reference_not_verified_SOTA"
+  },
+  {
+    "task": "alchemy",
+    "repository": "AI-Community-Contest/solutions",
+    "path": "round-4/alchemy.ipynb",
+    "blob_sha": "d466cd5c20dda3e3d3b0e1f72dd4ddf03009a9f8",
+    "role": "organizer_reference_not_verified_SOTA"
+  }
+]
+
