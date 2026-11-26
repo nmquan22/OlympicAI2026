@@ -30,9 +30,16 @@
         {
           "run_id": "R02",
           "idea": "Thêm Transformer ở mức token",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.663833805476865,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R02/report.json"
         },
         {
           "run_id": "R03",
