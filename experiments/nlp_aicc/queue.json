@@ -58,9 +58,16 @@
         {
           "run_id": "R04",
           "idea": "IDF weighting cho alignment",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 4,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6912181303116147,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R04/report.json"
         },
         {
           "run_id": "R05",
