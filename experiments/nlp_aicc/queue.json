@@ -11,14 +11,21 @@
       "competition_slug": "moment-match-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/moment-match.ipynb",
-      "status": "prepared",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
           "idea": "BPE + soft late interaction",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 1,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6543909348441926,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R01/report.json"
         },
         {
           "run_id": "R02",
@@ -62,7 +69,8 @@
           "notebook_version": null,
           "metric": null
         }
-      ]
+      ],
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"
     },
     {
       "order": 2,
@@ -71,7 +79,7 @@
       "competition_slug": "lost-interpreter-aicc-round-5",
       "rules_accepted": true,
       "source_notebook": "round-5/lost-interpreter.ipynb",
-      "status": "prepared",
+      "status": "recovering_draft_save_error",
       "runs": [
         {
           "run_id": "R01",
@@ -122,7 +130,8 @@
           "notebook_version": null,
           "metric": null
         }
-      ]
+      ],
+      "last_error": "Failed to save draft. No version created; not counted as a run."
     },
     {
       "order": 3,
@@ -306,4 +315,3 @@
     }
   ]
 }
-
