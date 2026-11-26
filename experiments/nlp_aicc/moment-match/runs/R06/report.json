@@ -1,0 +1,102 @@
+{
+  "task": "moment-match",
+  "run_id": "R06",
+  "config": {
+    "idea": "Center-only ablation measures the contribution of neighboring events",
+    "vocab": 2048,
+    "token_layers": 0,
+    "event_context": false,
+    "soft": true,
+    "temperature": 0.2,
+    "idf": false,
+    "center": true,
+    "epochs": 30,
+    "budget_seconds": 240,
+    "batch_size": 48
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "0cb9a7611a8d8a21d51f955264857ceb75ced8a3",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "elapsed_seconds": 57.05912756919861,
+  "validation": {
+    "metric": "accuracy",
+    "value": 0.4910292728989613,
+    "direction": "maximize",
+    "samples": 1059,
+    "split": "provided_validation"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 1970,
+    "labels_valid": true
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.2529271888178448,
+      "validation_accuracy": 0.48536355051935787
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.123244471328203,
+      "validation_accuracy": 0.4910292728989613
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.037077401959619,
+      "validation_accuracy": 0.4910292728989613
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.9715330922326376,
+      "validation_accuracy": 0.4721435316336166
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.9143522184948588,
+      "validation_accuracy": 0.47592067988668557
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.8649830779363943,
+      "validation_accuracy": 0.4702549575070821
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.8269950012828029,
+      "validation_accuracy": 0.4749763928234183
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.7947069179180056,
+      "validation_accuracy": 0.4740321057601511
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.7655577997828639,
+      "validation_accuracy": 0.4749763928234183
+    }
+  ],
+  "peak_gpu_memory_mb": 211.6533203125,
+  "artifacts": {
+    "tokenizer": "tokenizer.json",
+    "weights": "provided_fastText_only",
+    "source_sha256": null
+  },
+  "limitations": [
+    "BPE vocabulary trained on train text only; supplied fastText initializes its vectors.",
+    "Reference architecture is adapted, not claimed to reproduce its 0.7243 result."
+  ],
+  "leaderboard_public": null,
+  "leaderboard_private": null
+}

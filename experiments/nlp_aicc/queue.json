@@ -86,9 +86,16 @@
         {
           "run_id": "R06",
           "idea": "Chỉ giữ sự kiện trung tâm để đo vai trò ngữ cảnh",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 6,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.4910292728989613,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R06/report.json"
         },
         {
           "run_id": "R07",

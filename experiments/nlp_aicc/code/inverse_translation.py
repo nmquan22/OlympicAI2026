@@ -17,6 +17,7 @@ INVERSE_CONFIGS={
 def run_inverse(run_id):
     cfg={**INVERSE_CONFIGS[run_id],"probe_batch":512,"candidate_batch":64,"budget_seconds":720}
     info=start_run("inverse-translation",run_id,cfg)
+    info["versions"]["transformers"]=importlib.metadata.version("transformers")
     root=find_data("inverse-translation-aicc-round-10")
     targets=json.loads((root/"targets.json").read_text())
     examples=json.loads((root/"examples.json").read_text())
@@ -37,7 +38,9 @@ def run_inverse(run_id):
     # Verify the unmodified provided model before adapting teacher-forced positions.
     example_matches=[]
     for row in examples:
-        example_matches.append(generate(torch.tensor(row["alien_ids"],device=DEVICE),row["target_content_tokens"]+16)==row["target_ids"])
+        got=generate(torch.tensor(row["alien_ids"],device=DEVICE),row["target_content_tokens"]+16)
+        example_matches.append(got==row["target_ids"])
+        print("EXAMPLE_CHECK "+json.dumps(dict(match=example_matches[-1],expected=row["target_ids"],generated=got,expected_text=decode(row["target_ids"]),generated_text=decode(got))),flush=True)
     if not all(example_matches):
         raise RuntimeError("Provided model generation does not match the provided examples")
     def cached_positions(module,inputs,positions):

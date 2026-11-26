@@ -59,6 +59,8 @@ def record_run(notebook_path,url,version,notes):
     item["status"]="completed" if all(r["status"]=="completed" for r in item["runs"]) else "running_experiments"
     item["notebook_url"]=parsed._replace(query="",fragment="").geturl()
     queue_file.write_text(json.dumps(queue,indent=2,ensure_ascii=False)+"\n")
+    from nlp_status import render_status
+    render_status()
     return report
 
 
