@@ -10,7 +10,7 @@ MOMENT_CONFIGS = {
  4: dict(idea="IDF weighted token matching suppresses common words", vocab=2048, token_layers=0, event_context=False, soft=True, temperature=0.2, idf=True, center=False),
  5: dict(idea="Sharper soft matching tests alignment entropy", vocab=2048, token_layers=0, event_context=False, soft=True, temperature=0.07, idf=False, center=False),
  6: dict(idea="Center-only ablation measures the contribution of neighboring events", vocab=2048, token_layers=0, event_context=False, soft=True, temperature=0.2, idf=False, center=True),
- 7: dict(idea="Combine contextual event matching and IDF weighting", vocab=2048, token_layers=0, event_context=True, soft=True, temperature=0.2, idf=True, center=False)
+ 7: dict(idea="Combine token contextualization and IDF after R03/R04 evidence", vocab=2048, token_layers=1, event_context=False, soft=True, temperature=0.2, idf=True, center=False)
 }
 
 
@@ -145,6 +145,18 @@ def run_moment(run_id):
     assert np.isfinite(test_scores).all()
     np.save(OUT/"validation_logits.npy",val_scores)
     np.save(OUT/"validation_labels.npy",labels["validation"])
+    probability=torch.softmax(torch.from_numpy(val_scores),1).numpy()
+    predicted=val_scores.argmax(1);gold=labels["validation"]
+    ordered=np.sort(probability,axis=1);margins=ordered[:,-1]-ordered[:,-2]
+    wrong=np.flatnonzero(predicted!=gold)
+    selected=wrong[np.argsort(-probability[wrong,predicted[wrong]])[:8]]
+    cases=[dict(row_id=int(i),gold=int(gold[i]),prediction=int(predicted[i]),confidence=float(probability[i,predicted[i]]),
+                target=texts["validation"]["target"][i],
+                chosen=texts["validation"]["candidates"][i][predicted[i]],
+                expected=texts["validation"]["candidates"][i][gold[i]]) for i in selected]
+    (OUT/"validation_errors.json").write_text(json.dumps(cases,ensure_ascii=False,indent=2))
+    print("VALIDATION_ERRORS "+json.dumps(cases,ensure_ascii=False),flush=True)
+    print("VALIDATION_DIAGNOSTICS "+json.dumps(dict(mean_margin=float(margins.mean()),wrong_count=int(len(wrong)))),flush=True)
     torch.save(best_state,OUT/"model.pt")
     sub=pd.DataFrame(dict(row_id=np.arange(len(test_scores)),label=test_scores.argmax(1)))
     checks=dict(ids_unique=sub.row_id.is_unique,schema_valid=list(sub.columns)==["row_id","label"],

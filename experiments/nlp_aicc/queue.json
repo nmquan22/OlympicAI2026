@@ -85,7 +85,7 @@
         },
         {
           "run_id": "R07",
-          "idea": "Kết hợp event attention + IDF",
+          "idea": "Kết hợp token attention + IDF, dựa trên R03/R04",
           "status": "planned",
           "notebook_version": null,
           "metric": null

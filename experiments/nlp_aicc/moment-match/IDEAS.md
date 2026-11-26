@@ -24,9 +24,11 @@
 | R04 | IDF weighting cho alignment | planned |
 | R05 | Giảm nhiệt độ soft alignment | planned |
 | R06 | Chỉ giữ sự kiện trung tâm để đo vai trò ngữ cảnh | planned |
-| R07 | Kết hợp event attention + IDF | planned |
+| R07 | Kết hợp token attention + IDF (đổi sau R03/R04) | planned |
 
 Mỗi lượt là một Kaggle Save & Run All riêng. Tối đa 2 version chạy đồng thời. Không tính đổi seed đơn thuần là idea mới; không tính run lỗi hoặc synthetic smoke là một lượt hoàn tất. Không chạy lại baseline thấp để đủ số lượt. Sau mỗi lượt xong: ghi metric, runtime, peak VRAM, config, lỗi điển hình và câu trả lời “idea này có ích gì”; commit log để đọc ngay. Nếu một giả thuyết bị dữ liệu/evaluator bác bỏ, ghi rõ và thay bằng giả thuyết có căn cứ trước khi chạy.
 
 **Trạng thái hiện tại:** đã đọc và phân tích nguồn; chưa có số thực nghiệm mới trong trang này.
 
+
+Điều chỉnh sau kết quả: R03 event context chỉ 60.43%, R04 IDF đạt 69.12%. R07 chuyển sang token attention (R02) + IDF; in lỗi validation tự tin sai để phân tích alignment.
