@@ -119,9 +119,16 @@
         {
           "run_id": "R02",
           "idea": "Thêm separator lệnh và marker số",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "MAE",
+            "value": 37.94136428833008,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R02/report.json"
         },
         {
           "run_id": "R03",

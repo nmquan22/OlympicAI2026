@@ -1,0 +1,210 @@
+{
+  "task": "lost-interpreter",
+  "run_id": "R02",
+  "config": {
+    "idea": "Expose instruction boundaries using dedicated separators",
+    "structure": true,
+    "numeric": false,
+    "attention": false,
+    "aux": false,
+    "target": "standard",
+    "layers": 2,
+    "epochs": 45,
+    "budget_seconds": 300,
+    "batch_size": 128,
+    "bpe_vocab": 2048,
+    "max_length": 192
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "0cb9a7611a8d8a21d51f955264857ceb75ced8a3",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "elapsed_seconds": 109.24682831764221,
+  "validation": {
+    "metric": "MAE",
+    "value": 37.94136428833008,
+    "direction": "minimize",
+    "samples": 3000,
+    "split": "fixed_train_holdout_15pct"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 5000,
+    "ids_match": true,
+    "finite": true
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.43132612669378295,
+      "validation_mae": 39.4337272644043
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.4063994780294877,
+      "validation_mae": 38.74156188964844
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.40354598756123305,
+      "validation_mae": 38.59485626220703
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.40328625897715864,
+      "validation_mae": 38.75902557373047
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.4009359371393247,
+      "validation_mae": 38.961666107177734
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.39972720681724694,
+      "validation_mae": 38.566375732421875
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.3986175815413769,
+      "validation_mae": 38.53944778442383
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.39648352193653136,
+      "validation_mae": 38.21345901489258
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.39483694160791266,
+      "validation_mae": 38.24284362792969
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.39213690060870093,
+      "validation_mae": 38.164886474609375
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.39101593117964895,
+      "validation_mae": 38.44959259033203
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.38911357712476774,
+      "validation_mae": 38.18120193481445
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.386629670970422,
+      "validation_mae": 38.04000473022461
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.3844150965823267,
+      "validation_mae": 38.86260986328125
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.3822331120421116,
+      "validation_mae": 38.766910552978516
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.38087387293353114,
+      "validation_mae": 38.3599967956543
+    },
+    {
+      "epoch": 17,
+      "train_loss": 0.3766428564948247,
+      "validation_mae": 38.15288162231445
+    },
+    {
+      "epoch": 18,
+      "train_loss": 0.37421582952926036,
+      "validation_mae": 38.27092742919922
+    },
+    {
+      "epoch": 19,
+      "train_loss": 0.37307938955780257,
+      "validation_mae": 39.312198638916016
+    },
+    {
+      "epoch": 20,
+      "train_loss": 0.3699267632082889,
+      "validation_mae": 38.3961181640625
+    },
+    {
+      "epoch": 21,
+      "train_loss": 0.36786557016964244,
+      "validation_mae": 37.94136428833008
+    },
+    {
+      "epoch": 22,
+      "train_loss": 0.36278433257475834,
+      "validation_mae": 38.65147018432617
+    },
+    {
+      "epoch": 23,
+      "train_loss": 0.3608982506999396,
+      "validation_mae": 38.09815216064453
+    },
+    {
+      "epoch": 24,
+      "train_loss": 0.35854008278452365,
+      "validation_mae": 38.862579345703125
+    },
+    {
+      "epoch": 25,
+      "train_loss": 0.3549248996309768,
+      "validation_mae": 38.46125030517578
+    },
+    {
+      "epoch": 26,
+      "train_loss": 0.35321333175314995,
+      "validation_mae": 39.47915267944336
+    },
+    {
+      "epoch": 27,
+      "train_loss": 0.34937854032767446,
+      "validation_mae": 38.49580383300781
+    },
+    {
+      "epoch": 28,
+      "train_loss": 0.3476183066018542,
+      "validation_mae": 38.63973617553711
+    },
+    {
+      "epoch": 29,
+      "train_loss": 0.3433581880832973,
+      "validation_mae": 38.34870910644531
+    },
+    {
+      "epoch": 30,
+      "train_loss": 0.3433035549364592,
+      "validation_mae": 40.303409576416016
+    }
+  ],
+  "peak_gpu_memory_mb": 242.05078125,
+  "artifacts": {
+    "tokenizer": "tokenizer.json",
+    "pretrained_weights": false,
+    "train_sha256": "1486f0a20fb309dc3c81122d64c5544d9bfc26e954d8b38e3bfaa0c4b5ed4cf0",
+    "test_sha256": "5105ce3f47740930f5dc3b98afa05bd4392b3437fc0e515299c7b1964dd3725e"
+  },
+  "limitations": [
+    "Single fixed holdout. Results depend on optimization budget.",
+    "The official source uses a different split; its MAE is not a paired comparison."
+  ],
+  "leaderboard_public": null,
+  "leaderboard_private": null
+}
