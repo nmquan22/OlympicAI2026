@@ -72,9 +72,16 @@
         {
           "run_id": "R05",
           "idea": "Giảm nhiệt độ soft alignment",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 5,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6610009442870632,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R05/report.json"
         },
         {
           "run_id": "R06",
