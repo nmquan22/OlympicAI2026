@@ -426,9 +426,20 @@
         {
           "run_id": "R04",
           "idea": "Bốn encoder layers từ đầu thay vì hai",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.06666666666666667,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.06666666666666667,
+            "independent_accuracy": 0.06666666666666667,
+            "greedy_accuracy": 0.03333333333333333,
+            "duplicate_argmax_count": 24
+          },
+          "report_path": "alchemy/runs/R04/report.json"
         },
         {
           "run_id": "R05",
