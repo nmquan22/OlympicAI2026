@@ -16,6 +16,8 @@ LOST_CONFIGS={
 
 
 LOST_CONFIGS[8]={**LOST_CONFIGS[1],"idea":"Scratch BPE BiGRU with packed sequences, masked pooling and SmoothL1","backbone":"bigru","loss":"smooth_l1"}
+LOST_CONFIGS[9]=dict(idea="Typed instruction BPE plus exact operand channels and recurrent execution",curriculum=False,papers=['1410.4615','1511.06279','2001.05016'])
+LOST_CONFIGS[10]={**LOST_CONFIGS[9],"idea":"Typed instruction model with mixed easy/full curriculum","curriculum":True}
 
 def program_text(value,structured):
     text=str(value).replace(";"," ; ")
@@ -72,6 +74,7 @@ class ProgramBiGRU(nn.Module):
 
 
 def run_lost(run_id):
+    if run_id>=9:return run_lost_typed(run_id)
     config={**LOST_CONFIGS[run_id],"epochs":45,"budget_seconds":300,"batch_size":128,"bpe_vocab":2048,"max_length":192}
     info=start_run("lost-interpreter",run_id,config)
     root=find_data("lost-interpreter-aicc-round-5")
@@ -157,4 +160,113 @@ def run_lost(run_id):
                          train_sha256=hash_file(root/"train.csv"),test_sha256=hash_file(root/"test.csv")),
           limitations=["Single fixed holdout. Results depend on optimization budget.",
                        "The official source uses a different split; its MAE is not a paired comparison."])
+
+
+def parse_instructions(program):
+    parsed=[]
+    for instruction in str(program).split(';'):
+        parts=instruction.strip().split()
+        if not parts:continue
+        match=re.fullmatch(r'OP(\d+)',parts[0])
+        assert match, 'Unexpected opcode: '+parts[0]
+        opcode=int(match.group(1));assert 1<=opcode<=12
+        values=[int(x) for x in parts[1:]]
+        parsed.append((opcode,values,instruction.strip()))
+    assert parsed
+    return parsed
+
+
+class TypedProgramGRU(nn.Module):
+    def __init__(self,vocab,operand_width,dim=128):
+        super().__init__()
+        self.embedding=nn.Embedding(vocab,64,padding_idx=0)
+        self.opcode=nn.Embedding(13,32,padding_idx=0)
+        self.instruction=nn.Sequential(nn.Linear(96+operand_width,dim),nn.GELU(),nn.LayerNorm(dim))
+        self.gru=nn.GRU(dim,dim,2,batch_first=True,dropout=.1)
+        self.head=nn.Sequential(nn.Linear(dim*3,256),nn.GELU(),nn.Dropout(.1),nn.Linear(256,1))
+    def forward(self,ids,opcodes,operands):
+        valid=ids.ne(0).unsqueeze(-1)
+        lexical=(self.embedding(ids)*valid).sum(2)/valid.sum(2).clamp(min=1)
+        x=self.instruction(torch.cat([lexical,self.opcode(opcodes),operands],-1))
+        lengths=opcodes.ne(0).sum(1).clamp(min=1).cpu()
+        packed=nn.utils.rnn.pack_padded_sequence(x,lengths,batch_first=True,enforce_sorted=False)
+        h,last=self.gru(packed)
+        h,_=nn.utils.rnn.pad_packed_sequence(h,batch_first=True,total_length=opcodes.shape[1])
+        representation=torch.cat([pools(h,opcodes.eq(0)),last[-1]],-1)
+        return self.head(representation).squeeze(-1)
+
+
+def run_lost_typed(run_id):
+    cfg={**LOST_CONFIGS[run_id],"epochs":60,"budget_seconds":300,"batch_size":128,"bpe_vocab":2048,"pretrained":False}
+    info=start_run('lost-interpreter',run_id,cfg);root=find_data('lost-interpreter-aicc-round-5')
+    train=pd.read_csv(root/'train.csv');test=pd.read_csv(root/'test.csv')
+    tr,va=train_test_split(np.arange(len(train)),test_size=.15,random_state=SEED)
+    programs=[parse_instructions(p) for p in list(train.program)+list(test.program)]
+    assert parse_instructions('OP11 7 10 ; OP12 -3')[0][:2]==(11,[7,10])
+    tokenizer=make_bpe((inst[2] for i in tr for inst in programs[i]),cfg['bpe_vocab'])
+    tokenizer.save(str(OUT/'tokenizer.json'))
+    max_steps=max(map(len,programs));max_args=max(len(x[1]) for p in programs for x in p)
+    max_tokens=max(len(tokenizer.encode(x[2]).ids) for p in programs for x in p)
+    ids=np.zeros((len(programs),max_steps,max_tokens),dtype=np.int64)
+    ops=np.zeros((len(programs),max_steps),dtype=np.int64)
+    values=np.zeros((len(programs),max_steps,max_args*3),dtype=np.float32)
+    for i,p in enumerate(programs):
+        for j,(op,args,text) in enumerate(p):
+            token_ids=tokenizer.encode(text).ids;ids[i,j,:len(token_ids)]=token_ids;ops[i,j]=op
+            for k,value in enumerate(args):
+                values[i,j,k]=value/20
+                values[i,j,max_args+k]=np.sign(value)*np.log1p(abs(value))/3
+                values[i,j,2*max_args+k]=1
+    assert np.isfinite(values).all()
+    n=len(train);truth=train.output.to_numpy(np.float32);ym=float(truth[tr].mean());ys=max(float(truth[tr].std()),1e-6)
+    target=(truth-ym)/ys
+    model=TypedProgramGRU(tokenizer.get_vocab_size(),max_args*3).to(DEVICE)
+    optimizer=torch.optim.AdamW(model.parameters(),lr=8e-4,weight_decay=.01);scaler=torch.amp.GradScaler('cuda')
+    @torch.inference_mode()
+    def predict(indices):
+        model.eval();out=[]
+        for batch in np.array_split(indices,max(1,math.ceil(len(indices)/256))):
+            with torch.autocast('cuda',dtype=torch.float16):
+                out.append(model(torch.from_numpy(ids[batch]).to(DEVICE),torch.from_numpy(ops[batch]).to(DEVICE),torch.from_numpy(values[batch]).to(DEVICE)).float().cpu().numpy())
+        return np.concatenate(out)*ys+ym
+    rng=np.random.default_rng(SEED);lengths=np.array(list(map(len,programs)))
+    best=float('inf');state=None;history=[];bad=0;tick=time.time()
+    for epoch in range(cfg['epochs']):
+        model.train();order=rng.permutation(tr)
+        if cfg['curriculum'] and epoch<20:
+            # Half easy examples and half unrestricted; hard examples are never excluded.
+            cap=np.quantile(lengths[tr],min(1.,.25+.75*epoch/20))
+            easy=tr[lengths[tr]<=cap]
+            order=np.concatenate([rng.choice(easy,len(tr)//2,replace=True),rng.choice(tr,len(tr)-len(tr)//2,replace=True)])
+            rng.shuffle(order)
+        losses=[]
+        for indices in np.array_split(order,math.ceil(len(order)/cfg['batch_size'])):
+            optimizer.zero_grad(set_to_none=True)
+            with torch.autocast('cuda',dtype=torch.float16):
+                p=model(torch.from_numpy(ids[indices]).to(DEVICE),torch.from_numpy(ops[indices]).to(DEVICE),torch.from_numpy(values[indices]).to(DEVICE))
+                loss=F.smooth_l1_loss(p,torch.from_numpy(target[indices]).to(DEVICE),beta=.2)
+            assert torch.isfinite(loss)
+            scaler.scale(loss).backward();scaler.unscale_(optimizer);nn.utils.clip_grad_norm_(model.parameters(),1)
+            scaler.step(optimizer);scaler.update();losses.append(float(loss.detach()))
+        pred=predict(va);mae=float(mean_absolute_error(truth[va],pred))
+        row=dict(epoch=epoch+1,train_loss=float(np.mean(losses)),validation_mae=mae)
+        history.append(row);print('EPOCH '+json.dumps(row),flush=True)
+        if mae<best:best=mae;state={k:v.detach().cpu().clone() for k,v in model.state_dict().items()};bad=0
+        else:bad+=1
+        if (bad>=12 and epoch>=20) or time.time()-tick>cfg['budget_seconds']:break
+    model.load_state_dict(state);vp=predict(va);tp=predict(np.arange(n,len(programs)))
+    cases=pd.DataFrame(dict(row_index=va,program=train.program.iloc[va].tolist(),truth=truth[va],prediction=vp,instructions=lengths[va],absolute_error=np.abs(vp-truth[va])))
+    cases.to_csv(OUT/'validation_predictions.csv',index=False)
+    groups=cases.groupby(pd.cut(cases.instructions,[0,4,8,16,10000]),observed=True).absolute_error.agg(['mean','count'])
+    print('ERROR_BY_LENGTH '+groups.to_json(),flush=True)
+    print('VALIDATION_WORST '+cases.nlargest(8,'absolute_error').to_json(orient='records'),flush=True)
+    torch.save(dict(state=state,y_mean=ym,y_std=ys,max_args=max_args),OUT/'model.pt')
+    sub=pd.DataFrame(dict(ID=test.ID,output=np.rint(tp).astype(np.int64)))
+    return finish_run(info,dict(metric='MAE',value=best,direction='minimize',samples=len(va),split='fixed_train_holdout_15pct'),sub,
+        dict(ids_unique=sub.ID.is_unique,schema_valid=list(sub.columns)==['ID','output'],row_count=len(sub),finite=bool(np.isfinite(tp).all()),parser_canary=True,no_instruction_truncation=True),history,
+        artifacts=dict(tokenizer='train-only BPE',pretrained_weights=False,max_instructions=max_steps,max_operands=max_args,max_tokens_per_instruction=max_tokens,error_by_length=json.loads(groups.to_json()),train_sha256=hash_file(root/'train.csv')),
+        limitations=['Architecture inspired by recurrent execution; not a reproduction of NPI, whose trace labels are unavailable.',
+                    'Explicit operand values are an arithmetic input bias, not an implemented NAU/NMU.',
+                    'R09 changes representation and recurrent direction together; R10 isolates curriculum relative to R09.',
+                    'Single fixed holdout and seed; no claim of exact execution or length extrapolation.'])
 

@@ -18,6 +18,17 @@ ALCHEMY_CONFIGS={
 ALCHEMY_CONFIGS[8]={**ALCHEMY_CONFIGS[3],"idea":"Commutative three-tower composer with a shared scratch BPE embedding","composer":True}
 
 ALCHEMY_CONFIGS[9]={**ALCHEMY_CONFIGS[8],"idea":"Tie input/result roles and use additive residual composition","tied_roles":True}
+ALCHEMY_CONFIGS[10]={**ALCHEMY_CONFIGS[9],"idea":"Square bijective minibatches with row/column CE and balanced Sinkhorn","square":True,"papers":['1802.08665','1911.11763','1703.06114']}
+ALCHEMY_CONFIGS[11]=dict(idea="ESZSL-inspired bilinear BPE and character attribute compatibility",papers=['pmlr-v37-romera-paredes15','5071-translating-embeddings'],alpha=1.,beta=1.)
+
+
+def balanced_log_sinkhorn(matrix,iterations=20):
+    assert matrix.ndim==2 and matrix.shape[0]==matrix.shape[1]
+    logp=matrix.float()
+    for _ in range(iterations):
+        logp=logp-logp.logsumexp(1,keepdim=True)
+        logp=logp-logp.logsumexp(0,keepdim=True)
+    return logp
 
 class AlchemyComposer(nn.Module):
     """Candidate embeddings share lexical features; item order is symmetric."""
@@ -57,6 +68,7 @@ class AlchemyScorer(nn.Module):
 
 
 def run_alchemy(run_id):
+    if run_id==11:return run_alchemy_attributes(run_id)
     cfg={**ALCHEMY_CONFIGS[run_id],"steps":240,"budget_seconds":180,"bpe_vocab":1024,"pretrained":False}
     info=start_run("alchemy",run_id,cfg)
     root=find_data("alchemy-aicc-round-4")
@@ -72,6 +84,11 @@ def run_alchemy(run_id):
     val_candidates=sorted(validation.result.unique())
     texts=training[['item1','item2','result']].astype(str).to_numpy().flatten().tolist()
     tokenizer=make_bpe(texts,cfg['bpe_vocab']);tokenizer.save(str(OUT/'tokenizer.json'))
+    diagnostics=alchemy_diagnostics(training,validation,test,candidates,tokenizer)
+    if cfg.get('square'):
+        canary=balanced_log_sinkhorn(torch.arange(16,dtype=torch.float32,device=DEVICE).view(4,4)/16).exp()
+        assert torch.allclose(canary.sum(0),torch.ones(4,device=DEVICE),atol=1e-4)
+        assert torch.allclose(canary.sum(1),torch.ones(4,device=DEVICE),atol=1e-4)
     def triple(a,b,r):return '[CLS] '+str(a)+' [SEP] '+str(b)+' [SEP] '+str(r)+' [SEP]'
     def encode(rows,pool,swap=False):
         return torch.from_numpy(encode_texts(tokenizer,[triple(row.item2 if swap else row.item1,row.item1 if swap else row.item2,r)
@@ -107,10 +124,14 @@ def run_alchemy(run_id):
     history=[];best=-1;best_state=None;hard_scores=None;tick=time.time()
     for step in range(cfg['steps']):
         model.train()
-        idx=torch.tensor(rng.choice(len(training),size=min(8,len(training)),replace=False))
+        if cfg.get('square'):
+            chosen=rng.choice(len(train_candidates),size=min(16,len(train_candidates)),replace=False)
+            idx=torch.tensor([int(rng.choice(np.flatnonzero(correct.numpy()==label))) for label in chosen])
+        else:idx=torch.tensor(rng.choice(len(training),size=min(8,len(training)),replace=False))
         labels=correct[idx]
         pool=set(labels.tolist())
-        if cfg['full']:pool=set(range(len(train_candidates)))
+        if cfg.get('square'):pass  # exactly one query per candidate: genuine square bijection
+        elif cfg['full']:pool=set(range(len(train_candidates)))
         else:
             if cfg['hard'] and hard_scores is not None:
                 for i in idx.tolist():pool.update(hard_scores[i].argsort()[-3:].tolist())
@@ -121,6 +142,12 @@ def run_alchemy(run_id):
         a=scores(fwd,True).view(len(idx),len(pool));b=scores(rev,True).view_as(a)
         combined=(a+b)/2
         loss=F.cross_entropy(combined,targets)+.05*F.mse_loss(a.softmax(1),b.softmax(1))
+        if cfg.get('square'):
+            assert len(idx)==len(pool) and targets.unique().numel()==len(pool)
+            inverse=torch.argsort(targets)
+            loss=.5*(F.cross_entropy(combined,targets)+F.cross_entropy(combined.T,inverse))
+            logp=balanced_log_sinkhorn(combined)
+            loss=loss-.2*logp[torch.arange(len(idx),device=DEVICE),targets].mean()
         if cfg['sinkhorn']:
             unique,counts=targets.unique(return_counts=True)
             if counts.max()==1:
@@ -158,8 +185,75 @@ def run_alchemy(run_id):
     return finish_run(info,dict(metric='bijective_holdout_accuracy',value=best,direction='maximize',samples=len(validation),
             split='fixed_result_disjoint_train_holdout',**assignment_metrics(val_matrix)),sub,checks,history,
             artifacts=dict(pretrained_weights=False,tokenizer='train-only BPE',validation_cases='validation_cases.csv',
-                           training_rows=len(training),heldout_result_names=val_candidates,swap_gap=asym),
+                           training_rows=len(training),heldout_result_names=val_candidates,swap_gap=asym,coverage_diagnostics=diagnostics),
             limitations=['150 rules cannot replace BERT pretraining; organizer pretrained scores are a separate condition.',
                         'Validation is small and result-disjoint; single-seed differences are uncertain.',
                         'Checkpoint selection uses holdout Hungarian accuracy, not the Kaggle test leaderboard.',
                         'This checkpoint is trained on the training fold, without a final full-data refit.'])
+
+
+def alchemy_diagnostics(training,validation,test,candidates,tokenizer):
+    seen=set(training[['item1','item2','result']].astype(str).to_numpy().flatten())
+    seen_inputs=set(training[['item1','item2']].astype(str).to_numpy().flatten())
+    def stats(names):
+        names=list(map(str,names));encoded=tokenizer.encode_batch(names)
+        return dict(count=len(names),seen_any=sum(x in seen for x in names),seen_as_input=sum(x in seen_inputs for x in names),
+                    unk_tokens=sum(e.ids.count(1) for e in encoded),total_tokens=sum(len(e.ids) for e in encoded))
+    out=dict(training_rules=len(training),unique_train_names=len(seen),heldout_results=stats(validation.result),
+             test_candidates=stats(candidates),test_input_names=stats(test[['item1','item2']].to_numpy().flatten()))
+    print('ALCHEMY_COVERAGE '+json.dumps(out),flush=True)
+    return out
+
+
+def run_alchemy_attributes(run_id):
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.decomposition import TruncatedSVD
+    from scipy.sparse import hstack
+    cfg={**ALCHEMY_CONFIGS[run_id],"pretrained":False,"bpe_vocab":1024,"attribute_dim":64}
+    info=start_run('alchemy',run_id,cfg);root=find_data('alchemy-aicc-round-4')
+    train=pd.read_csv(root/'train.csv');test=pd.read_csv(root/'test.csv')
+    candidates=sorted(pd.read_csv(root/'candidates.csv').result.unique().tolist())
+    rng=np.random.default_rng(SEED);results=sorted(train.result.unique())
+    held=set(rng.choice(results,size=max(8,len(results)//5),replace=False).tolist())
+    validation=train[train.result.isin(held)].drop_duplicates('result').reset_index(drop=True)
+    training=train[~train.result.isin(held)].reset_index(drop=True)
+    names=sorted(set(training[['item1','item2','result']].astype(str).to_numpy().flatten()))
+    tokenizer=make_bpe(names,cfg['bpe_vocab']);tokenizer.save(str(OUT/'tokenizer.json'))
+    def pieces(items):return [' '.join(map(str,tokenizer.encode(str(x)).ids)) for x in items]
+    bpe=TfidfVectorizer(token_pattern=r'\d+',lowercase=False)
+    chars=TfidfVectorizer(analyzer='char',ngram_range=(2,4),max_features=2048,sublinear_tf=True)
+    fit=hstack([bpe.fit_transform(pieces(names)),chars.fit_transform(names)]).tocsr()
+    svd=TruncatedSVD(n_components=min(64,len(names)-1,fit.shape[1]-1),random_state=SEED).fit(fit)
+    def attributes(items):
+        items=list(map(str,items));x=svd.transform(hstack([bpe.transform(pieces(items)),chars.transform(items)]).tocsr()).astype(np.float32)
+        x/=np.maximum(np.linalg.norm(x,axis=1,keepdims=True),1e-6)
+        return torch.from_numpy(x).to(DEVICE)
+    def queries(rows):
+        a,b=attributes(rows.item1),attributes(rows.item2)
+        return torch.cat([a+b,(a-b).abs(),a*b,torch.ones((len(rows),1),device=DEVICE)],1)
+    pool=sorted(training.result.unique());S=attributes(pool);X=queries(training)
+    target=attributes(training.result)
+    # ESZSL-style two-sided Tikhonov compatibility, lexical attributes replace semantic attributes.
+    left=X.T@X+cfg['alpha']*torch.eye(X.shape[1],device=DEVICE)
+    right=S.T@S+cfg['beta']*torch.eye(S.shape[1],device=DEVICE)
+    W=torch.linalg.solve(left,X.T@target)
+    W=torch.linalg.solve(right,W.T).T
+    assert torch.isfinite(W).all()
+    def scores(rows,pool):return (queries(rows)@W@attributes(pool).T).cpu().numpy()
+    val_pool=sorted(validation.result.unique());gold=np.array([val_pool.index(x) for x in validation.result])
+    matrix=scores(validation,val_pool);_,assigned=linear_sum_assignment(-matrix)
+    metric=float(np.mean(assigned==gold));test_scores=scores(test,candidates);_,prediction=linear_sum_assignment(-test_scores)
+    sub=pd.DataFrame(dict(Id=test.Id,result=[candidates[i] for i in prediction]))
+    cases=validation.copy();cases['prediction']=[val_pool[i] for i in assigned];cases['correct']=assigned==gold
+    cases.to_csv(OUT/'validation_cases.csv',index=False)
+    np.save(OUT/'test_scores.npy',test_scores);np.save(OUT/'validation_scores.npy',matrix)
+    torch.save(dict(W=W.cpu(),source_commit=info['source_commit']),OUT/'compatibility.pt')
+    diagnostic=alchemy_diagnostics(training,validation,test,candidates,tokenizer)
+    print('VALIDATION_CASES '+cases.to_json(orient='records'),flush=True)
+    return finish_run(info,dict(metric='bijective_holdout_accuracy',value=metric,direction='maximize',samples=len(validation),split='fixed_result_disjoint_train_holdout',
+        independent_accuracy=float(np.mean(matrix.argmax(1)==gold)),duplicate_argmax_count=int(len(matrix)-len(set(matrix.argmax(1))))),sub,
+        dict(ids_unique=sub.Id.is_unique,schema_valid=list(sub.columns)==['Id','result'],row_count=len(sub),results_unique=sub.result.is_unique,finite=bool(np.isfinite(test_scores).all())),[],
+        artifacts=dict(pretrained_weights=False,tokenizer='train-only BPE plus character attribute features',coverage_diagnostics=diagnostic,training_rows=len(training),heldout_result_names=val_pool),
+        limitations=['ESZSL-inspired compatibility, not a semantic zero-shot reproduction: character/BPE attributes contain no external world knowledge.',
+                    'The training-fold SVD and vocabulary never fit held-out or test names.',
+                    'A 30-rule holdout has high variance; fixed regularizers were chosen before scoring.'])
