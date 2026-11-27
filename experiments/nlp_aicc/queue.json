@@ -346,14 +346,25 @@
       "competition_slug": "alchemy-aicc-round-4",
       "rules_accepted": true,
       "source_notebook": "round-4/alchemy.ipynb",
-      "status": "prepared",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
           "idea": "Cross-encoder + symmetry consistency",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 1,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.1,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.1,
+            "independent_accuracy": 0.03333333333333333,
+            "greedy_accuracy": 0.1,
+            "duplicate_argmax_count": 19
+          },
+          "report_path": "alchemy/runs/R01/report.json"
         },
         {
           "run_id": "R02",
@@ -398,7 +409,8 @@
           "metric": null
         }
       ],
-      "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory."
+      "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-alchemy-learning-experiments"
     }
   ],
   "execution_mode": "independent_gpu_experiments_batched_in_saved_versions",

@@ -1,6 +1,6 @@
 # Tiến độ thực nghiệm NLP
 
-**13/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**14/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
@@ -8,7 +8,7 @@
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 1/7 | R01: 6.10684 BPE_LM_NLL_proxy |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 0/7 | Chưa có kết quả |
-| [Alchemy](alchemy/IDEAS.md) | 0/7 | Chưa có kết quả |
+| [Alchemy](alchemy/IDEAS.md) | 1/7 | R01: 0.10000 bijective_holdout_accuracy |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -64,7 +64,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 
 | Run | Ý tưởng | Kết quả | Nhật ký |
 |---|---|---|---|
-| R01 | Cross-encoder + symmetry consistency | planned | Chưa có kết quả |
+| R01 | Cross-encoder + symmetry consistency | 0.10000 bijective_holdout_accuracy | [Đọc](alchemy/runs/R01/LEARNED.md) |
 | R02 | Hard negative mining từ train | planned | Chưa có kết quả |
 | R03 | Candidate-list CE thay sampled negatives | planned | Chưa có kết quả |
 | R04 | Bốn encoder layers từ đầu thay vì hai | planned | Chưa có kết quả |
