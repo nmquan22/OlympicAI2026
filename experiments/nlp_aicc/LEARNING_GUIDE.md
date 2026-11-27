@@ -16,7 +16,7 @@ flowchart TD
   F --> E
 ```
 
-Bảy lượt đã đo: soft alignment 65.44%; token attention 66.38%; event context 60.43%; IDF 69.12%; temperature nhỏ 66.10%; chỉ target center 49.10%; token attention+IDF 66.48%. IDF tốt hơn thêm layer trong loạt này. Center-only giảm mạnh cho thấy context có ích; event Transformer giảm điểm chỉ nói cách ghép đó chưa tốt. R08/R09 đang là giả thuyết mới, chưa có kết quả trong bảng này.
+Bảy lượt đã đo: soft alignment 65.44%; token attention 66.38%; event context 60.43%; IDF 69.12%; temperature nhỏ 66.10%; chỉ target center 49.10%; token attention+IDF 66.48%. IDF tốt hơn thêm layer trong loạt này. Center-only giảm mạnh cho thấy context có ích; event Transformer giảm điểm chỉ nói cách ghép đó chưa tốt. Đã thử thêm R08 monotonic DP68.93%, R09 hard max67.71%, R10 BPE+word-feature64.87%; chưa vượt IDF69.12%. Đây là kết quả bác bỏ các ứng viên trong ngân sách hiện tại, không phải bằng chứng các cơ chế đó luôn kém.
 
 **Khi áp dụng:** matching, retrieval, VQA có candidate. Hỏi “feature đang được gộp quá sớm không?” trước khi tăng backbone. Với VQA, giữ token ảnh/text để tương tác có thể cần thiết hơn concatenate hai vector đã pooling, nhưng vẫn phải ablate trên validation.
 
@@ -26,7 +26,7 @@ Một chuỗi opcode/giá trị vào, một scalar ra. Transformer + regression 
 
 BPE → embedding/position → encoder → mean/max hoặc query pooling → scalar head. R01 MAE36.26; markers37.94; numeric summaries37.67; query37.77; count auxiliary37.61. Những số này trên cùng 3,000 holdout, chưa vượt ứng viên đầu. Không lấy MAE22.65 của reference chia fold khác làm một phép so sánh cặp.
 
-**Câu hỏi nâng cấp:** một con số có giữ giá trị thật và đúng vị trí lệnh không? Mô hình có thể cập nhật trạng thái theo thứ tự không? Global sum/min/max làm mất opcode và thứ tự. R08 thử BiGRU với packing/mask và SmoothL1 trên cùng holdout; đây là ứng viên kết hợp backbone+loss, không phải ablation chỉ đổi một yếu tố. Kiến trúc mới hơn không bảo đảm hợp hơn.
+**Câu hỏi nâng cấp:** một con số có giữ giá trị thật và đúng vị trí lệnh không? Mô hình có thể cập nhật trạng thái theo thứ tự không? Global sum/min/max làm mất opcode và thứ tự. R08 BiGRU với packing/mask và SmoothL1 đạt **MAE15.31**, giảm57.8% so36.26 trên cùng holdout; đây là ứng viên kết hợp backbone+loss, không phải ablation chỉ đổi một yếu tố. Kiến trúc mới hơn không bảo đảm hợp hơn.
 
 ## 3. Word Lookups: học không nhãn và chọn đúng đại lượng để đo
 
@@ -44,7 +44,7 @@ Kết quả đã chấm public/private: R01 0.7559/0.7560; R02 hai chiều 0.817
 
 Reference thay edit distance của output rời rạc bằng margin ở logits có teacher forcing. Khi target logit đứng cao nhất ở mọi vị trí, margin về 0. Probe từng Alien token để giữ top-k proposal theo English token, rồi thử đổi từng vị trí input. Dùng GPU chấm cả lô thay từng ứng viên. Canary bốn ví dụ phải khớp và evaluator gốc phải xác nhận; chỉ margin thấp chưa đủ.
 
-Lần search đã quan sát đạt100/24 target exact nhưng wrapper sau đó lỗi do cell cũ; đã lưu riêng thất bại và chạy lại bản sạch. Nếu đủ100, câu hỏi nghiên cứu tiếp là số candidate evaluations, runtime, VRAM và ổn định theo top-k/loss/search, không hứa “tăng score” vượt100.
+Bản sạch đã chạy đủ bảy cấu hình: top8 đạt94.61 (22/24 exact), top16 đạt96.86 (23/24), còn top32/margin, CE, coarse, coordinate và restart đạt100. Coordinate giảm candidate evaluations9624→7832 và runtime16.29→11.97s trong batch; timing một lượt có warm-up nên chưa là benchmark thống kê. Học tối ưu chi phí tại cùng score100, không hứa tăng điểm vượt100.
 
 ## 5. Alchemy: model chấm score và decoder giải bài toán toàn cục
 
@@ -61,7 +61,7 @@ flowchart TD
 
 Theo yêu cầu người học, các lượt đều scratch BPE. 120 rule train/30 result-disjoint holdout: R01 3/30; hard negatives4/30; full CE3/30; bốn layer2/30; probability average2/30; Sinkhorn3/30; kết hợp2/30. BERT pretrained được đề cho phép nhưng không bắt buộc; điểm reference pretrained không phải đối chứng cùng điều kiện.
 
-**Điều cần học:** thay decoder có thể tăng độ đúng mà không đổi scorer; tăng complexity không tạo ra world knowledge thiếu trong 120 mẫu. R08 composer giao hoán thử `[a+b, |a-b|, a*b]` để bảo đảm đối xứng ở eval và giảm số thứ model phải học từ dữ liệu.
+**Điều cần học:** thay decoder có thể tăng độ đúng mà không đổi scorer; tăng complexity không tạo ra world knowledge thiếu trong 120 mẫu. R08 composer giao hoán `[a+b, |a-b|, a*b]` bảo đảm swap gap0 nhưng vẫn3/30. R09 chia sẻ input/result role space và query additive+residual đạt5/30; đây là ứng viên tốt nhất hiện tại nhưng mẫu30 quá nhỏ để khẳng định tăng ổn định.
 
 ## Cách đọc một lượt experiment
 
@@ -71,4 +71,4 @@ Theo yêu cầu người học, các lượt đều scratch BPE. 120 rule train/
 - Nhìn lỗi theo nhóm và chi phí trước khi thêm model lớn.
 - Một seed và 30 holdout không đủ khẳng định tăng một câu là ổn định.
 
-Nguồn gốc reference và SHA nằm ở SOURCES.json; hướng nghiên cứu và link paper ở RESEARCH_NEXT.md. Kết quả mới nhất ở STATUS.md và từng runs/Rxx/LEARNED.md. Hướng dẫn này mô tả trạng thái lúc viết, các thí nghiệm đang chạy chưa được coi là đã xong.
+Nguồn gốc reference và SHA nằm ở SOURCES.json; hướng nghiên cứu và link paper ở RESEARCH_NEXT.md. Kết quả mới nhất ở STATUS.md và từng runs/Rxx/LEARNED.md. Toàn bộ41 thí nghiệm đã hoàn tất và được audit; điểm vẫn có giới hạn của split, seed, metric và điều kiện pretrained như ghi trong từng báo cáo.

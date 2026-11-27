@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "successful_unique_experiments": 41,
+  "by_task": {
+    "moment-match": {
+      "successful_unique": 10,
+      "minimum_seven_met": true
+    },
+    "lost-interpreter": {
+      "successful_unique": 8,
+      "minimum_seven_met": true
+    },
+    "word-lookups": {
+      "successful_unique": 7,
+      "minimum_seven_met": true
+    },
+    "inverse-translation": {
+      "successful_unique": 7,
+      "minimum_seven_met": true
+    },
+    "alchemy": {
+      "successful_unique": 9,
+      "minimum_seven_met": true
+    }
+  },
+  "problems": [],
+  "notes": [
+    "Counts unique completed model/decoder configurations, not Saved Versions or retry attempts.",
+    "This is an evidence/schema audit; it does not replay GPU training or establish statistical significance."
+  ]
+}

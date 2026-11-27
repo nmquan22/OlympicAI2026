@@ -1,0 +1,98 @@
+{
+  "moment-match": {
+    "run_id": "R04",
+    "validation": {
+      "metric": "accuracy",
+      "value": 0.6912181303116147,
+      "direction": "maximize",
+      "samples": 1059,
+      "split": "provided_validation"
+    },
+    "public_score": null,
+    "private_score": null,
+    "source_commit": "0cb9a7611a8d8a21d51f955264857ceb75ced8a3",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments?scriptVersionId=374521565",
+    "notebook_version": 4,
+    "script_version_id": 374521565,
+    "output_file": "submission.csv"
+  },
+  "lost-interpreter": {
+    "run_id": "R08",
+    "validation": {
+      "metric": "MAE",
+      "value": 15.30885124206543,
+      "direction": "minimize",
+      "samples": 3000,
+      "split": "fixed_train_holdout_15pct"
+    },
+    "public_score": null,
+    "private_score": null,
+    "source_commit": "d062d09407e3449cd49c95fcada87f1b13b49ac7",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-lost-interpreter-learning-experiments?scriptVersionId=374710361",
+    "notebook_version": 7,
+    "script_version_id": 374710361,
+    "output_file": "lost-interpreter/R08/submission.csv"
+  },
+  "word-lookups": {
+    "run_id": "R07",
+    "validation": {
+      "metric": "BPE_LM_NLL_proxy",
+      "value": 5.802002440784768,
+      "direction": "minimize",
+      "samples": 3709,
+      "split": "train_only_10pct",
+      "boundary_f1": null
+    },
+    "public_score": 0.9097,
+    "private_score": 0.9113,
+    "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-word-lookups-learning-experiments?scriptVersionId=374702140",
+    "notebook_version": 2,
+    "script_version_id": 374702140,
+    "output_file": "word-lookups/R07/submission.csv"
+  },
+  "inverse-translation": {
+    "run_id": "R06",
+    "validation": {
+      "metric": "official_score_0_100",
+      "value": 100.0,
+      "direction": "maximize",
+      "samples": 24,
+      "split": "explicit_public_targets",
+      "official": {
+        "score": 100.0,
+        "exact_rate": 1.0,
+        "mean_similarity": 1.0,
+        "valid_rate": 1.0
+      }
+    },
+    "public_score": null,
+    "private_score": null,
+    "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374704969",
+    "notebook_version": 4,
+    "script_version_id": 374704969,
+    "output_file": "inverse-translation/R06/submission.csv"
+  },
+  "alchemy": {
+    "run_id": "R09",
+    "validation": {
+      "metric": "bijective_holdout_accuracy",
+      "value": 0.16666666666666666,
+      "direction": "maximize",
+      "samples": 30,
+      "split": "fixed_result_disjoint_train_holdout",
+      "hungarian_accuracy": 0.16666666666666666,
+      "independent_accuracy": 0.16666666666666666,
+      "greedy_accuracy": 0.13333333333333333,
+      "duplicate_argmax_count": 13
+    },
+    "public_score": null,
+    "private_score": null,
+    "source_commit": "1c072c8e6632523ce2d063e63b96f05a1787f1c4",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-alchemy-learning-experiments?scriptVersionId=374715624",
+    "notebook_version": 4,
+    "script_version_id": 374715624,
+    "output_file": "alchemy/R09/submission.csv"
+  }
+}

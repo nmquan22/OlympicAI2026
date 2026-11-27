@@ -11,7 +11,7 @@
       "competition_slug": "moment-match-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/moment-match.ipynb",
-      "status": "completed",
+      "status": "completed_with_research",
       "runs": [
         {
           "run_id": "R01",
@@ -163,7 +163,7 @@
       "competition_slug": "lost-interpreter-aicc-round-5",
       "rules_accepted": true,
       "source_notebook": "round-5/lost-interpreter.ipynb",
-      "status": "completed",
+      "status": "completed_with_research",
       "runs": [
         {
           "run_id": "R01",
@@ -287,7 +287,7 @@
       "competition_slug": "aicc-round-9-word-lookups",
       "rules_accepted": true,
       "source_notebook": "round-9/word-lookups.ipynb",
-      "status": "completed",
+      "status": "completed_with_research",
       "runs": [
         {
           "run_id": "R01",
@@ -425,7 +425,7 @@
       "competition_slug": "inverse-translation-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/inverse-translation.ipynb",
-      "status": "completed",
+      "status": "completed_with_research",
       "runs": [
         {
           "run_id": "R01",
@@ -577,7 +577,7 @@
       "competition_slug": "alchemy-aicc-round-4",
       "rules_accepted": true,
       "source_notebook": "round-4/alchemy.ipynb",
-      "status": "completed",
+      "status": "completed_with_research",
       "runs": [
         {
           "run_id": "R01",
@@ -762,5 +762,10 @@
       480,
       900
     ]
-  }
+  },
+  "phase": "completed",
+  "successful_unique_experiments": 41,
+  "minimum_successful_experiments": 35,
+  "saved_versions_observed": 27,
+  "counting_note": "41 unique successful GPU experiment configurations; failed attempts and repeated configurations excluded. This is not a count of 41 Saved Versions."
 }

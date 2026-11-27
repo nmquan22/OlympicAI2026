@@ -2,7 +2,7 @@
 
 Đọc [LEARNING_GUIDE.md](LEARNING_GUIDE.md) để nắm idea; [STATUS.md](STATUS.md) để xem số đã đo. Mỗi `runs/Rxx/LEARNED.md` có kết luận và giới hạn của thí nghiệm.
 
-Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. **35 lượt T4** là mục tiêu, không phải số đã chạy. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
+Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. Đã hoàn tất **41 thí nghiệm T4 duy nhất**, mỗi bài ít nhất 7. Chi tiết ở [SUMMARY.md](SUMMARY.md), [41 dòng metric](EXPERIMENTS.csv), [cấu hình đã chọn](BEST_CONFIGS.json) và [audit](AUDIT.json). Lượt lỗi/chạy lặp không tính thêm. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
 
 | Bài | Idea chính | Weights |
 |---|---|---|
