@@ -168,9 +168,16 @@
         {
           "run_id": "R04",
           "idea": "Learned query attention pooling",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 4,
+          "metric": {
+            "metric": "MAE",
+            "value": 37.77339172363281,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R04/report.json"
         },
         {
           "run_id": "R05",

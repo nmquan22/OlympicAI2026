@@ -1,0 +1,53 @@
+{
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "leaderboard_public": null,
+  "leaderboard_private": null,
+  "task": "lost-interpreter",
+  "run_id": "R04",
+  "config": {
+    "idea": "Learned query attention pooling replaces fixed pooling",
+    "structure": true,
+    "numeric": false,
+    "attention": true,
+    "aux": false,
+    "target": "standard",
+    "layers": 2,
+    "epochs": 45,
+    "budget_seconds": 300,
+    "batch_size": 128,
+    "bpe_vocab": 2048,
+    "max_length": 192
+  },
+  "source_commit": "0cb9a7611a8d8a21d51f955264857ceb75ced8a3",
+  "elapsed_seconds": 78.16557025909424,
+  "validation": {
+    "metric": "MAE",
+    "value": 37.77339172363281,
+    "direction": "minimize",
+    "samples": 3000,
+    "split": "fixed_train_holdout_15pct"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 5000,
+    "ids_match": true,
+    "finite": true
+  },
+  "peak_gpu_memory_mb": 262.05322265625,
+  "artifacts": {
+    "tokenizer": "tokenizer.json",
+    "pretrained_weights": false
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}
