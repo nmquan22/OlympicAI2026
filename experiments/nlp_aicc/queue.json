@@ -128,9 +128,16 @@
         {
           "run_id": "R09",
           "idea": "IDF + max alignment gần reference",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 9,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6770538243626062,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R09/report.json"
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"
