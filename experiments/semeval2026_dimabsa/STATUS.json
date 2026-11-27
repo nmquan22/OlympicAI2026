@@ -1,0 +1,18 @@
+{
+  "task": "SemEval 2026 Task 3 DimABSA",
+  "track": "A",
+  "language": "eng",
+  "domain": "restaurant",
+  "scope": "Subtask 1 first; extend to Subtasks 2 and 3",
+  "weights_policy": "random initialization; no pretrained weights or tokenizer",
+  "max_concurrent_kaggle_versions": 2,
+  "github_connected": true,
+  "kaggle_authenticated": false,
+  "kaggle_dataset_uploaded": false,
+  "gpu_runs_started": 0,
+  "cpu_controls_completed": 3,
+  "test_evaluated": false,
+  "blocker": "Google device verification pending user completion",
+  "neural_validation": "syntax checked only; forward/backward not yet executed",
+  "next": "Verify Kaggle signed-in state, inspect active sessions, upload private training dataset, launch R01 and R02 within two-session cap"
+}

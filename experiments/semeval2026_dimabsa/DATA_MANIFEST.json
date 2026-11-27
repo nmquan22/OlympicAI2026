@@ -1,0 +1,68 @@
+{
+  "source_repository": "DimABSA/DimABSA2026",
+  "source_commit": "bdc93be1224106ae7d3eb95739c02a76ed4ae8a1",
+  "files": [
+    {
+      "file": "eng_restaurant_dev_task1.jsonl",
+      "sha256": "85999766aee96b02b0c45d8ea4750c2da8db11cc47de84a64c5557fcd64972c8",
+      "sentences": 200,
+      "annotations": 340,
+      "null_aspects": 0
+    },
+    {
+      "file": "eng_restaurant_dev_task2.jsonl",
+      "sha256": "8065c7044364228b406ebb63872900d03a107a9c39303add5dc9cd5211da7c0f",
+      "sentences": 200,
+      "annotations": 408,
+      "null_aspects": 0
+    },
+    {
+      "file": "eng_restaurant_dev_task3.jsonl",
+      "sha256": "656022e2d83ec0d758765881cdfa38b409077c6137f4df743165c72eb08e4a9c",
+      "sentences": 200,
+      "annotations": 408,
+      "null_aspects": 0
+    },
+    {
+      "file": "eng_restaurant_test_task1.jsonl",
+      "sha256": "8243807fc4a42ed0c261136fc6884f48e33785f2ecb71254912d6f57226f4674",
+      "sentences": 1000,
+      "annotations": 1504,
+      "null_aspects": 0
+    },
+    {
+      "file": "eng_restaurant_test_task2.jsonl",
+      "sha256": "df4ac8e38bff17415763f0e84f08fda38ec2cc8bb210bd0fde8eaf4a2641055a",
+      "sentences": 1000,
+      "annotations": 2129,
+      "null_aspects": 0
+    },
+    {
+      "file": "eng_restaurant_test_task3.jsonl",
+      "sha256": "8f0d167ee746ad2f9b9a88b9c662fd85d21945c054ee76ad3dd271e2d3942c10",
+      "sentences": 1000,
+      "annotations": 2129,
+      "null_aspects": 0
+    },
+    {
+      "file": "eng_restaurant_train_alltasks.jsonl",
+      "sha256": "bebab04e593f3f6afe76f144b897c85bcc2eb9749bfbfa1e0080e7d4e2d3985c",
+      "sentences": 2284,
+      "annotations": 3659,
+      "null_aspects": 880
+    }
+  ],
+  "normalized_text_overlap_with_train": {
+    "eng_restaurant_dev_task1.jsonl": 1,
+    "eng_restaurant_dev_task2.jsonl": 0,
+    "eng_restaurant_dev_task3.jsonl": 0,
+    "eng_restaurant_test_task1.jsonl": 0,
+    "eng_restaurant_test_task2.jsonl": 0,
+    "eng_restaurant_test_task3.jsonl": 0
+  },
+  "training_aspect_examples": 2337,
+  "clean_training_aspect_examples": 2336,
+  "overlapping_train_rows_removed": 1,
+  "training_policy": "exclude train rows overlapping dev text; train-only vocabulary/features/weights; dev selection; test final evaluation only",
+  "training_target_policy": "drop NULL aspect; mean VA over annotations with the same sentence ID and exact aspect"
+}

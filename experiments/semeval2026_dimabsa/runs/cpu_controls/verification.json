@@ -1,0 +1,29 @@
+[
+  {
+    "run": "C00",
+    "official_scorer": {
+      "PCC_V": null,
+      "PCC_A": null,
+      "RMSE_VA": 1.8365399052374036
+    },
+    "matches_local_metric": true
+  },
+  {
+    "run": "C01",
+    "official_scorer": {
+      "PCC_V": 0.6615534708223325,
+      "PCC_A": 0.4405309061079953,
+      "RMSE_VA": 1.4552046551036366
+    },
+    "matches_local_metric": true
+  },
+  {
+    "run": "C02",
+    "official_scorer": {
+      "PCC_V": 0.6647867198915356,
+      "PCC_A": 0.44683170542392087,
+      "RMSE_VA": 1.4515384333628276
+    },
+    "matches_local_metric": true
+  }
+]

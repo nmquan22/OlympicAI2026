@@ -1,0 +1,40 @@
+{
+  "status": "completed_cpu_controls",
+  "pretrained_weights": false,
+  "test_evaluated": false,
+  "train_aspects": 2336,
+  "dev_aspects": 340,
+  "overlapping_train_rows_removed": 1,
+  "runs": [
+    {
+      "run": "C00",
+      "idea": "Train target mean",
+      "official_RMSE_VA": 1.8365399052374036,
+      "joint_coordinate_RMSE": 1.2986298209130673,
+      "RMSE_V": 1.637848481105264,
+      "RMSE_A": 0.8308617071875372
+    },
+    {
+      "run": "C01",
+      "idea": "Full context TF-IDF + ridge",
+      "alpha": 3.0,
+      "features": 23793,
+      "seconds": 0.471325545000127,
+      "official_RMSE_VA": 1.4552046551036366,
+      "joint_coordinate_RMSE": 1.0289850796380124,
+      "RMSE_V": 1.220432300457506,
+      "RMSE_A": 0.7925689801116961
+    },
+    {
+      "run": "C02",
+      "idea": "Local context TF-IDF + ridge",
+      "alpha": 3.0,
+      "features": 21434,
+      "seconds": 0.45630352900002435,
+      "official_RMSE_VA": 1.4515384333628276,
+      "joint_coordinate_RMSE": 1.0263926693837528,
+      "RMSE_V": 1.215757086805439,
+      "RMSE_A": 0.7930312285224114
+    }
+  ]
+}
