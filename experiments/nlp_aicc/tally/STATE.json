@@ -1,7 +1,7 @@
 {
   "task": "tally",
   "competition_slug": "tally-aicc-round-11",
-  "status": "R04_R05_completed_R06_R07_prepared",
+  "status": "R06_R07_running",
   "rules_accepted": true,
   "successful_unique_experiments": 5,
   "scored_unique_submissions": 5,
@@ -15,8 +15,39 @@
     "R06",
     "R07"
   ],
-  "active_saved_versions": [],
-  "next_action": "Freeze and launch R06 typed boundary auxiliary loss and R07 singleton whole-word masking on R03; no duplicate R01-R05 submissions. Hypotheses chosen from validation failures before reading R04/R05 scores.",
+  "active_saved_versions": [
+    {
+      "version": 6,
+      "script_version_id": 374947843,
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374947843",
+      "run_ids": [
+        "R06"
+      ],
+      "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
+      "status": "running",
+      "accelerator": "GPU T4 x2",
+      "observed_at_utc": "2026-11-27T18:23:17.757082+00:00",
+      "run_start_timestamp": 1795803725.095866,
+      "crf_teacher_canary_passed": true,
+      "representation_canary_passed": true
+    },
+    {
+      "version": 7,
+      "script_version_id": 374948086,
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374948086",
+      "run_ids": [
+        "R07"
+      ],
+      "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
+      "status": "running",
+      "accelerator": "GPU T4 x2",
+      "observed_at_utc": "2026-11-27T18:23:17.757082+00:00",
+      "run_start_timestamp": 1795803770.1689973,
+      "crf_teacher_canary_passed": true,
+      "representation_canary_passed": null
+    }
+  ],
+  "next_action": "Read R06/R07 results after completion; inspect boundary failures and singleton diagnostics, submit exact outputs once, then audit seven completed/scored configs. Do not duplicate running jobs or R01-R05 submissions.",
   "code_verification": "R02/R03 T4 exhaustive CRF canaries passed; completed reports observed and both submissions scored.",
   "polling": {
     "unmeasured_train_budget_seconds": 480,
@@ -30,7 +61,7 @@
     "background_check": "Hourly condition watch created; first scheduled check 21:19 Asia/Saigon on 27/11/2026. No repeated notifications while queued.",
     "measured_R01_code_seconds": 148.8752338886261,
     "measured_R01_kaggle_total_seconds": 175.5,
-    "next_configs_note": "CRF/DP cost is unmeasured; allow up to480s training/config plus startup/eval. Automated condition checks remain hourly.",
+    "next_configs_note": "R06/R07 each480s train cap plus startup/eval. Next useful result check at least15minutes after RUN_START; no repeated polling or duplicate launch.",
     "measured_R04_code_seconds": 330.59193229675293,
     "measured_R05_code_seconds": 490.20216488838196
   },
@@ -92,5 +123,5 @@
       "script_version_id": 374929750
     }
   ],
-  "new_source_verification": "R04/R05 completed T4; CRF/count/teacher canaries passed. R06/R07 code and AST prepared; representation canary not observed on T4 yet."
+  "new_source_verification": "R06/R07 RUN_START observed on TeslaT4x2 at immutable source469e5332a09dd0faf6bcf7970cdf7c1b33d33d02. CRF/count/teacher canaries passed both. Boundary/singleton representation canary passed R06; not yet observed for R07 at last snapshot. No final results yet."
 }

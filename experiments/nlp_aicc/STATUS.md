@@ -98,5 +98,5 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R03 | CRF per-type count composite likelihood | 0.44444 entity_span_micro_F1; Kaggle 0.3530/0.3530 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R03/LEARNED.md) |
 | R04 | Byte character CNN supplements BPE count CRF | 0.42857 entity_span_micro_F1; Kaggle 0.3706/0.3774 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R04/LEARNED.md) |
 | R05 | Approximate joint moment CRF teacher and stop-gradient KL | 0.37037 entity_span_micro_F1; Kaggle 0.2502/0.2561 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R05/LEARNED.md) |
-| R06 | Typed start/end auxiliary supervision for truncated entity boundaries | prepared | Chưa có kết quả |
-| R07 | Train-singleton whole-word masking encourages contextual NER instead of name memorization | prepared | Chưa có kết quả |
+| R06 | Typed start/end auxiliary supervision for truncated entity boundaries | running | Chưa có kết quả |
+| R07 | Train-singleton whole-word masking encourages contextual NER instead of name memorization | running | Chưa có kết quả |

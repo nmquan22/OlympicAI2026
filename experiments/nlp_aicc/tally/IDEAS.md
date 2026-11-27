@@ -74,3 +74,7 @@ R04 Saved Version4/script374929474 và R05 Saved Version5/script374929750 đã R
 Tally5/7; tổng56 cấu hình/scored. R04: val.428571/public.37057/private.37740,330.592s/156.699MiB. R05: val.370370/public.25020/private.25609,490.202s/92.551MiB. Cả hai Complete(afterdeadline), canariespass. Count proxy tốt hơn không bảo đảm spanF1: R04 countvector38.875% nhưng val giảm, còn R05 giảm residual teacher nhưng holdout tệ. R04 hiện dẫn public; R03 giữ lựa chọn theo validation. Private chỉ báo cáo.
 
 Hai phép thử đã chốt từ lỗi validation trước score: R06 auxiliary start/end, R07 singleton whole-word masking. Cả hai độc lập xuất phátR03, không pretrained và không thêm dữ liệu; [chi tiết giả thuyết](RESEARCH.md). Chưa tính vào56 trước khi có kết quả.
+
+## R06/R07 đã RUN_START
+
+Saved Version6/script374947843 và Version7/script374948086, immutable source `469e5332a09dd0faf6bcf7970cdf7c1b33d33d02`, TeslaT4x2. CRF/count/teacher canary pass cả hai; canary boundary/singleton pass R06, R07 chưa quan sát lúc snapshot cuối. Chưa có report cuối hoặc score; tổng vẫn56, Tally5/7. Notebook trongrepo là launch export chưa execute, không giả notebook đã chạy.

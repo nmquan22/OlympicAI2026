@@ -1735,12 +1735,20 @@
         {
           "run_id": "R06",
           "idea": "Typed start/end auxiliary supervision for truncated entity boundaries",
-          "status": "prepared"
+          "status": "running",
+          "notebook_version": 6,
+          "script_version_id": 374947843,
+          "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
+          "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374947843"
         },
         {
           "run_id": "R07",
           "idea": "Train-singleton whole-word masking encourages contextual NER instead of name memorization",
-          "status": "prepared"
+          "status": "running",
+          "notebook_version": 7,
+          "script_version_id": 374948086,
+          "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
+          "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374948086"
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
