@@ -7,7 +7,7 @@ Phạm vi Quân chọn ngày 27/11/2026: **Track A, tiếng Anh–restaurant; b�
 - GitHub đã kết nối, có quyền ghi repo.
 - Đã tải train/dev/test từ commit BTC `bdc93be1224106ae7d3eb95739c02a76ed4ae8a1`; [manifest](DATA_MANIFEST.json) có SHA256 trên bản chuẩn hóa newline LF.
 - **Đã chạy ba control CPU trên dữ liệu thật**, đã đối chiếu bằng scorer BTC. Xem [report](runs/cpu_controls/report.json), [log scorer](runs/cpu_controls/C02_official_scorer.log).
-- **Kaggle đã kết nối: `QuanNguyen0501`. Dataset private đã tạo, hai Saved Version T4 đã gửi.** R02 đã hoàn tất, R01 đã bắt đầu chạy. R02 RMSE_VA **1.62459**, kém Ridge **1.45154** nên bỏ cấu hình Transformer hiện tại; [bài học và nhóm lỗi](runs/R02/LEARNED.md). Hai bản BiGRU cũ đã bỏ trước khi chạy theo yêu cầu của Quân. [Trạng thái + link job](STATUS.json).
+- **Kaggle đã kết nối: `QuanNguyen0501`. Dataset private đã tạo, hai Saved Version T4 đã gửi.** R01 và R02 đã hoàn tất. R02 RMSE_VA **1.62459**, kém Ridge **1.45154** nên bỏ cấu hình Transformer hiện tại; [bài học và nhóm lỗi](runs/R02/LEARNED.md). Hai bản BiGRU cũ đã bỏ trước khi chạy theo yêu cầu của Quân. [Trạng thái + link job](STATUS.json).
 - Chưa chấm test và chưa nộp Codabench. Điểm dưới đây là **official dev split, chấm cục bộ bằng scorer BTC**; không phải leaderboard.
 
 ## Control CPU để biết GPU cần vượt mốc nào
@@ -37,14 +37,14 @@ Các thứ hạng/điểm trong bảng này là **kết quả tác giả dưới
 
 | Run | Kiến trúc | So sánh muốn trả lời | Trạng thái |
 |---|---|---|---|
-| R01 | BPE train-only → embedding 192 random → 2-layer BiLSTM → mean/max text + aspect pool + aspect-conditioned attention → head VA | Cấu trúc recurrent với attention học composition và chọn ngữ cảnh theo aspect thế nào? | Saved Version 1 đã gửi, chờ worker |
+| R01 | BPE train-only → embedding 192 random → 2-layer BiLSTM → mean/max text + aspect pool + aspect-conditioned attention → head VA | Cấu trúc recurrent với attention học composition và chọn ngữ cảnh theo aspect thế nào? | Hoàn tất: dev RMSE_VA 1.50198; tốt hơn R02 nhưng kém Ridge |
 | R02 | BPE train-only → embedding 192 random → 4-layer Transformer pre-norm, 4 heads → mean/max + aspect-conditioned attention → head VA | Transformer có vượt BiLSTM attention trong cùng ngân sách thời gian không? | Hoàn tất: dev RMSE_VA 1.62459; bỏ cấu hình hiện tại |
 | R03 | Nâng cấp nhánh được chọn sau R01/R02 | Chỉ chọn theo lỗi và chi phí thực tế; bỏ nhánh yếu rõ ràng | chưa chọn cấu hình |
 | R04 | Encoder được chọn + learned log-variance trên hai loss | Điều chỉnh gradient V/A có tốt hơn MSE bằng nhau không? | planned, chưa chạy |
 
 Mỗi lượt dùng cùng split/seed, fit lại tokenizer bằng train sạch và khởi tạo mới model/optimizer. R01/R02 dùng MSE, output `1 + 8*sigmoid(logit)` và chọn epoch theo RMSE_VA dev. BiLSTM LR 0.002; Transformer LR 0.0005. Giới hạn mặc định 60 epoch, patience 10, warmup 10% + cosine theo step, khoảng 20 phút/lượt; có thể dừng sau epoch hiện tại nên không phải hard timeout. R03/R04 chỉ quyết định sau khi đọc R01/R02 và nhóm lỗi; không mặc định chạy hết mọi tổ hợp. Giữ cả hai trong lần so đầu; nhánh thua rõ về dev và chi phí sẽ không được cấp thêm lượt chỉ để thử thay đổi nhỏ. Một seed chưa đủ kết luận kiến trúc nào luôn tốt hơn.
 
-Khi đã chọn xong kiến trúc trên dev, mới chạy inference test, chấm bằng gold test cục bộ và ghi riêng kết quả. Mở rộng ST2: encoder → span aspect/opinion → liên kết cặp → head VA; ST3 thêm head category. Phải có scorer cF1 và phân tích phần mất điểm do span, liên kết, category, VA trước khi thêm kiến trúc phức tạp. Các phần ST2/ST3 **chưa implement**.
+Khi đã chọn xong kiến trúc trên dev, mới chạy inference test, chấm bằng gold test cục bộ và ghi riêng kết quả. Mở rộng ST2: encoder → span aspect/opinion → liên kết cặp → head VA; ST3 thêm head category. Phải có scorer cF1 và phân tích phần mất điểm do span, liên kết, category, VA trước khi thêm kiến trúc phức tạp. ST2/ST3 đã có [joint model scratch](train_structured.py), [notebook S01](S01_kaggle.ipynb); lượt S01 đang chạy. Local cF1 đã đối chiếu khớp scorer BTC cho cả hai subtask bằng prediction có tuple bị thiếu và VA sai: [kiểm tra metric](STRUCTURED_METRIC_VALIDATION.json).
 
 ## Ba chi tiết phòng thi cần nhớ
 
@@ -62,3 +62,10 @@ python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data
 ```
 
 Neural cần `torch`, `tokenizers`, `numpy`, `scipy`, `scikit-learn`. Chưa khóa phiên bản Kaggle vì chưa có runtime GPU thực tế; mỗi report sẽ ghi torch version, GPU, tokenizer hash, số parameter, thời gian, epoch, config, split và score. Scorer BTC tải từ `evaluation_script/metrics_subtask_1_2_3.py` cùng source commit; không thay công thức chấm. Không commit dataset thô, API token hoặc checkpoint lớn vào repo.
+
+## Kết quả mới và quyết định
+
+- [R01 BiLSTM attention](runs/R01/LEARNED.md): dev RMSE_VA **1.50198**, same BPE hash với R02.
+- [R02 Transformer](runs/R02/LEARNED.md): **1.62459**, bỏ cấu hình hiện tại vì overfit và lỗi sentiment âm.
+- Gộp cố định 50/50 Ridge + R01 bằng cache: **1.39469**, [scorer BTC](runs/C03_cached_ensemble/official_scorer.log); không tốn lượt train mới, chưa chấm test.
+- S01: BPE trung bình trong từng word → BiLSTM → span aspect/opinion → pair linking → VA + category. Span dự đoán trong train làm hard negative; không nạp checkpoint của R01. Joint model dùng idea từ [Span-ASTE, ACL 2021](https://aclanthology.org/2021.acl-long.367/), không phải tái lập paper.

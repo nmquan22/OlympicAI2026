@@ -1,0 +1,14 @@
+[
+  {
+    "task": 2,
+    "local_cF1": 0.75541669633561,
+    "official_cF1": 0.75541669633561,
+    "match": true
+  },
+  {
+    "task": 3,
+    "local_cF1": 0.75541669633561,
+    "official_cF1": 0.75541669633561,
+    "match": true
+  }
+]

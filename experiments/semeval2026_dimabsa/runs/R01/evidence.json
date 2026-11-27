@@ -1,0 +1,10 @@
+{
+  "state": "completed",
+  "saved_version": 1,
+  "script_version_id": 374890167,
+  "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r01-scratch-bilstm-aspect-attention?scriptVersionId=374890167",
+  "viewer_runtime_seconds": 83.2,
+  "official_scorer_RMSE_VA": 1.5019792823823779,
+  "same_tokenizer_hash_as_R02": true,
+  "test_evaluated": false
+}

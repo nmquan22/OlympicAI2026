@@ -1,0 +1,22 @@
+[
+  {
+    "idea": "Ridge + BiLSTM equal average",
+    "official_dev_RMSE_VA": 1.3946892970458036,
+    "additional_gpu_runs": 0,
+    "weights_fixed": [
+      0.5,
+      0.5
+    ],
+    "status": "cached prediction diagnostic; not evaluated on test"
+  },
+  {
+    "idea": "BiLSTM + Transformer equal average",
+    "official_dev_RMSE_VA": 1.459940470180407,
+    "additional_gpu_runs": 0,
+    "weights_fixed": [
+      0.5,
+      0.5
+    ],
+    "status": "cached prediction diagnostic; not evaluated on test"
+  }
+]

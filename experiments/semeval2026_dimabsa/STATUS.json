@@ -13,10 +13,10 @@
   "cpu_controls_completed": 3,
   "test_evaluated": false,
   "blocker": null,
-  "neural_validation": "R02 completed and official dev score verified; R01 GPU startup verified",
-  "next": "Read R01/R02 GPU logs and official dev scores; compare accuracy, runtime and error groups before selecting upgrades",
+  "neural_validation": "R01 and R02 completed on Tesla T4; official dev scorers verified; same train-only tokenizer hash",
+  "next": "Build joint aspect/opinion span and pair model for Subtasks 2 and 3; keep current Transformer configuration deprioritized",
   "kaggle_username": "quannguyen0501",
-  "gpu_runs_submitted": 2,
+  "gpu_runs_submitted": 3,
   "dataset_url": "https://www.kaggle.com/datasets/quannguyen0501/dimabsa-2026-english-restaurant-scratch-training",
   "dataset_version": 1,
   "dataset_bundle_sha256": "2184fadaf9e10c357585aba273394d236eade639a974652662cba44edfeb76f9",
@@ -28,10 +28,14 @@
       "layers": 2,
       "width": 192,
       "learning_rate": 0.002,
-      "state": "running",
+      "state": "completed",
       "version": 1,
       "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r01-scratch-bilstm-aspect-attention?scriptVersionId=374890167",
-      "script_version_id": 374890167
+      "script_version_id": 374890167,
+      "official_dev_RMSE_VA": 1.5019792823823779,
+      "best_epoch": 12,
+      "train_seconds": 44.672849767,
+      "decision": "better neural starting point than current Transformer; still below Ridge dev control"
     },
     {
       "run": "R02",
@@ -54,5 +58,26 @@
     "plain BiGRU control",
     "BiGRU attention control"
   ],
-  "gpu_runs_completed": 1
+  "gpu_runs_completed": 2,
+  "structured_run": {
+    "run": "S01",
+    "architecture": "BiLSTM span/pair linking + category + VA joint model",
+    "state": "running",
+    "version": 1,
+    "script_version_id": 374895892,
+    "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-s01-scratch-joint-span-pair-va?scriptVersionId=374895892",
+    "pretrained_weights": false
+  },
+  "selected_subtask_1_dev_recipe": {
+    "components": [
+      "C02 ridge",
+      "R01 BiLSTM attention"
+    ],
+    "weights": [
+      0.5,
+      0.5
+    ],
+    "official_dev_RMSE_VA": 1.3946892970458036,
+    "test_evaluated": false
+  }
 }
