@@ -217,14 +217,22 @@
       "competition_slug": "aicc-round-9-word-lookups",
       "rules_accepted": true,
       "source_notebook": "round-9/word-lookups.ipynb",
-      "status": "prepared",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
           "idea": "Transformer surprisal với offset-safe BPE",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 1,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 6.1068441094658725,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct",
+            "boundary_f1": null
+          },
+          "report_path": "word-lookups/runs/R01/report.json"
         },
         {
           "run_id": "R02",
@@ -268,7 +276,8 @@
           "notebook_version": null,
           "metric": null
         }
-      ]
+      ],
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-word-lookups-learning-experiments"
     },
     {
       "order": 4,

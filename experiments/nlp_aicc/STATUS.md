@@ -1,12 +1,12 @@
 # Tiến độ thực nghiệm NLP
 
-**12/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**13/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
 | [Moment Match](moment-match/IDEAS.md) | 7/7 | R04: 0.69122 accuracy |
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
-| [Word Lookups](word-lookups/IDEAS.md) | 0/7 | Chưa có kết quả |
+| [Word Lookups](word-lookups/IDEAS.md) | 1/7 | R01: 6.10684 BPE_LM_NLL_proxy |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 0/7 | Chưa có kết quả |
 | [Alchemy](alchemy/IDEAS.md) | 0/7 | Chưa có kết quả |
 
@@ -40,7 +40,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 
 | Run | Ý tưởng | Kết quả | Nhật ký |
 |---|---|---|---|
-| R01 | Transformer surprisal với offset-safe BPE | planned | Chưa có kết quả |
+| R01 | Transformer surprisal với offset-safe BPE | 6.10684 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R01/LEARNED.md) |
 | R02 | Surprisal hai chiều | planned | Chưa có kết quả |
 | R03 | Chuẩn hóa surprisal theo vị trí/độ dài | planned | Chưa có kết quả |
 | R04 | Kết hợp cohesion n-gram học từ train | planned | Chưa có kết quả |
