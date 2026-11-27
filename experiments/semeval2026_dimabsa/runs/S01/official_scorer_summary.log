@@ -1,0 +1,5 @@
+# Exact final result lines observed in Kaggle S01 v2 logs; full scorer logs remain in Kaggle Output.
+SUBTASK 2
+Final Results: {'TP': 262.908448551787, 'FP': 199, 'FN': 121, 'cPrecision': 0.5409638859090268, 'cRecall': 0.6443834523328112, 'cF1': 0.5881620772970626}
+SUBTASK 3
+Final Results: {'TP': 244.8268514914741, 'FP': 219, 'FN': 141, 'cPrecision': 0.5037589536861606, 'cRecall': 0.6000658124791032, 'cF1': 0.5477110771621344}

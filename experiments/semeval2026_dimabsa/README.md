@@ -44,7 +44,7 @@ Các thứ hạng/điểm trong bảng này là **kết quả tác giả dưới
 
 Mỗi lượt dùng cùng split/seed, fit lại tokenizer bằng train sạch và khởi tạo mới model/optimizer. R01/R02 dùng MSE, output `1 + 8*sigmoid(logit)` và chọn epoch theo RMSE_VA dev. BiLSTM LR 0.002; Transformer LR 0.0005. Giới hạn mặc định 60 epoch, patience 10, warmup 10% + cosine theo step, khoảng 20 phút/lượt; có thể dừng sau epoch hiện tại nên không phải hard timeout. R03/R04 chỉ quyết định sau khi đọc R01/R02 và nhóm lỗi; không mặc định chạy hết mọi tổ hợp. Giữ cả hai trong lần so đầu; nhánh thua rõ về dev và chi phí sẽ không được cấp thêm lượt chỉ để thử thay đổi nhỏ. Một seed chưa đủ kết luận kiến trúc nào luôn tốt hơn.
 
-Khi đã chọn xong kiến trúc trên dev, mới chạy inference test, chấm bằng gold test cục bộ và ghi riêng kết quả. Mở rộng ST2: encoder → span aspect/opinion → liên kết cặp → head VA; ST3 thêm head category. Phải có scorer cF1 và phân tích phần mất điểm do span, liên kết, category, VA trước khi thêm kiến trúc phức tạp. ST2/ST3 đã có [joint model scratch](train_structured.py), [notebook S01](S01_kaggle.ipynb); lượt S01 đang chạy. Local cF1 đã đối chiếu khớp scorer BTC cho cả hai subtask bằng prediction có tuple bị thiếu và VA sai: [kiểm tra metric](STRUCTURED_METRIC_VALIDATION.json).
+Khi đã chọn xong kiến trúc trên dev, mới chạy inference test, chấm bằng gold test cục bộ và ghi riêng kết quả. Mở rộng ST2: encoder → span aspect/opinion → liên kết cặp → head VA; ST3 thêm head category. Phải có scorer cF1 và phân tích phần mất điểm do span, liên kết, category, VA trước khi thêm kiến trúc phức tạp. ST2/ST3 đã có [joint model scratch](train_structured.py), [notebook S01](S01_kaggle.ipynb); lượt S01 đã hoàn tất: dev cF1 ST2 **0.58816**, ST3 **0.54771**; [bài học](runs/S01/LEARNED.md). Local cF1 đã đối chiếu khớp scorer BTC cho cả hai subtask bằng prediction có tuple bị thiếu và VA sai: [kiểm tra metric](STRUCTURED_METRIC_VALIDATION.json).
 
 ## Ba chi tiết phòng thi cần nhớ
 
@@ -73,3 +73,11 @@ Neural cần `torch`, `tokenizers`, `numpy`, `scipy`, `scikit-learn`. Runtime ha
 ### Lỗi pipeline S01 v1
 
 Lượt đầu dừng ở preprocessing, chưa train, do hàm tạo ví dụ dev chuyển category gold qua vocabulary train. Dev có `RESTAURANT#STYLE_OPTIONS` chưa xuất hiện trong train. Đã sửa inference chỉ dựng tensor từ văn bản; gold dev đi riêng tới scorer. Đã kiểm tra 200 câu dev có cùng input khi thay toàn bộ nhãn. Không thêm category từ nhãn dev vào vocabulary. [Chi tiết lỗi](failures/S01_v1.md). Cùng kiến trúc chạy lại ở v2.
+
+### S01 hoàn tất và giới hạn hiện tại
+
+S01 v2 đã chạy thành công trên T4: ST2 dev cF1 **0.58816**, ST3 **0.54771**, epoch30, 430 giây train, 1.292.019 parameter. [Report](runs/S01/report.json), [kết quả scorer BTC](runs/S01/official_scorer_summary.log), [phân tích lỗi](runs/S01/analysis.json), [bài học](runs/S01/LEARNED.md).
+
+Pair F1 64,21%; khi pair đúng category accuracy 93,03%. Hướng ưu tiên là liên kết/precision. Full predictions, epoch logs, checkpoint và tokenizer còn tại [Kaggle S01 v2 Output](https://www.kaggle.com/code/quannguyen0501/dimabsa-s01-scratch-joint-span-pair-va/output?scriptVersionId=374897225); không commit checkpoint lớn.
+
+Đã khóa recipe test: ST1 0.5 Ridge + 0.5 R01; ST2/3 S01 epoch30 ngưỡng0.7/0.7. Bundle inference loại gold test, chỉ giữ text/aspect cho ST1 và ID/text cho ST2/3. **E01 chưa gửi, chưa có điểm test**: execution environment và browser transport mất kết nối trước khi xác minh upload dataset v2. Xem STATUS.json để tiếp tục; không đánh đồng dev với leaderboard hoặc test.

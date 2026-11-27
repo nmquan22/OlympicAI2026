@@ -1,0 +1,52 @@
+{
+  "run": "S01",
+  "status": "completed",
+  "architecture": "random BPE word pooling + BiLSTM + span/pair/category/VA heads",
+  "pretrained_weights": false,
+  "source_commit": "bdc93be1224106ae7d3eb95739c02a76ed4ae8a1",
+  "train_sentences": 1447,
+  "train_relations": 2374,
+  "dropped_training_quads": 1,
+  "word_limit": 96,
+  "span_word_limit": 16,
+  "best_epoch": 30,
+  "seed": 42,
+  "parameters": 1292019,
+  "seconds": 430.00797955600007,
+  "device": "Tesla T4",
+  "torch_version": "2.11.0+cu130",
+  "test_evaluated": false,
+  "categories": [
+    "AMBIENCE#GENERAL",
+    "DRINKS#PRICES",
+    "DRINKS#QUALITY",
+    "DRINKS#STYLE_OPTIONS",
+    "FOOD#GENERAL",
+    "FOOD#PRICES",
+    "FOOD#QUALITY",
+    "FOOD#STYLE_OPTIONS",
+    "LOCATION#GENERAL",
+    "RESTAURANT#GENERAL",
+    "RESTAURANT#MISCELLANEOUS",
+    "RESTAURANT#PRICES",
+    "SERVICE#GENERAL",
+    "SERVICE#QUALITY"
+  ],
+  "selection_score": 0.5679365772295983,
+  "span_threshold": 0.7,
+  "link_threshold": 0.7,
+  "subtask_2": {
+    "cF1": 0.5881620772970625,
+    "tuple_F1_without_VA": 0.6420581655480985,
+    "predicted_tuples": 486,
+    "gold_tuples": 408,
+    "matched_tuples": 287
+  },
+  "subtask_3": {
+    "cF1": 0.5477110771621343,
+    "tuple_F1_without_VA": 0.5973154362416108,
+    "predicted_tuples": 486,
+    "gold_tuples": 408,
+    "matched_tuples": 267
+  }
+}

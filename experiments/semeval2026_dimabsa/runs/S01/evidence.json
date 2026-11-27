@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "script_version_id": 374897225,
+  "notebook_url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-s01-scratch-joint-span-pair-va/output?scriptVersionId=374897225",
+  "status": "Successfully ran",
+  "notebook_runtime_seconds": 486.9,
+  "train_seconds": 430.00797955600007,
+  "device": "Tesla T4",
+  "torch_version": "2.11.0+cu130",
+  "official_subtask2_cF1": 0.5881620772970626,
+  "official_subtask3_cF1": 0.5477110771621344,
+  "test_evaluated": false,
+  "verification": "Observed successful Kaggle run and official scorer final results; downloaded full output archive and read report/candidate diagnostics before execution environment loss.",
+  "durable_full_artifacts": "Kaggle S01 v2 Output: best.pt, tokenizer.json, report.json, epochs.jsonl, dev_task2_predictions.jsonl, dev_task3_predictions.jsonl, dev_candidates.json, official_task2_scorer.log, official_task3_scorer.log, S01_console.log",
+  "git_artifact_scope": "Report, observed official final results and candidate diagnostics are preserved here. Full predictions/epoch logs/checkpoint remain in Kaggle Output; local copies were unavailable to upload after environment disconnection."
+}

@@ -1,0 +1,83 @@
+{
+  "pair_decoding": {
+    "gold": 408,
+    "predicted": 486,
+    "matched": 287,
+    "precision": 0.5905349794238683,
+    "recall": 0.7034313725490197,
+    "F1": 0.6420581655480985
+  },
+  "top8_candidate_pair_coverage": {
+    "gold": 408,
+    "predicted": 12450,
+    "matched": 369,
+    "precision": 0.02963855421686747,
+    "recall": 0.9044117647058824,
+    "F1": 0.05739617358842744
+  },
+  "aspect_decoding": {
+    "gold": 319,
+    "predicted": 309,
+    "matched": 259,
+    "precision": 0.8381877022653722,
+    "recall": 0.8119122257053292,
+    "F1": 0.8248407643312102
+  },
+  "aspect_candidate_coverage": {
+    "gold": 319,
+    "predicted": 1579,
+    "matched": 300,
+    "precision": 0.18999366687777075,
+    "recall": 0.9404388714733543,
+    "F1": 0.31612223393045313
+  },
+  "opinion_decoding": {
+    "gold": 370,
+    "predicted": 369,
+    "matched": 296,
+    "precision": 0.8021680216802168,
+    "recall": 0.8,
+    "F1": 0.8010825439783491
+  },
+  "opinion_candidate_coverage": {
+    "gold": 370,
+    "predicted": 1573,
+    "matched": 352,
+    "precision": 0.22377622377622378,
+    "recall": 0.9513513513513514,
+    "F1": 0.3623262995367988
+  },
+  "category_given_correct_pair": {
+    "matched_pairs": 287,
+    "category_correct": 267,
+    "accuracy": 0.9303135888501742
+  },
+  "VA_given_correct_pair_RMSE_VA": 1.170206956293412,
+  "unseen_train_categories_in_gold": [
+    {
+      "ID": "rest26_asqp_dev_11",
+      "category": "RESTAURANT#STYLE_OPTIONS"
+    },
+    {
+      "ID": "rest26_asqp_dev_22",
+      "category": "AMBIENCE#STYLE_OPTIONS"
+    },
+    {
+      "ID": "rest26_asqp_dev_93",
+      "category": "AMBIENCE#STYLE_OPTIONS"
+    },
+    {
+      "ID": "rest26_asqp_dev_96",
+      "category": "SERVICE#PRICES"
+    },
+    {
+      "ID": "rest26_asqp_dev_107",
+      "category": "AMBIENCE#STYLE_OPTIONS"
+    },
+    {
+      "ID": "rest26_asqp_dev_109",
+      "category": "RESTAURANT#STYLE_OPTIONS"
+    }
+  ],
+  "interpretation": "Candidate coverage is an upper bound for pair recall at fixed top-8 pruning; conditional VA/category metrics ignore missing pairs. Extracted from the downloaded S01 v2 candidates and predictions before environment disconnection."
+}
