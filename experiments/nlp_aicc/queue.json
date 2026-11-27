@@ -156,7 +156,7 @@
       "competition_slug": "lost-interpreter-aicc-round-5",
       "rules_accepted": true,
       "source_notebook": "round-5/lost-interpreter.ipynb",
-      "status": "running_experiments",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -245,9 +245,16 @@
         {
           "run_id": "R07",
           "idea": "Kết hợp structure + numeric + query + auxiliary",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 7,
+          "metric": {
+            "metric": "MAE",
+            "value": 37.576290130615234,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R07/report.json"
         },
         {
           "run_id": "R08",
