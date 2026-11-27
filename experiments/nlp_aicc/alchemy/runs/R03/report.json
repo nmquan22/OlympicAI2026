@@ -42,5 +42,20 @@
     "tokenizer": "train-only BPE",
     "training_rows": 120
   },
-  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_public": 0.0285,
+  "leaderboard_private": 0.0285,
+  "leaderboard_metric": "Accuracy",
+  "leaderboard_direction": "maximize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+    "run": "R03",
+    "public": 0.0285,
+    "private": 0.0285,
+    "version_id": 374703926,
+    "output_file": "alchemy/R03/submission.csv",
+    "description_note": "Source version/output verified; description is correct."
+  }
 }

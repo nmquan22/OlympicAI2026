@@ -25,7 +25,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R01/report.json"
+          "report_path": "moment-match/runs/R01/report.json",
+          "leaderboard_public": 0.6121,
+          "leaderboard_private": 0.5959,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R01",
+            "public": 0.6121,
+            "private": 0.5959,
+            "version_id": 374514931,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R02",
@@ -39,7 +54,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R02/report.json"
+          "report_path": "moment-match/runs/R02/report.json",
+          "leaderboard_public": 0.6406,
+          "leaderboard_private": 0.6172,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R02",
+            "public": 0.6406,
+            "private": 0.6172,
+            "version_id": 374516657,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R03",
@@ -53,7 +83,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R03/report.json"
+          "report_path": "moment-match/runs/R03/report.json",
+          "leaderboard_public": 0.5898,
+          "leaderboard_private": 0.5695,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R03",
+            "public": 0.5898,
+            "private": 0.5695,
+            "version_id": 374519044,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R04",
@@ -67,7 +112,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R04/report.json"
+          "report_path": "moment-match/runs/R04/report.json",
+          "leaderboard_public": 0.6436,
+          "leaderboard_private": 0.6284,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R04",
+            "public": 0.6436,
+            "private": 0.6284,
+            "version_id": 374521565,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R05",
@@ -81,7 +141,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R05/report.json"
+          "report_path": "moment-match/runs/R05/report.json",
+          "leaderboard_public": 0.6304,
+          "leaderboard_private": 0.606,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R05",
+            "public": 0.6304,
+            "private": 0.606,
+            "version_id": 374522701,
+            "output_file": "submission.csv",
+            "description_note": "UI race caused description R02; actual notebook source R05 and version ID identify this score. No duplicate run counted."
+          }
         },
         {
           "run_id": "R06",
@@ -95,7 +170,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R06/report.json"
+          "report_path": "moment-match/runs/R06/report.json",
+          "leaderboard_public": 0.4659,
+          "leaderboard_private": 0.469,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R06",
+            "public": 0.4659,
+            "private": 0.469,
+            "version_id": 374523524,
+            "output_file": "submission.csv",
+            "description_note": "UI race caused description R03; actual notebook source R06 and version ID identify this score. No duplicate run counted."
+          }
         },
         {
           "run_id": "R07",
@@ -109,7 +199,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R07/report.json"
+          "report_path": "moment-match/runs/R07/report.json",
+          "leaderboard_public": 0.6619,
+          "leaderboard_private": 0.6162,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R07",
+            "public": 0.6619,
+            "private": 0.6162,
+            "version_id": 374524193,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R08",
@@ -123,7 +228,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R08/report.json"
+          "report_path": "moment-match/runs/R08/report.json",
+          "leaderboard_public": 0.6477,
+          "leaderboard_private": 0.6253,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R08",
+            "public": 0.6477,
+            "private": 0.6253,
+            "version_id": 374710491,
+            "output_file": "moment-match/R08/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R09",
@@ -137,7 +257,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R09/report.json"
+          "report_path": "moment-match/runs/R09/report.json",
+          "leaderboard_public": 0.6467,
+          "leaderboard_private": 0.6182,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R09",
+            "public": 0.6467,
+            "private": 0.6182,
+            "version_id": 374710491,
+            "output_file": "moment-match/R09/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R10",
@@ -151,7 +286,22 @@
             "samples": 1059,
             "split": "provided_validation"
           },
-          "report_path": "moment-match/runs/R10/report.json"
+          "report_path": "moment-match/runs/R10/report.json",
+          "leaderboard_public": 0.6162,
+          "leaderboard_private": 0.5969,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R10",
+            "public": 0.6162,
+            "private": 0.5969,
+            "version_id": 374715490,
+            "output_file": "moment-match/R10/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"
@@ -177,7 +327,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R01/report.json"
+          "report_path": "lost-interpreter/runs/R01/report.json",
+          "leaderboard_public": 36.9252,
+          "leaderboard_private": 39.306,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R01",
+            "public": 36.9252,
+            "private": 39.306,
+            "version_id": 374517357,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R02",
@@ -191,7 +356,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R02/report.json"
+          "report_path": "lost-interpreter/runs/R02/report.json",
+          "leaderboard_public": 38.1944,
+          "leaderboard_private": 40.578,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R02",
+            "public": 38.1944,
+            "private": 40.578,
+            "version_id": 374521303,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R03",
@@ -205,7 +385,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R03/report.json"
+          "report_path": "lost-interpreter/runs/R03/report.json",
+          "leaderboard_public": 37.426,
+          "leaderboard_private": 40.1384,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R03",
+            "public": 37.426,
+            "private": 40.1384,
+            "version_id": 374522722,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R04",
@@ -219,7 +414,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R04/report.json"
+          "report_path": "lost-interpreter/runs/R04/report.json",
+          "leaderboard_public": 37.5484,
+          "leaderboard_private": 40.3992,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R04",
+            "public": 37.5484,
+            "private": 40.3992,
+            "version_id": 374524205,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R05",
@@ -233,7 +443,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R05/report.json"
+          "report_path": "lost-interpreter/runs/R05/report.json",
+          "leaderboard_public": 37.4428,
+          "leaderboard_private": 40.3316,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R05",
+            "public": 37.4428,
+            "private": 40.3316,
+            "version_id": 374699632,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R06",
@@ -247,7 +472,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R06/report.json"
+          "report_path": "lost-interpreter/runs/R06/report.json",
+          "leaderboard_public": 37.918,
+          "leaderboard_private": 40.7816,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R06",
+            "public": 37.918,
+            "private": 40.7816,
+            "version_id": 374710361,
+            "output_file": "lost-interpreter/R06/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R07",
@@ -261,7 +501,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R07/report.json"
+          "report_path": "lost-interpreter/runs/R07/report.json",
+          "leaderboard_public": 37.02,
+          "leaderboard_private": 39.9584,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R07",
+            "public": 37.02,
+            "private": 39.9584,
+            "version_id": 374710361,
+            "output_file": "lost-interpreter/R07/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R08",
@@ -275,7 +530,22 @@
             "samples": 3000,
             "split": "fixed_train_holdout_15pct"
           },
-          "report_path": "lost-interpreter/runs/R08/report.json"
+          "report_path": "lost-interpreter/runs/R08/report.json",
+          "leaderboard_public": 14.1608,
+          "leaderboard_private": 16.792,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R08",
+            "public": 14.1608,
+            "private": 16.792,
+            "version_id": 374710361,
+            "output_file": "lost-interpreter/R08/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-lost-interpreter-learning-experiments"
@@ -445,7 +715,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R01/report.json"
+          "report_path": "inverse-translation/runs/R01/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R01",
+            "public": 100.0,
+            "private": 100.0,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R01/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R02",
@@ -465,7 +750,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R02/report.json"
+          "report_path": "inverse-translation/runs/R02/report.json",
+          "leaderboard_public": 94.5555,
+          "leaderboard_private": 94.6666,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R02",
+            "public": 94.5555,
+            "private": 94.6666,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R02/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R03",
@@ -485,7 +785,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R03/report.json"
+          "report_path": "inverse-translation/runs/R03/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 93.7179,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R03",
+            "public": 100.0,
+            "private": 93.7179,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R03/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R04",
@@ -505,7 +820,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R04/report.json"
+          "report_path": "inverse-translation/runs/R04/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R04",
+            "public": 100.0,
+            "private": 100.0,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R04/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R05",
@@ -525,7 +855,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R05/report.json"
+          "report_path": "inverse-translation/runs/R05/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R05",
+            "public": 100.0,
+            "private": 100.0,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R05/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R06",
@@ -545,7 +890,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R06/report.json"
+          "report_path": "inverse-translation/runs/R06/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R06",
+            "public": 100.0,
+            "private": 100.0,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R06/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R07",
@@ -565,7 +925,22 @@
               "valid_rate": 1.0
             }
           },
-          "report_path": "inverse-translation/runs/R07/report.json"
+          "report_path": "inverse-translation/runs/R07/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R07",
+            "public": 100.0,
+            "private": 100.0,
+            "version_id": 374704969,
+            "output_file": "inverse-translation/R07/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683"
@@ -595,7 +970,22 @@
             "greedy_accuracy": 0.1,
             "duplicate_argmax_count": 19
           },
-          "report_path": "alchemy/runs/R01/report.json"
+          "report_path": "alchemy/runs/R01/report.json",
+          "leaderboard_public": 0.0285,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R01",
+            "public": 0.0285,
+            "private": 0.0,
+            "version_id": 374699981,
+            "output_file": "submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R02",
@@ -613,7 +1003,22 @@
             "greedy_accuracy": 0.03333333333333333,
             "duplicate_argmax_count": 23
           },
-          "report_path": "alchemy/runs/R02/report.json"
+          "report_path": "alchemy/runs/R02/report.json",
+          "leaderboard_public": 0.0,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R02",
+            "public": 0.0,
+            "private": 0.0,
+            "version_id": 374703926,
+            "output_file": "alchemy/R02/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R03",
@@ -631,7 +1036,22 @@
             "greedy_accuracy": 0.1,
             "duplicate_argmax_count": 20
           },
-          "report_path": "alchemy/runs/R03/report.json"
+          "report_path": "alchemy/runs/R03/report.json",
+          "leaderboard_public": 0.0285,
+          "leaderboard_private": 0.0285,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R03",
+            "public": 0.0285,
+            "private": 0.0285,
+            "version_id": 374703926,
+            "output_file": "alchemy/R03/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R04",
@@ -649,7 +1069,22 @@
             "greedy_accuracy": 0.03333333333333333,
             "duplicate_argmax_count": 24
           },
-          "report_path": "alchemy/runs/R04/report.json"
+          "report_path": "alchemy/runs/R04/report.json",
+          "leaderboard_public": 0.0,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R04",
+            "public": 0.0,
+            "private": 0.0,
+            "version_id": 374703926,
+            "output_file": "alchemy/R04/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R05",
@@ -667,7 +1102,22 @@
             "greedy_accuracy": 0.06666666666666667,
             "duplicate_argmax_count": 23
           },
-          "report_path": "alchemy/runs/R05/report.json"
+          "report_path": "alchemy/runs/R05/report.json",
+          "leaderboard_public": 0.0285,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R05",
+            "public": 0.0285,
+            "private": 0.0,
+            "version_id": 374703926,
+            "output_file": "alchemy/R05/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R06",
@@ -685,7 +1135,22 @@
             "greedy_accuracy": 0.06666666666666667,
             "duplicate_argmax_count": 19
           },
-          "report_path": "alchemy/runs/R06/report.json"
+          "report_path": "alchemy/runs/R06/report.json",
+          "leaderboard_public": 0.0,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R06",
+            "public": 0.0,
+            "private": 0.0,
+            "version_id": 374703926,
+            "output_file": "alchemy/R06/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R07",
@@ -703,7 +1168,22 @@
             "greedy_accuracy": 0.06666666666666667,
             "duplicate_argmax_count": 21
           },
-          "report_path": "alchemy/runs/R07/report.json"
+          "report_path": "alchemy/runs/R07/report.json",
+          "leaderboard_public": 0.0285,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R07",
+            "public": 0.0285,
+            "private": 0.0,
+            "version_id": 374703926,
+            "output_file": "alchemy/R07/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R08",
@@ -721,7 +1201,22 @@
             "greedy_accuracy": 0.03333333333333333,
             "duplicate_argmax_count": 12
           },
-          "report_path": "alchemy/runs/R08/report.json"
+          "report_path": "alchemy/runs/R08/report.json",
+          "leaderboard_public": 0.0,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R08",
+            "public": 0.0,
+            "private": 0.0,
+            "version_id": 374712482,
+            "output_file": "alchemy/R08/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         },
         {
           "run_id": "R09",
@@ -739,7 +1234,22 @@
             "greedy_accuracy": 0.13333333333333333,
             "duplicate_argmax_count": 13
           },
-          "report_path": "alchemy/runs/R09/report.json"
+          "report_path": "alchemy/runs/R09/report.json",
+          "leaderboard_public": 0.0285,
+          "leaderboard_private": 0.1142,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R09",
+            "public": 0.0285,
+            "private": 0.1142,
+            "version_id": 374715624,
+            "output_file": "alchemy/R09/submission.csv",
+            "description_note": "Source version/output verified; description is correct."
+          }
         }
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",

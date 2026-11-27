@@ -1,0 +1,11 @@
+run,public,private,version_id,output_file,description_note
+R01,0.6121,0.5959,374514931,submission.csv,Source version/output verified; description is correct.
+R02,0.6406,0.6172,374516657,submission.csv,Source version/output verified; description is correct.
+R03,0.5898,0.5695,374519044,submission.csv,Source version/output verified; description is correct.
+R04,0.6436,0.6284,374521565,submission.csv,Source version/output verified; description is correct.
+R05,0.6304,0.606,374522701,submission.csv,UI race caused description R02; actual notebook source R05 and version ID identify this score. No duplicate run counted.
+R06,0.4659,0.469,374523524,submission.csv,UI race caused description R03; actual notebook source R06 and version ID identify this score. No duplicate run counted.
+R07,0.6619,0.6162,374524193,submission.csv,Source version/output verified; description is correct.
+R08,0.6477,0.6253,374710491,moment-match/R08/submission.csv,Source version/output verified; description is correct.
+R09,0.6467,0.6182,374710491,moment-match/R09/submission.csv,Source version/output verified; description is correct.
+R10,0.6162,0.5969,374715490,moment-match/R10/submission.csv,Source version/output verified; description is correct.

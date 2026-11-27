@@ -9,9 +9,11 @@ def render_status():
  for task in queue['items']:
   completed=[r for r in task['runs'] if r['status']=='completed'];total+=len(completed)
   metric='Chưa có kết quả'
-  scored=[r for r in completed if r.get('leaderboard_metric')=='Boundary F1']
+  scored=[r for r in completed if r.get('leaderboard_public') is not None]
   if scored:
-   best=max(scored,key=lambda r:r['leaderboard_public']);metric=f"{best['run_id']}: public {best['leaderboard_public']:.4f}, private {best['leaderboard_private']:.4f} Boundary F1"
+   direction=scored[0].get('leaderboard_direction','maximize')
+   best=sorted(scored,key=lambda r:r['leaderboard_public'],reverse=direction=='maximize')[0]
+   metric=f"{best['run_id']}: public {best['leaderboard_public']:.4f}, private {best['leaderboard_private']:.4f} {best['leaderboard_metric']}"
   elif completed and completed[0]['metric']['metric']=='BPE_LM_NLL_proxy':
    metric='Chưa xếp hạng segmentation: cần Boundary F1'
   elif completed:
@@ -23,7 +25,7 @@ def render_status():
   lines += [f"## {task['title']}",'','| Run | Ý tưởng | Kết quả | Nhật ký |','|---|---|---|---|']
   for r in task['runs']:
    m=r.get('metric');score=f"{m['value']:.5f} {m['metric']}" if m else r['status']
-   if r.get('leaderboard_metric')=='Boundary F1':score=f"public {r['leaderboard_public']:.4f}, private {r['leaderboard_private']:.4f} Boundary F1"
+   if r.get('leaderboard_public') is not None:score+=f"; Kaggle {r['leaderboard_public']:.4f}/{r['leaderboard_private']:.4f} {r['leaderboard_metric']} (public/private)"
    link=f"[Đọc]({task['id']}/runs/{r['run_id']}/LEARNED.md)" if r['status']=='completed' else 'Chưa có kết quả'
    lines.append(f"| {r['run_id']} | {r['idea']} | {score} | {link} |")
   lines.append('')

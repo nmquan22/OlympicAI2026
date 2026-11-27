@@ -51,5 +51,20 @@
     "checkpoint": "provided FSMT only",
     "example_canary_matches": 4
   },
-  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_public": 100.0,
+  "leaderboard_private": 100.0,
+  "leaderboard_metric": "Competition score",
+  "leaderboard_direction": "maximize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+    "run": "R04",
+    "public": 100.0,
+    "private": 100.0,
+    "version_id": 374704969,
+    "output_file": "inverse-translation/R04/submission.csv",
+    "description_note": "Source version/output verified; description is correct."
+  }
 }

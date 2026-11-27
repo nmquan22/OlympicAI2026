@@ -10,8 +10,8 @@
     "tokenizers": "0.23.3"
   },
   "status": "completed",
-  "leaderboard_public": null,
-  "leaderboard_private": null,
+  "leaderboard_public": 37.5484,
+  "leaderboard_private": 40.3992,
   "task": "lost-interpreter",
   "run_id": "R04",
   "config": {
@@ -49,5 +49,18 @@
     "tokenizer": "tokenizer.json",
     "pretrained_weights": false
   },
-  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_metric": "MAE",
+  "leaderboard_direction": "minimize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+    "run": "R04",
+    "public": 37.5484,
+    "private": 40.3992,
+    "version_id": 374524205,
+    "output_file": "submission.csv",
+    "description_note": "Source version/output verified; description is correct."
+  }
 }

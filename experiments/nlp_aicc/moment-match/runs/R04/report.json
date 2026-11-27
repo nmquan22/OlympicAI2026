@@ -102,6 +102,19 @@
     "BPE vocabulary trained on train text only; supplied fastText initializes its vectors.",
     "Reference architecture is adapted, not claimed to reproduce its 0.7243 result."
   ],
-  "leaderboard_public": null,
-  "leaderboard_private": null
+  "leaderboard_public": 0.6436,
+  "leaderboard_private": 0.6284,
+  "leaderboard_metric": "Accuracy",
+  "leaderboard_direction": "maximize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+    "run": "R04",
+    "public": 0.6436,
+    "private": 0.6284,
+    "version_id": 374521565,
+    "output_file": "submission.csv",
+    "description_note": "Source version/output verified; description is correct."
+  }
 }
