@@ -238,7 +238,7 @@
       "competition_slug": "aicc-round-9-word-lookups",
       "rules_accepted": true,
       "source_notebook": "round-9/word-lookups.ipynb",
-      "status": "running_experiments",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -333,9 +333,17 @@
         {
           "run_id": "R07",
           "idea": "Kết hợp hai chiều + cohesion + DP",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 5.802002440784768,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct",
+            "boundary_f1": null
+          },
+          "report_path": "word-lookups/runs/R07/report.json"
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-word-lookups-learning-experiments"
