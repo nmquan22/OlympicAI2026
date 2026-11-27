@@ -1,13 +1,13 @@
 # Tiến độ thực nghiệm NLP
 
-**22 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**23 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
 | [Moment Match](moment-match/IDEAS.md) | 7/7 | R04: 0.69122 accuracy |
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 1/7 | Chưa xếp hạng segmentation: cần Boundary F1 |
-| [Inverse Translation](inverse-translation/IDEAS.md) | 2/7 | R01: 100.00000 official_score_0_100 |
+| [Inverse Translation](inverse-translation/IDEAS.md) | 3/7 | R01: 100.00000 official_score_0_100 |
 | [Alchemy](alchemy/IDEAS.md) | 7/7 | R02: 0.13333 bijective_holdout_accuracy |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
@@ -57,7 +57,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 |---|---|---|---|
 | R01 | Probe streaming giữ top-32, margin search | 100.00000 official_score_0_100 | [Đọc](inverse-translation/runs/R01/LEARNED.md) |
 | R02 | Top-8 để đo recall–cost | 94.61111 official_score_0_100 | [Đọc](inverse-translation/runs/R02/LEARNED.md) |
-| R03 | Top-16 để đo recall–cost | planned | Chưa có kết quả |
+| R03 | Top-16 để đo recall–cost | 96.85897 official_score_0_100 | [Đọc](inverse-translation/runs/R03/LEARNED.md) |
 | R04 | Cross-entropy thay margin, cùng candidate budget | planned | Chưa có kết quả |
 | R05 | Coarse-to-fine top-8→32 | planned | Chưa có kết quả |
 | R06 | Coordinate sweep thay full replacement grid | planned | Chưa có kết quả |

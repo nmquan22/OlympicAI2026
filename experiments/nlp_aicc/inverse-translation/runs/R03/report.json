@@ -1,0 +1,55 @@
+{
+  "task": "inverse-translation",
+  "run_id": "R03",
+  "config": {
+    "idea": "Top-16 measures the middle recall-cost tradeoff",
+    "topk": 16,
+    "loss": "margin",
+    "search": "grid",
+    "restart": 0,
+    "probe_batch": 512,
+    "candidate_batch": 64,
+    "budget_seconds": 720
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "tokenizers": "0.22.2",
+    "transformers": "4.57.1"
+  },
+  "status": "completed",
+  "elapsed_seconds": 9.729282140731812,
+  "peak_gpu_memory_mb": 340.31884765625,
+  "validation": {
+    "metric": "official_score_0_100",
+    "value": 96.85897435897436,
+    "direction": "maximize",
+    "samples": 24,
+    "split": "explicit_public_targets",
+    "official": {
+      "score": 96.85897435897436,
+      "exact_rate": 0.9583333333333334,
+      "mean_similarity": 0.983974358974359,
+      "valid_rate": 1.0
+    }
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 24,
+    "token_ranges_valid": true,
+    "lengths_valid": true
+  },
+  "artifacts": {
+    "probe_seconds": 3.75333571434021,
+    "probe_batches": 46,
+    "candidate_evaluations": 5720,
+    "model_calls": 125,
+    "checkpoint": "provided FSMT only",
+    "example_canary_matches": 4
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}
