@@ -32,3 +32,8 @@ R08 Lost Interpreter đã chuẩn bị code: BiGRU train từ đầu với packe
 Sau bảy lượt, hard negatives tốt nhất 4/30 so với 3/30 ban đầu. Chênh một câu chưa đủ vững. R08 dùng shared BPE embedding từ đầu, mean pool riêng item1/item2/result qua SEP, rồi ghép `[a+b, abs(a-b), a*b]`. Hai thứ tự có cùng representation theo cấu trúc; query và candidate được chấm cosine với scale học được, full-list CE và Hungarian giữ nguyên.
 
 Đây là ứng viên data-efficient để kiểm tra, không phải một SOTA được dẫn từ paper. Tính đối xứng được đảm bảo ở eval, còn semantic generalization vẫn phụ thuộc dữ liệu 120 train rules; có thể vẫn rất thấp. Không tải pretrained BERT để tăng điểm ngoài điều kiện của người học.
+
+
+### Source preflight
+
+Lượt gọi Lost R08 dùng nhầm source SHA cũ, nên R06/R07 hoàn tất nhưng R08 gặp KeyError trước khi train. Lỗi ở loader đã chuẩn bị, không phải model. Đổi generator nhận SHA bằng tham số tường minh, kiểm tra SHA cụ thể trong text và validate toàn bộ config IDs trước khi chạy lượt đầu. Các lượt research lỗi không tính thêm. Chạy lại batch sạch R06–R08 để có một version hoàn tất đầy đủ.

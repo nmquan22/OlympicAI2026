@@ -22,6 +22,15 @@ def run_batch(task,run_ids,source_commit):
  base=f'https://raw.githubusercontent.com/nmquan22/OlympicAI2026/{source_commit}/experiments/nlp_aicc/code/'
  code={name:urlopen(base+name).read().decode('utf-8') for name in ['common.py',module+'.py']}
  root=Path('/kaggle/working')/task;root.mkdir(parents=True,exist_ok=True)
+ # Verify every requested configuration before training the first experiment.
+ preflight={'SOURCE_COMMIT':source_commit,'__name__':'__main__'}
+ for name,source in code.items():exec(compile(source,name,'exec'),preflight)
+ table_name={'moment-match':'MOMENT_CONFIGS','lost-interpreter':'LOST_CONFIGS','word-lookups':'WORD_CONFIGS','inverse-translation':'INVERSE_CONFIGS','alchemy':'ALCHEMY_CONFIGS'}[task]
+ available=set(preflight[table_name])
+ missing=set(run_ids)-available
+ if missing:raise ValueError(f'Requested config IDs missing from immutable source {source_commit}: {sorted(missing)}; available={sorted(available)}')
+ print('BATCH_PREFLIGHT '+json.dumps(dict(task=task,source_commit=source_commit,requested=run_ids,available=sorted(available))),flush=True)
+ preflight.clear();del preflight
  manifest={'task':task,'source_commit':source_commit,'run_ids':run_ids,'completed':[],
            'source_sha256':{k:hashlib.sha256(v.encode()).hexdigest() for k,v in code.items()}}
  for run_id in run_ids:
