@@ -1,5 +1,7 @@
 # NLP AICC · Học idea trước, đo kết quả sau
 
+Đọc [LEARNING_GUIDE.md](LEARNING_GUIDE.md) để nắm idea; [STATUS.md](STATUS.md) để xem số đã đo. Mỗi `runs/Rxx/LEARNED.md` có kết luận và giới hạn của thí nghiệm.
+
 Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. **35 lượt T4** là mục tiêu, không phải số đã chạy. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
 
 | Bài | Idea chính | Weights |
@@ -22,3 +24,5 @@ Theo dõi tiến độ và kết quả thật tại [STATUS.md](STATUS.md). Mỗ
 ## Tiết kiệm thao tác khi chờ GPU
 
 Runtime đã đo: Moment Match 81–168 giây cả khởi động; Lost Interpreter R05 114 giây; Word Lookups R01 138 giây; Alchemy R01 có phần model 12.8 giây. Ước lượng batch từ tổng runtime của các thí nghiệm cộng overhead khởi động, chỉ kiểm tra khi gần mốc đó. Thời gian chờ queue được ghi riêng, không xem là thời gian train.
+
+Dự đoán mốc kiểm tra từ dữ liệu thật: `python tools/nlp_eta.py --task word-lookups --runs 2 3 4 5 6 7`. Audit bằng chứng và số lượt duy nhất: `python tools/nlp_audit.py`. Hai lệnh này không gọi Kaggle, không cần credential. Ước lượng không bao gồm queue delay.
