@@ -1,0 +1,45 @@
+{
+  "task": "word-lookups",
+  "run_id": "R04",
+  "config": {
+    "idea": "Train-only character cohesion supplements BPE-internal boundaries",
+    "reverse": false,
+    "normalize": false,
+    "cohesion": true,
+    "dp": false,
+    "punct": false,
+    "bpe_vocab": 8192,
+    "epochs": 8,
+    "budget_seconds": 240,
+    "max_length": 96
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
+  "status": "completed",
+  "elapsed_seconds": 107.42641472816467,
+  "validation": {
+    "metric": "BPE_LM_NLL_proxy",
+    "value": 6.1068441094658725,
+    "direction": "minimize",
+    "samples": 3709,
+    "split": "train_only_10pct",
+    "boundary_f1": null
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 9272,
+    "lengths_match": true,
+    "valid_bmes": true
+  },
+  "artifacts": {
+    "pretrained_weights": false,
+    "train_only_statistics": true,
+    "tokenizer": "tokenizer.json",
+    "threshold": -0.9036913389520514,
+    "mean_bpe_length": 1.476672276989661
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}

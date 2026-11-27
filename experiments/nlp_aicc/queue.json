@@ -288,9 +288,17 @@
         {
           "run_id": "R04",
           "idea": "Kết hợp cohesion n-gram học từ train",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 6.1068441094658725,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct",
+            "boundary_f1": null
+          },
+          "report_path": "word-lookups/runs/R04/report.json"
         },
         {
           "run_id": "R05",
