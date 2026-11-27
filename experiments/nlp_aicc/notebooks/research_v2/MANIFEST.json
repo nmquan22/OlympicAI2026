@@ -1,0 +1,42 @@
+{
+  "moment-match": {
+    "path": "experiments/nlp_aicc/notebooks/research_v2/moment-match_study.ipynb",
+    "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+    "run_id": 12,
+    "executed": false,
+    "common_sha256": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "module_sha256": "255b13e910ac683ae7ef2b3bc5372192425d8e710be64ba693f3d6e21ae451eb"
+  },
+  "lost-interpreter": {
+    "path": "experiments/nlp_aicc/notebooks/research_v2/lost-interpreter_study.ipynb",
+    "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+    "run_id": 8,
+    "executed": false,
+    "common_sha256": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "module_sha256": "979ada255b49a3af6f4721ff262157190b1074895b82d5c35b53417ece1fe8f8"
+  },
+  "word-lookups": {
+    "path": "experiments/nlp_aicc/notebooks/research_v2/word-lookups_study.ipynb",
+    "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+    "run_id": 8,
+    "executed": false,
+    "common_sha256": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "module_sha256": "66cafa23b95a0cfdf5b84e10dc1aca498ef57db3978412fa93007738182cf9ac"
+  },
+  "inverse-translation": {
+    "path": "experiments/nlp_aicc/notebooks/research_v2/inverse-translation_study.ipynb",
+    "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+    "run_id": 6,
+    "executed": false,
+    "common_sha256": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "module_sha256": "032767436aa9894641129d4cbcf1ce8d536d88cdf60995d062ddc1fd85b6f6fd"
+  },
+  "alchemy": {
+    "path": "experiments/nlp_aicc/notebooks/research_v2/alchemy_study.ipynb",
+    "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+    "run_id": 10,
+    "executed": false,
+    "common_sha256": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "module_sha256": "5d99f410fd187002d07a10e107fa6641784f99cc69f35ae26adf4ea5fe11926a"
+  }
+}
