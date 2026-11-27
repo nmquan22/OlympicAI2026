@@ -23,3 +23,5 @@ Sau R06/R07, nếu vẫn không cải thiện: so BPE BiGRU được sửa paddi
 ## Chờ GPU
 
 Giữ tối đa hai Saved Version. Batch còn lại Word Lookups dự kiến khoảng 14 phút, không mở trạng thái từng phút. Inverse R01 dùng canary bốn ví dụ và Transformers 4.57.1; chỉ kiểm tra sau khoảng 4–5 phút. Tách lỗi cài package, lỗi canary, runtime train và thời gian queue. Thí nghiệm lỗi không tính vào số đã hoàn tất.
+
+R08 Lost Interpreter đã chuẩn bị code: BiGRU train từ đầu với packed sequences, mean/max pooling có mask, SmoothL1 beta 0.2. So sánh cả một ứng viên (backbone + loss), không gọi là ablation chỉ đổi backbone. Thêm log chương trình train và nhóm lỗi theo độ dài để quyết định thử value channel; chưa có kết quả R08.

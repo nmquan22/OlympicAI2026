@@ -15,6 +15,8 @@ LOST_CONFIGS={
 }
 
 
+LOST_CONFIGS[8]={**LOST_CONFIGS[1],"idea":"Scratch BPE BiGRU with packed sequences, masked pooling and SmoothL1","backbone":"bigru","loss":"smooth_l1"}
+
 def program_text(value,structured):
     text=str(value).replace(";"," ; ")
     if structured:
@@ -53,6 +55,22 @@ class ProgramTransformer(nn.Module):
         return self.head(final).squeeze(-1),self.auxiliary(representation).squeeze(-1)
 
 
+class ProgramBiGRU(nn.Module):
+    def __init__(self,vocab,dim=128):
+        super().__init__()
+        self.embedding=nn.Embedding(vocab,dim,padding_idx=0)
+        self.gru=nn.GRU(dim,dim,2,batch_first=True,bidirectional=True,dropout=.1)
+        self.head=nn.Sequential(nn.Linear(dim*4,256),nn.GELU(),nn.Dropout(.1),nn.Linear(256,128),nn.GELU(),nn.Linear(128,1))
+        self.auxiliary=nn.Linear(dim*4,1)
+    def forward(self,ids,numbers):
+        lengths=ids.ne(0).sum(1).clamp(min=1).cpu()
+        packed=nn.utils.rnn.pack_padded_sequence(self.embedding(ids),lengths,batch_first=True,enforce_sorted=False)
+        encoded,_=self.gru(packed)
+        h,_=nn.utils.rnn.pad_packed_sequence(encoded,batch_first=True,total_length=ids.shape[1])
+        representation=pools(h,ids.eq(0))
+        return self.head(representation).squeeze(-1),self.auxiliary(representation).squeeze(-1)
+
+
 def run_lost(run_id):
     config={**LOST_CONFIGS[run_id],"epochs":45,"budget_seconds":300,"batch_size":128,"bpe_vocab":2048,"max_length":192}
     info=start_run("lost-interpreter",run_id,config)
@@ -60,6 +78,7 @@ def run_lost(run_id):
     train=pd.read_csv(root/"train.csv");test=pd.read_csv(root/"test.csv")
     assert {"program","output"}.issubset(train.columns) and {"ID","program"}.issubset(test.columns)
     tr_idx,va_idx=train_test_split(np.arange(len(train)),test_size=0.15,random_state=SEED)
+    if run_id>=8:print("TRAIN_PROGRAM_EXAMPLES "+train.iloc[tr_idx[:8]][["program","output"]].to_json(orient="records"),flush=True)
     texts=[program_text(p,config["structure"]) for p in train.program]
     test_texts=[program_text(p,config["structure"]) for p in test.program]
     tokenizer=make_bpe((texts[i] for i in tr_idx),config["bpe_vocab"])
@@ -82,7 +101,7 @@ def run_lost(run_id):
     aux=(aux-am)/astd
     tr=TensorDataset(torch.from_numpy(ids[tr_idx]),torch.from_numpy(num[tr_idx]),
                      torch.from_numpy(target[tr_idx]),torch.from_numpy(aux[tr_idx]))
-    model=ProgramTransformer(tokenizer.get_vocab_size(),config).to(DEVICE)
+    model=(ProgramBiGRU(tokenizer.get_vocab_size()) if config.get("backbone")=="bigru" else ProgramTransformer(tokenizer.get_vocab_size(),config)).to(DEVICE)
     optim=torch.optim.AdamW(model.parameters(),lr=8e-4,weight_decay=0.01)
     scaler=torch.amp.GradScaler("cuda")
     loader=DataLoader(tr,batch_size=config["batch_size"],shuffle=True,num_workers=0)
@@ -103,7 +122,7 @@ def run_lost(run_id):
             optim.zero_grad(set_to_none=True)
             with torch.autocast("cuda",dtype=torch.float16):
                 pred,aux_pred=model(x.to(DEVICE),n.to(DEVICE))
-                loss=F.l1_loss(pred,y.to(DEVICE))
+                loss=F.smooth_l1_loss(pred,y.to(DEVICE),beta=.2) if config.get("loss")=="smooth_l1" else F.l1_loss(pred,y.to(DEVICE))
                 if config["aux"]:loss=loss+0.05*F.mse_loss(aux_pred,a.to(DEVICE))
             assert torch.isfinite(loss)
             scaler.scale(loss).backward();scaler.unscale_(optim)
@@ -120,7 +139,13 @@ def run_lost(run_id):
     model.load_state_dict(best_state)
     val=predict_ids(ids[va_idx],num[va_idx]);pred=predict_ids(test_ids,test_num)
     assert np.isfinite(pred).all()
-    pd.DataFrame(dict(row_index=va_idx,truth=truth[va_idx],prediction=val)).to_csv(OUT/"validation_predictions.csv",index=False)
+    validation_cases=pd.DataFrame(dict(row_index=va_idx,program=train.program.iloc[va_idx].tolist(),truth=truth[va_idx],prediction=val))
+    validation_cases["absolute_error"]=np.abs(val-truth[va_idx])
+    validation_cases["instructions"]=validation_cases.program.map(lambda p:len(str(p).split(";")))
+    validation_cases.to_csv(OUT/"validation_predictions.csv",index=False)
+    print("VALIDATION_WORST "+validation_cases.nlargest(8,"absolute_error").to_json(orient="records"),flush=True)
+    by_length=validation_cases.groupby(pd.cut(validation_cases.instructions,[0,4,8,16,10000]),observed=True).absolute_error.agg(["mean","count"])
+    print("ERROR_BY_LENGTH "+by_length.to_json(),flush=True)
     pd.DataFrame(dict(row_index=tr_idx)).to_csv(OUT/"train_indices.csv",index=False)
     torch.save(dict(state=best_state,y_mean=ym,y_std=ys,numeric_mean=center,numeric_std=scale),OUT/"model.pt")
     sub=pd.DataFrame(dict(ID=test.ID,output=np.rint(pred).astype(np.int64)))
