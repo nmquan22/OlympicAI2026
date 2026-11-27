@@ -1,0 +1,55 @@
+{
+  "task": "inverse-translation",
+  "run_id": "R05",
+  "config": {
+    "idea": "Coarse-to-fine proposal search top-8 then top-32",
+    "topk": 32,
+    "loss": "margin",
+    "search": "coarse",
+    "restart": 0,
+    "probe_batch": 512,
+    "candidate_batch": 64,
+    "budget_seconds": 720
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "tokenizers": "0.22.2",
+    "transformers": "4.57.1"
+  },
+  "status": "completed",
+  "elapsed_seconds": 13.470340251922607,
+  "peak_gpu_memory_mb": 358.0478515625,
+  "validation": {
+    "metric": "official_score_0_100",
+    "value": 100.0,
+    "direction": "maximize",
+    "samples": 24,
+    "split": "explicit_public_targets",
+    "official": {
+      "score": 100.0,
+      "exact_rate": 1.0,
+      "mean_similarity": 1.0,
+      "valid_rate": 1.0
+    }
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 24,
+    "token_ranges_valid": true,
+    "lengths_valid": true
+  },
+  "artifacts": {
+    "probe_seconds": 3.9198343753814697,
+    "probe_batches": 46,
+    "candidate_evaluations": 10376,
+    "model_calls": 228,
+    "checkpoint": "provided FSMT only",
+    "example_canary_matches": 4
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}

@@ -392,9 +392,22 @@
         {
           "run_id": "R05",
           "idea": "Coarse-to-fine top-8→32",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 4,
+          "metric": {
+            "metric": "official_score_0_100",
+            "value": 100.0,
+            "direction": "maximize",
+            "samples": 24,
+            "split": "explicit_public_targets",
+            "official": {
+              "score": 100.0,
+              "exact_rate": 1.0,
+              "mean_similarity": 1.0,
+              "valid_rate": 1.0
+            }
+          },
+          "report_path": "inverse-translation/runs/R05/report.json"
         },
         {
           "run_id": "R06",
