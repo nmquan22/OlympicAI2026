@@ -4,5 +4,13 @@
   "script_version_id": 374702140,
   "status": "completed",
   "evidence_method": "observed_rendered_kaggle_output",
-  "full_notebook_export_available": false
+  "full_notebook_export_available": false,
+  "submission_observation": {
+    "url": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups/submissions",
+    "description_prefix": "Post-contest practice R07:",
+    "status": "Complete (after deadline)",
+    "public_score": 0.9097,
+    "private_score": 0.9113,
+    "output_file": "word-lookups/R07/submission.csv"
+  }
 }

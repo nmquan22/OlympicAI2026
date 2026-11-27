@@ -6,7 +6,7 @@
 |---|---:|---|
 | [Moment Match](moment-match/IDEAS.md) | 7/7 | R04: 0.69122 accuracy |
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
-| [Word Lookups](word-lookups/IDEAS.md) | 7/7 | Chưa xếp hạng segmentation: cần Boundary F1 |
+| [Word Lookups](word-lookups/IDEAS.md) | 7/7 | R07: public 0.9097, private 0.9113 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 7/7 | R01: 100.00000 official_score_0_100 |
 | [Alchemy](alchemy/IDEAS.md) | 7/7 | R02: 0.13333 bijective_holdout_accuracy |
 
@@ -43,13 +43,13 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 
 | Run | Ý tưởng | Kết quả | Nhật ký |
 |---|---|---|---|
-| R01 | Transformer surprisal với offset-safe BPE | 6.10684 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R01/LEARNED.md) |
-| R02 | Surprisal hai chiều | 5.80200 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R02/LEARNED.md) |
-| R03 | Chuẩn hóa surprisal theo vị trí/độ dài | 6.10684 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R03/LEARNED.md) |
-| R04 | Kết hợp cohesion n-gram học từ train | 6.10684 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R04/LEARNED.md) |
-| R05 | DP với prior độ dài từ | 6.10684 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R05/LEARNED.md) |
-| R06 | Punctuation-aware BMES constraints | 6.10684 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R06/LEARNED.md) |
-| R07 | Kết hợp hai chiều + cohesion + DP | 5.80200 BPE_LM_NLL_proxy | [Đọc](word-lookups/runs/R07/LEARNED.md) |
+| R01 | Transformer surprisal với offset-safe BPE | public 0.7559, private 0.7560 Boundary F1 | [Đọc](word-lookups/runs/R01/LEARNED.md) |
+| R02 | Surprisal hai chiều | public 0.8179, private 0.8214 Boundary F1 | [Đọc](word-lookups/runs/R02/LEARNED.md) |
+| R03 | Chuẩn hóa surprisal theo vị trí/độ dài | public 0.7604, private 0.7594 Boundary F1 | [Đọc](word-lookups/runs/R03/LEARNED.md) |
+| R04 | Kết hợp cohesion n-gram học từ train | public 0.8766, private 0.8775 Boundary F1 | [Đọc](word-lookups/runs/R04/LEARNED.md) |
+| R05 | DP với prior độ dài từ | public 0.7578, private 0.7583 Boundary F1 | [Đọc](word-lookups/runs/R05/LEARNED.md) |
+| R06 | Punctuation-aware BMES constraints | public 0.8196, private 0.8215 Boundary F1 | [Đọc](word-lookups/runs/R06/LEARNED.md) |
+| R07 | Kết hợp hai chiều + cohesion + DP | public 0.9097, private 0.9113 Boundary F1 | [Đọc](word-lookups/runs/R07/LEARNED.md) |
 
 ## Inverse Translation
 

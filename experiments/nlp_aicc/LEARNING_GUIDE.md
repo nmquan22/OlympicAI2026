@@ -36,6 +36,8 @@ Surprisal lớn có thể báo chuyển từ nhưng cũng có thể do ký tự 
 
 **Ba phép đo khác nhau:** NLL đo dự đoán token; Boundary F1 đo ranh giới; kiểm tra BMES đo định dạng. Chuỗi đúng chiều dài chưa có nghĩa tách từ tốt. NLL mỗi token cũng không so ngang khi tokenizer/corpus đổi. Giữ các submission cố định trước khi xem điểm; không đọc gold test để chọn threshold rồi gọi là validation.
 
+Kết quả đã chấm public/private: R01 0.7559/0.7560; R02 hai chiều 0.8179/0.8214; R03 chuẩn hóa 0.7604/0.7594; R04 PMI 0.8766/0.8775; R05 DP 0.7578/0.7583; R06 dấu câu 0.8196/0.8215; R07 kết hợp 0.9097/0.9113. PMI và punctuation đem lại cải thiện lớn dù NLL giữ nguyên; R07 cùng NLL với R02 nhưng F1 hơn0.09. Tách từ ở đây cải thiện nhờ tín hiệu/decoder cấu trúc.
+
 ## 4. Inverse Translation: làm mục tiêu dễ tối ưu hơn
 
 Đây là tìm input token sao cho model dịch cho ra một target đã được đề cung cấp. Không train model mới; trọng số và token ID của FSMT phải giữ nguyên. Tự BPE lại sẽ làm sai mapping.

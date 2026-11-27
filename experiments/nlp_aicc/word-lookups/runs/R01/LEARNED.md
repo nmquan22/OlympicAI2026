@@ -7,3 +7,7 @@ Flow: BPE train-only → causal Transformer từ đầu → surprisal ở vị t
 R02–R07 kiểm tra hướng ngược, chuẩn hóa, PMI, DP length prior và dấu câu. Cần điểm segmentation để kết luận cải thiện tách từ, không chọn NLL thay thế F1.
 
 Bằng chứng: số được đọc từ output Kaggle thật; bản lưu này là tóm tắt các trường đo, không giả lập notebook đã execute. Xem version trong evidence.json để đọc toàn bộ log.
+
+## Boundary F1 thật sau khi đóng băng output
+
+Kaggle public **0.7559**, private **0.7560**; UI hiển thị bốn chữ số. Đây là late submission luyện tập, không phải LM validation. Không đọc gold test, không chỉnh threshold sau khi thấy các điểm này.
