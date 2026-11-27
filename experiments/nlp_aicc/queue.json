@@ -370,5 +370,22 @@
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory."
     }
-  ]
+  ],
+  "execution_mode": "independent_gpu_experiments_batched_in_saved_versions",
+  "polling_policy": {
+    "initial_check_seconds": {
+      "moment-match": 180,
+      "lost-interpreter": 180,
+      "word-lookups": 180,
+      "alchemy": 90,
+      "inverse-translation": 240
+    },
+    "batch_check": "sum of measured runtimes plus startup buffer; work on research while waiting",
+    "queued_backoff_seconds": [
+      120,
+      240,
+      480,
+      900
+    ]
+  }
 }

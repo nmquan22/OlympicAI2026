@@ -14,7 +14,11 @@ Mặc định BPE fit trên training split và model khởi tạo ngẫu nhiên.
 
 Lời giải được dẫn nguồn là reference BTC. Chỉ gọi SOTA nếu có bằng chứng leaderboard/paper phù hợp cùng điều kiện. Điểm từ nguồn, validation tự chạy và leaderboard tự nộp luôn tách riêng. Các thay đổi là giả thuyết, không hứa chắc tăng điểm.
 
-Sau **mỗi lượt hoàn tất** sẽ commit nhật ký vào repo, tối đa hai lượt Kaggle đang chạy. Mỗi báo cáo cần: input/output mẫu; flow baseline → reference → thay đổi; loss; cách decode; metric thật; chi phí; 3 nhóm lỗi; một câu kết luận học được gì.
+Sau khi lấy được output sẽ commit riêng nhật ký cho từng thí nghiệm, tối đa hai Saved Version Kaggle đang chạy. Một version có thể chứa nhiều thí nghiệm độc lập; mỗi thí nghiệm khởi tạo mới model/optimizer/seed, giữ split cũ và lưu thư mục output riêng. Số thí nghiệm GPU và số Saved Version được báo riêng. Mỗi báo cáo cần: input/output mẫu; flow baseline → reference → thay đổi; loss; cách decode; metric thật; chi phí; 3 nhóm lỗi; một câu kết luận học được gì.
 
 
 Theo dõi tiến độ và kết quả thật tại [STATUS.md](STATUS.md). Mỗi thư mục `runs/Rxx/LEARNED.md` có kết luận của riêng lượt đó; không lấy điểm trong nguồn làm kết quả đã chạy.
+
+## Tiết kiệm thao tác khi chờ GPU
+
+Runtime đã đo: Moment Match 81–168 giây cả khởi động; Lost Interpreter R05 114 giây; Word Lookups R01 138 giây; Alchemy R01 có phần model 12.8 giây. Ước lượng batch từ tổng runtime của các thí nghiệm cộng overhead khởi động, chỉ kiểm tra khi gần mốc đó. Thời gian chờ queue được ghi riêng, không xem là thời gian train.
