@@ -726,9 +726,20 @@
         {
           "run_id": "R09",
           "idea": "Tied input/result role space + residual additive composition",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 4,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.16666666666666666,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.16666666666666666,
+            "independent_accuracy": 0.16666666666666666,
+            "greedy_accuracy": 0.13333333333333333,
+            "duplicate_argmax_count": 13
+          },
+          "report_path": "alchemy/runs/R09/report.json"
         }
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",

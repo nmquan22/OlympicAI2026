@@ -1,0 +1,50 @@
+{
+  "task": "alchemy",
+  "run_id": "R09",
+  "config": {
+    "idea": "Tie input/result roles and use additive residual composition",
+    "hard": false,
+    "full": true,
+    "layers": 2,
+    "probability": false,
+    "sinkhorn": false,
+    "composer": true,
+    "tied_roles": true,
+    "steps": 240,
+    "budget_seconds": 180,
+    "bpe_vocab": 1024,
+    "pretrained": false
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "1c072c8e6632523ce2d063e63b96f05a1787f1c4",
+  "status": "completed",
+  "elapsed_seconds": 25.227909326553345,
+  "peak_gpu_memory_mb": 37.58837890625,
+  "validation": {
+    "metric": "bijective_holdout_accuracy",
+    "value": 0.16666666666666666,
+    "direction": "maximize",
+    "samples": 30,
+    "split": "fixed_result_disjoint_train_holdout",
+    "hungarian_accuracy": 0.16666666666666666,
+    "independent_accuracy": 0.16666666666666666,
+    "greedy_accuracy": 0.13333333333333333,
+    "duplicate_argmax_count": 13
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 70,
+    "results_unique": true,
+    "allowed_results": true
+  },
+  "artifacts": {
+    "pretrained_weights": false,
+    "tokenizer": "train-only BPE",
+    "swap_gap": 0,
+    "training_rows": 120
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}
