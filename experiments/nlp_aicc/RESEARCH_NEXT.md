@@ -44,3 +44,5 @@ Lượt gọi Lost R08 dùng nhầm source SHA cũ, nên R06/R07 hoàn tất nh�
 R08 đạt68.93%, R09 max BPE alignment67.71%, đều chưa vượt IDF69.12%. Đọc lại reference cho thấy họ pad thêm một hàng 0 vào embedding matrix rồi shift word IDs +1; word vectors trong data bắt đầu ở index0 thật. R10 giữ tokenizer BPE, thêm một nhánh **feature** từ nguyên word vectors được đề cấp (frozen) → projection → max late interaction. Ghép hai grid BPE + word ở mức feature map, CNN nhận bốn channel. Không tải model/tokenizer bên ngoài.
 
 Giả thuyết: trung bình vector của nhiều từ vào cùng BPE piece làm nhòe nghĩa, nhất là noun/action hiếm. Đây là giả thuyết được kiểm tra, chưa có điểm R10. Tokenizer của model vẫn là BPE; nhánh phụ là lookup feature từ tài nguyên bài cấp. Điều kiện khác với reference word-only nên không gọi là tái lập exact SOTA.
+
+Alchemy R08 đạt3/30 dù symmetry gap0. R09 thử tied role space và query a+b+residual nhỏ để chuyển thông tin của các tên đã xuất hiện ở input sang result role. Đây là giả thuyết composition từ train rules, không thêm world facts hoặc pretrained.

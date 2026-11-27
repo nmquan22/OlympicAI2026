@@ -715,6 +715,13 @@
             "duplicate_argmax_count": 12
           },
           "report_path": "alchemy/runs/R08/report.json"
+        },
+        {
+          "run_id": "R09",
+          "idea": "Tied input/result role space + residual additive composition",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
         }
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",
