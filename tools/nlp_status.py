@@ -9,11 +9,13 @@ def render_status():
  for task in queue['items']:
   completed=[r for r in task['runs'] if r['status']=='completed'];total+=len(completed)
   metric='Chưa có kết quả'
-  if completed:
+  if completed and completed[0]['metric']['metric']=='BPE_LM_NLL_proxy':
+   metric='Chưa xếp hạng segmentation: cần Boundary F1'
+  elif completed:
    best=sorted(completed,key=lambda r:r['metric']['value'],reverse=completed[0]['metric']['direction']=='maximize')[0]
    m=best['metric'];metric=f"{best['run_id']}: {m['value']:.5f} {m['metric']}"
   rows.append(f"| [{task['title']}]({task['id']}/IDEAS.md) | {len(completed)}/7 | {metric} |")
- lines=['# Tiến độ thực nghiệm NLP', '',f'**{total}/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.', '', '| Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |','|---|---:|---|',*rows,'', 'Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.', '']
+ lines=['# Tiến độ thực nghiệm NLP', '',f'**{total} thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.', '', '| Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |','|---|---:|---|',*rows,'', 'Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.', '']
  for task in queue['items']:
   lines += [f"## {task['title']}",'','| Run | Ý tưởng | Kết quả | Nhật ký |','|---|---|---|---|']
   for r in task['runs']:
