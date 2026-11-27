@@ -1,7 +1,7 @@
 {
   "success": false,
-  "successful_unique_experiments": 52,
-  "scored_unique_submissions": 52,
+  "successful_unique_experiments": 54,
+  "scored_unique_submissions": 54,
   "by_task": {
     "moment-match": {
       "successful_unique": 12,
@@ -24,7 +24,7 @@
       "minimum_seven_met": true
     },
     "tally": {
-      "successful_unique": 1,
+      "successful_unique": 3,
       "minimum_seven_met": false
     }
   },

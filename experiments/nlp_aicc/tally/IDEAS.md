@@ -58,3 +58,8 @@ Trước khi có số T4, 480 giây là **trần train cấu hình**, không ph�
 - R03: Saved Version3/script374853890, CRF per-type count composite likelihood; [job](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853890).
 
 Cả hai dùng nguồn bất biến `dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598`, trần480s train/lượt, đang queued T4x2 lúc20:47 giờ Việt Nam. Chưa có kết quả hoặc canary pass được quan sát của R02/R03. Không cần Quân điều chỉnh từng lượt; lịch sẽ tự đọc kết quả, chọn nâng cấp trong phạm vi đã cho phép, ghi Git và thông báo khi có số mới.
+
+
+## Kết quả R02/R03 (đã chấm)
+
+Tally hiện3/7, tổng NLP54 cấu hình/scored. R02: val.444444, public.30394/private.30351,335.166s. R03: val.444444, public.35301/private.35300,374.102s. Canary cả hai pass. R03 cải thiện public và count vector nhưng ORG vẫn0/5, năm span hụt biên; chưa giải quyết được vị trí. [R03 LEARNED](runs/R03/LEARNED.md). Chuẩn bị R04 character features và R05 approximate posterior projection; chưa có kết quả của hai hướng đó.

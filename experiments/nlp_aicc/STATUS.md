@@ -1,6 +1,6 @@
 # Tiến độ thực nghiệm NLP
 
-**52 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 42 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**54 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 42 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
@@ -9,7 +9,7 @@
 | [Word Lookups](word-lookups/IDEAS.md) | 9/7 | R08: public 0.9150, private 0.9171 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 9/7 | R09: public 100.0000, private 100.0000 Competition score |
 | [Alchemy](alchemy/IDEAS.md) | 11/7 | R01: public 0.0285, private 0.0000 Accuracy |
-| [Tally](tally/IDEAS.md) | 1/7 | R01: public 0.2971, private 0.3008 Entity-span micro F1 |
+| [Tally](tally/IDEAS.md) | 3/7 | R03: public 0.3530, private 0.3530 Entity-span micro F1 |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -94,5 +94,5 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | Run | Ý tưởng | Kết quả | Nhật ký |
 |---|---|---|---|
 | R01 | Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts | 0.44444 entity_span_micro_F1; Kaggle 0.2971/0.3008 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R01/LEARNED.md) |
-| R02 | CRF exact pair-marginal expected run counts | queued | Chưa có kết quả |
-| R03 | CRF per-type count composite likelihood | queued | Chưa có kết quả |
+| R02 | CRF exact pair-marginal expected run counts | 0.44444 entity_span_micro_F1; Kaggle 0.3039/0.3035 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R02/LEARNED.md) |
+| R03 | CRF per-type count composite likelihood | 0.44444 entity_span_micro_F1; Kaggle 0.3530/0.3530 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R03/LEARNED.md) |

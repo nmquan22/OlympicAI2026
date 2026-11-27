@@ -1575,7 +1575,7 @@
       "title": "Tally",
       "competition_slug": "tally-aicc-round-11",
       "rules_accepted": true,
-      "status": "queued",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
@@ -1611,18 +1611,64 @@
         {
           "run_id": "R02",
           "idea": "CRF exact pair-marginal expected run counts",
-          "status": "queued",
+          "status": "completed",
           "notebook_version": 2,
           "script_version_id": 374853542,
-          "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598"
+          "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.4444444444444444,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R02/report.json",
+          "leaderboard_public": 0.30394,
+          "leaderboard_private": 0.30351,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R02",
+            "public": 0.30394,
+            "private": 0.30351,
+            "version_id": 374853542,
+            "output_file": "tally/R02/submission.csv",
+            "description_note": "Post-contest practice Tally R02: frozen scratch experiment; version2/script374853542. Source/output verified; Complete(after deadline)."
+          }
         },
         {
           "run_id": "R03",
           "idea": "CRF per-type count composite likelihood",
-          "status": "queued",
+          "status": "completed",
           "notebook_version": 3,
           "script_version_id": 374853890,
-          "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598"
+          "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.4444444444444444,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R03/report.json",
+          "leaderboard_public": 0.35301,
+          "leaderboard_private": 0.353,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R03",
+            "public": 0.35301,
+            "private": 0.353,
+            "version_id": 374853890,
+            "output_file": "tally/R03/submission.csv",
+            "description_note": "Post-contest practice Tally R03: frozen scratch experiment; version3/script374853890. Source/output verified; Complete(after deadline)."
+          }
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
@@ -1649,7 +1695,7 @@
     ]
   },
   "phase": "tally_in_progress",
-  "successful_unique_experiments": 52,
+  "successful_unique_experiments": 54,
   "minimum_successful_experiments": 42,
   "saved_versions_observed": 30,
   "counting_note": "Completed unique model/decoder configurations counted from run records; queued jobs, retries and Saved Versions are not additional completed configurations.",

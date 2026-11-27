@@ -1,44 +1,19 @@
 {
   "task": "tally",
   "competition_slug": "tally-aicc-round-11",
-  "status": "R02_R03_queued",
+  "status": "preparing_R04_R05",
   "rules_accepted": true,
-  "successful_unique_experiments": 1,
-  "scored_unique_submissions": 1,
+  "successful_unique_experiments": 3,
+  "scored_unique_submissions": 3,
   "minimum_successful_experiments": 7,
   "runnable_configurations": [
     "R01",
     "R02",
     "R03"
   ],
-  "active_saved_versions": [
-    {
-      "version": 2,
-      "script_version_id": 374853542,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853542",
-      "run_ids": [
-        "R02"
-      ],
-      "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598",
-      "status": "queued",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T13:47:12Z"
-    },
-    {
-      "version": 3,
-      "script_version_id": 374853890,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853890",
-      "run_ids": [
-        "R03"
-      ],
-      "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598",
-      "status": "queued",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T13:47:12Z"
-    }
-  ],
-  "next_action": "Check exact R02/R03 saved jobs; read canary/traceback/results, submit once, analyze measured failures and continue toward at least seven configurations without waiting for user adjustments.",
-  "code_verification": "AST plus pure IO-span/grammar and exhaustive independent expected-count canaries passed locally; torch/tokenizers unavailable locally, GPU execution remains unverified.",
+  "active_saved_versions": [],
+  "next_action": "Prepare scratch character features and approximate posterior projection from measured R02/R03 failures; then launch at most2 T4 saved versions.",
+  "code_verification": "R02/R03 T4 exhaustive CRF canaries passed; completed reports observed and both submissions scored.",
   "polling": {
     "unmeasured_train_budget_seconds": 480,
     "first_running_check_minutes": 15,
@@ -69,6 +44,26 @@
       "peak_gpu_memory_mb": 92.43896484375,
       "version": 1,
       "script_version_id": 374844445
+    },
+    {
+      "run_id": "R02",
+      "validation_f1": 0.4444444444444444,
+      "public_score": 0.30394,
+      "private_score": 0.30351,
+      "code_seconds": 335.165988445282,
+      "peak_gpu_memory_mb": 92.44482421875,
+      "version": 2,
+      "script_version_id": 374853542
+    },
+    {
+      "run_id": "R03",
+      "validation_f1": 0.4444444444444444,
+      "public_score": 0.35301,
+      "private_score": 0.353,
+      "code_seconds": 374.10202836990356,
+      "peak_gpu_memory_mb": 136.32763671875,
+      "version": 3,
+      "script_version_id": 374853890
     }
   ]
 }

@@ -51,3 +51,8 @@ Tổng51 kết quả và51 submissions ở trên thuộc năm bài đã hoàn t�
 ### Tally R01 có kết quả
 
 R01 đã hoàn tất T4: code148.875s, peak92.439MiB; val spanF1.444444 trên10câu (TP6/FP6/FN9), Kaggle public.29710/private.30080, Complete(afterdeadline). Tổng hiện52 cấu hình hoàn tất/scored; Tally mới1/7. Lỗi chính: bỏ tổ chức, hụt biên tên; weak countMAE.22375 và31.5% đúng vector. [Nhật ký R01](tally/runs/R01/LEARNED.md); R02/R03 sẽ thử CRF pair expectations và count composite likelihood sau canary. Các đoạn51 phía trên là snapshot năm bài cũ.
+
+
+### Tally R02/R03 đã hoàn tất và nộp
+
+Tổng54 cấu hình hoàn tất/scored, Tally3/7. R02 CRF expectations: val.444444, public.30394/private.30351,335.166s/92.445MiB. R03 count composite likelihood: val.444444, public.35301/private.35300,374.102s/136.328MiB. Cả hai pass exhaustive CRF canary. R03 weak exact count vector36.125% so31.5% củaR01, nhưng ORG vẫn0/5 và lỗi biên cùng loại5 so3. Xem [R02](tally/runs/R02/LEARNED.md), [R03](tally/runs/R03/LEARNED.md).
