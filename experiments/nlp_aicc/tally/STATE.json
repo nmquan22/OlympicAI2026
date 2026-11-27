@@ -9,7 +9,9 @@
   "runnable_configurations": [
     "R01",
     "R02",
-    "R03"
+    "R03",
+    "R04",
+    "R05"
   ],
   "active_saved_versions": [],
   "next_action": "Prepare scratch character features and approximate posterior projection from measured R02/R03 failures; then launch at most2 T4 saved versions.",
@@ -65,5 +67,6 @@
       "version": 3,
       "script_version_id": 374853890
     }
-  ]
+  ],
+  "new_source_verification": "R04/R05 source AST valid; new teacher-KL canary and character model await actual T4 execution."
 }

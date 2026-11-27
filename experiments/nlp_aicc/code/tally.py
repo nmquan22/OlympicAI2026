@@ -20,6 +20,11 @@ TALLY_CONFIGS[2] = {**TALLY_CONFIGS[1], 'idea': 'Scratch BiGRU CRF with exact pa
 TALLY_CONFIGS[3] = {**TALLY_CONFIGS[2], 'idea': 'CRF per-type count likelihood through count-augmented dynamic programming',
                    'objective': 'crf_count_composite_likelihood',
                    'papers': ['ICML2009-393', 'P08-1099', 'N16-1030']}
+TALLY_CONFIGS[4] = {**TALLY_CONFIGS[3], 'idea': 'Byte character CNN supplements mean-pooled BPE for unseen entity words',
+                   'char_cnn': True, 'papers': ['N16-1030', 'ICML2009-393']}
+TALLY_CONFIGS[5] = {**TALLY_CONFIGS[3], 'idea': 'Approximate joint moment-constrained CRF teacher and stop-gradient KL student',
+                   'objective': 'approximate_posterior_projection', 'pr_steps': 6, 'pr_rate': .5,
+                   'papers': ['ganchev10a', 'P08-1099', 'N16-1030']}
 
 
 def tally_spans(tags):
@@ -172,6 +177,66 @@ class TallyCRF(nn.Module):
         return result
 
 
+def tally_crf_statistics(e, mask, start, transition, end):
+    """Exact marginals for sentence-dependent chain potentials (teacher only)."""
+    alpha=start+e[:,0]; forward=[alpha]
+    for t in range(1,e.shape[1]):
+        new=torch.logsumexp(alpha[:,:,None]+transition,dim=1)+e[:,t]
+        alpha=torch.where(mask[:,t,None],new,alpha); forward.append(alpha)
+    z=torch.logsumexp(alpha+end,dim=1)
+    beta=end.expand(e.shape[0],-1); backward=[None]*e.shape[1]; backward[-1]=beta
+    for t in range(e.shape[1]-2,-1,-1):
+        new=torch.logsumexp(transition+e[:,t+1,None,:]+beta[:,None,:],dim=2)
+        beta=torch.where(mask[:,t+1,None],new,beta); backward[t]=beta
+    nodes=[]; pair_sum=torch.zeros_like(transition).expand(e.shape[0],-1,-1).clone()
+    for t in range(e.shape[1]):
+        lognode=forward[t]+backward[t]-z[:,None]
+        nodes.append(lognode.masked_fill(~mask[:,t,None],-10000.).exp())
+        if t:
+            logpair=forward[t-1][:,:,None]+transition+e[:,t,None,:]+backward[t][:,None,:]-z[:,None,None]
+            pair_sum=pair_sum+logpair.masked_fill(~mask[:,t,None,None],-10000.).exp()
+    node=torch.stack(nodes,dim=1)
+    last=node.gather(1,(mask.sum(1)-1)[:,None,None].expand(-1,1,e.shape[-1])).squeeze(1)
+    off=1-torch.eye(e.shape[-1],device=e.device,dtype=e.dtype)
+    counts=node[:,0,1:]+(pair_sum*off).sum(1)[:,1:]
+    return dict(z=z,node=node,pair_sum=pair_sum,last=last,counts=counts)
+
+
+def tally_pr_loss(crf, emissions, mask, target, steps=6, rate=.5, return_teacher=False):
+    """Finite dual updates: approximate PR, not exact hard-count conditioning.
+
+    q(y) proportional to p(y) exp(lambda dot N(y)). All type moments are
+    adjusted jointly in one six-state chain. q is detached in the student KL.
+    """
+    e=emissions if emissions.dtype==torch.float64 else emissions.float()
+    off=1-torch.eye(e.shape[-1],device=e.device,dtype=e.dtype)
+    with torch.no_grad():
+        lam=torch.zeros(e.shape[0],e.shape[-1]-1,device=e.device,dtype=e.dtype)
+        for iteration in range(steps+1):
+            destination=torch.cat([torch.zeros_like(lam[:,:1]),lam],dim=1)
+            qs=crf.start.detach()+destination
+            qt=crf.transition.detach()[None]+destination[:,None,:]*off
+            q=tally_crf_statistics(e.detach(),mask,qs,qt,crf.end.detach())
+            residual=q['counts']-target
+            if iteration==0: before=float(residual.abs().mean())
+            if iteration<steps:
+                # A preconditioned equality-constraint dual descent; truncation
+                # and bounded lambda leave residuals, especially for zero counts.
+                lam=(lam-rate*residual/(target+1)).clamp(-10,10)
+        qscore=(q['node']*e.detach()).sum((1,2))+(q['pair_sum']*qt).sum((1,2))
+        qscore=qscore+(q['node'][:,0]*qs).sum(1)+(q['last']*crf.end.detach()).sum(1)
+        entropy=q['z']-qscore
+    _,_,z=crf.forward_tables(e,mask)
+    score=(q['node']*e).sum((1,2))+(q['pair_sum']*crf.transition).sum((1,2))
+    score=score+(q['node'][:,0]*crf.start).sum(1)+(q['last']*crf.end).sum(1)
+    kl=z-score-entropy
+    loss=(kl/mask.sum(1)).mean()
+    stats=dict(before_count_mae=before,after_count_mae=float(residual.abs().mean()),
+               teacher_kl=float(kl.detach().mean()),mean_abs_lambda=float(lam.abs().mean()),
+               dual_steps=steps,exact_projection=False)
+    return (loss,stats,q,lam) if return_teacher else (loss,stats)
+
+
 def tally_crf_canary():
     """Brute force validates partition, counts, Viterbi and finite gradients."""
     import itertools
@@ -209,12 +274,24 @@ def tally_crf_canary():
                     if bool(selected.any()): assert torch.allclose(numerator[b,c],torch.logsumexp(values[b][selected],0),atol=1e-9)
                     else: assert numerator[b,c] < -1000
         counts=torch.tensor([[1,1],[0,1]],device=DEVICE)
-        loss=z.mean()+expected.square().mean()+crf.count_nll(emissions,mask,counts)
+        pr,pr_stats,q,lam=tally_pr_loss(crf,emissions,mask,counts,return_teacher=True)
+        brute_kl=[]
+        for b in [0,1]:
+            plog=values[b]-torch.logsumexp(values[b],0)
+            qscore=values[b].detach()+truths[b]@lam[b]
+            qlog=qscore-torch.logsumexp(qscore,0)
+            brute_kl.append((qlog.exp()*(qlog-plog)).sum()/mask[b].sum())
+        assert torch.allclose(pr,torch.stack(brute_kl).mean(),atol=1e-9)
+        assert pr_stats['after_count_mae'] < pr_stats['before_count_mae']
+        assert not q['node'].requires_grad and not q['pair_sum'].requires_grad
+        loss=z.mean()+expected.square().mean()+crf.count_nll(emissions,mask,counts)+pr
         loss.backward()
         assert bool(torch.isfinite(emissions.grad).all())
         assert all(p.grad is not None and bool(torch.isfinite(p.grad).all()) for p in crf.parameters())
         report=dict(partition_exact=True,run_expectation_exact=True,per_type_count_partition_exact=True,
-                    viterbi_exact=True,padding_invariant=True,finite_gradients=True,enumerated_paths=[27,9],masked_lengths=[3,2],tolerance=1e-9)
+                    viterbi_exact=True,padding_invariant=True,finite_gradients=True,
+                    teacher_KL_matches_enumeration=True,teacher_stop_gradient=True,dual_residual_reduced=True,
+                    enumerated_paths=[27,9],masked_lengths=[3,2],tolerance=1e-9)
         print('TALLY_CRF_CANARY '+json.dumps(report),flush=True)
         return report
     finally:
@@ -222,16 +299,29 @@ def tally_crf_canary():
 
 
 class TallyModel(nn.Module):
-    def __init__(self, vocab, dim, structured=False):
+    def __init__(self, vocab, dim, structured=False, char_cnn=False):
         super().__init__()
         self.embedding = nn.Embedding(vocab, dim, padding_idx=0)
         self.gru = nn.GRU(dim+2, dim, 2, batch_first=True, bidirectional=True, dropout=.15)
         self.head = nn.Sequential(nn.Dropout(.2), nn.Linear(dim*2, 6))
         self.crf = TallyCRF() if structured else None
+        self.char_cnn=char_cnn
+        if char_cnn:
+            self.char_embedding=nn.Embedding(257,16,padding_idx=0)
+            self.char_convs=nn.ModuleList([nn.Conv1d(16,32,k,padding=k//2) for k in [3,5]])
+            self.char_project=nn.Linear(64,dim)
+            self.char_dropout=nn.Dropout(.15)
 
-    def forward(self, pieces, features, mask):
+    def forward(self, pieces, features, mask, chars=None):
         keep = pieces.ne(0).unsqueeze(-1)
         h = (self.embedding(pieces)*keep).sum(2)/keep.sum(2).clamp(min=1)
+        if self.char_cnn:
+            assert chars is not None
+            shape=chars.shape; flat=chars.reshape(-1,shape[-1]); valid=flat.ne(0)
+            ce=self.char_embedding(flat).transpose(1,2)
+            cv=[F.gelu(conv(ce)).masked_fill(~valid[:,None,:],-10000.).amax(-1) for conv in self.char_convs]
+            ch=torch.cat(cv,dim=1).masked_fill(~valid.any(1)[:,None],0.)
+            h=h+self.char_dropout(self.char_project(ch).reshape(shape[0],shape[1],-1))*mask[:,:,None]
         packed = nn.utils.rnn.pack_padded_sequence(torch.cat([h, features], -1),
                     mask.sum(1).cpu(), batch_first=True, enforce_sorted=False)
         h, _ = self.gru(packed)
@@ -270,6 +360,7 @@ def run_tally(run_id):
         for word in words:
             if word not in cache: cache[word] = tok.encode(word).ids
         return dict(text=text, words=words, pieces=[cache[w] for w in words],
+                    chars=[[v+1 for v in w.encode('utf-8')] for w in words] if config.get('char_cnn') else None,
                     features=[[math.log1p(freq[w])/8, math.log1p(len(w))/3] for w in words])
     gx = [encode(s) for s in gold.text]; wx = [encode(s) for s in weak.text]
     tx = [encode(s) for s in test.text]
@@ -278,30 +369,33 @@ def run_tally(run_id):
         parts = max(len(p) for x in examples for p in x['pieces'])
         ids = torch.zeros(b,length,parts,dtype=torch.long)
         ft = torch.zeros(b,length,2); mask = torch.zeros(b,length,dtype=torch.bool)
+        chars=torch.zeros(b,length,max(len(v) for x in examples for v in x['chars']),dtype=torch.long) if config.get('char_cnn') else None
         for j,x in enumerate(examples):
             n = len(x['words']); mask[j,:n] = True; ft[j,:n] = torch.tensor(x['features'])
             for t, p in enumerate(x['pieces']): ids[j,t,:len(p)] = torch.tensor(p)
-        return ids.to(DEVICE), ft.to(DEVICE), mask.to(DEVICE)
+            if chars is not None:
+                for t,ch in enumerate(x['chars']): chars[j,t,:len(ch)]=torch.tensor(ch)
+        return ids.to(DEVICE), ft.to(DEVICE), mask.to(DEVICE), chars.to(DEVICE) if chars is not None else None
     def gold_loss(indices):
-        examples = [gx[i] for i in indices]; ids,ft,mask = batch(examples)
+        examples = [gx[i] for i in indices]; ids,ft,mask,chars = batch(examples)
         labels = torch.full(mask.shape,-100,dtype=torch.long,device=DEVICE)
         for j,i in enumerate(indices): labels[j,:len(truth[i])] = torch.tensor(truth[i],device=DEVICE)
-        logits = model(ids,ft,mask)
+        logits = model(ids,ft,mask,chars)
         if model.crf is not None: return model.crf.gold_nll(logits,labels,mask)
         return F.cross_entropy(logits.float().reshape(-1,6), labels.reshape(-1))
     def predict(examples):
         result = []; model.eval()
         with torch.inference_mode():
             for start in range(0,len(examples),128):
-                rows = examples[start:start+128]; ids,ft,mask = batch(rows)
-                with torch.autocast('cuda', dtype=torch.float16): logits = model(ids,ft,mask)
+                rows = examples[start:start+128]; ids,ft,mask,chars = batch(rows)
+                with torch.autocast('cuda', dtype=torch.float16): logits = model(ids,ft,mask,chars)
                 pred = model.crf.decode(logits,mask) if model.crf is not None else logits.argmax(-1).cpu().tolist()
                 result += [p[:len(r['words'])] for p,r in zip(pred,rows)]
         return result
     counts = weak[TALLY_LABELS[1:]].to_numpy(dtype=np.float32)
-    model = TallyModel(tok.get_vocab_size(), config['dim'],config.get('structured',False)).to(DEVICE)
+    model = TallyModel(tok.get_vocab_size(), config['dim'],config.get('structured',False),config.get('char_cnn',False)).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=config['lr'], weight_decay=.01)
-    scaler = torch.amp.GradScaler('cuda'); history = []; tick = time.time()
+    scaler = torch.amp.GradScaler('cuda'); history = []; tick = time.time(); pr_rows=[]
     def update(loss):
         assert bool(torch.isfinite(loss)), 'Non-finite training loss'
         scaler.scale(loss).backward(); scaler.unscale_(opt)
@@ -316,11 +410,15 @@ def run_tally(run_id):
         for start in range(0,len(order),config['batch_size']):
             model.train(); opt.zero_grad(set_to_none=True)
             ix = order[start:start+config['batch_size']]
-            ids,ft,mask = batch([wx[i] for i in ix])
+            ids,ft,mask,chars = batch([wx[i] for i in ix])
             with torch.autocast('cuda',dtype=torch.float16):
-                logits = model(ids,ft,mask)
+                logits = model(ids,ft,mask,chars)
                 target = torch.tensor(counts[ix],device=DEVICE)
-                if config['objective']=='crf_count_composite_likelihood':
+                if config['objective']=='approximate_posterior_projection':
+                    count_loss,pr_stats=tally_pr_loss(model.crf,logits,mask,target,
+                                           steps=config['pr_steps'],rate=config['pr_rate'])
+                    pr_rows.append(pr_stats)
+                elif config['objective']=='crf_count_composite_likelihood':
                     count_loss=model.crf.count_nll(logits,mask,target.long())
                 else:
                     expected=model.crf.expected_counts(logits,mask) if model.crf is not None else expected_tally_counts(logits,mask)
@@ -363,6 +461,12 @@ def run_tally(run_id):
     assert all(len(tags.split())==len(text.split()) for tags,text in zip(submission.tags,test.text))
     assert set(' '.join(submission.tags).split()).issubset(TALLY_LABELS)
     info['diagnostics'] = diagnostic
+    if pr_rows:
+        info['posterior_projection']=dict(steps=config['pr_steps'],exact=False,training_batches=len(pr_rows),
+            mean_batch_count_mae_before=float(np.mean([x['before_count_mae'] for x in pr_rows])),
+            mean_batch_count_mae_after=float(np.mean([x['after_count_mae'] for x in pr_rows])),
+            mean_teacher_KL=float(np.mean([x['teacher_kl'] for x in pr_rows])),
+            note='Batch means across training, not validation; six bounded dual updates need not exactly meet moments.')
     info['data_provenance'] = {p.name:hash_file(p) for p in [root/'train_counts.csv',root/'train_tags.csv',root/'test.csv']}
     return finish_run(info, dict(metric='entity_span_micro_F1',value=measured['f1'],direction='maximize',
         samples=len(va),split='fixed_gold_40_train_10_validation_seed42'), submission,
@@ -371,5 +475,5 @@ def run_tally(run_id):
         artifacts=dict(failure_analysis='failure_analysis.json',model='model.pt',tokenizer='tokenizer.json'),
         limitations=['Only ten gold validation sentences; no significance claim or SOTA comparison.',
                      'Selected checkpoint uses 40 gold training sentences; no full-50 refit.',
-                     ('Per-type count log-likelihood is a weighted composite objective, not joint five-count likelihood.' if config['objective']=='crf_count_composite_likelihood' else 'CRF pair-marginal expectations are exact.' if model.crf is not None else 'Expected run count is exact only for independent word labels, not CRF marginals.'),
+                     ('Finite dual teacher projection is approximate; residuals are reported, no hard count guarantee.' if config['objective']=='approximate_posterior_projection' else 'Per-type count log-likelihood is a weighted composite objective, not joint five-count likelihood.' if config['objective']=='crf_count_composite_likelihood' else 'CRF pair-marginal expectations are exact.' if model.crf is not None else 'Expected run count is exact only for independent word labels, not CRF marginals.'),
                      'No test count labels used; all weights and tokenizer trained from scratch.'])

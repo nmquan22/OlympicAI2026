@@ -34,3 +34,16 @@ ORGANIZATION đúng0/5, ba gold span cùng loại sai biên, năm không có ove
 **R03:** giữ toàn bộ R02, đổi weak count loss thành -logP(N_c=k_c|x) riêng từng loại qua count-augmented DP, chia k_c+1 rồi lấy trung bình. Đây là weighted composite likelihood; năm count không được ràng buộc đồng thời. Phép thử tách expectation matching với probability mass tại đúng count theo hướng Measurements.
 
 Canary trên T4 sẽ liệt kê27/9chuỗi ở2câu toy, kiểm partition/expectation/count-numerator/Viterbi/padding và finite gradients trước train. Nếu canary lỗi thì không chạy training, ghi failure và retry. Hai cấu hình đều trần480s, batch64,40goldtrain/10val,800weakholdout; runtime thực tế của CRF/DP chưa biết, không suy từ149s của R01.
+
+
+## Sau kết quả R02/R03: R04 và R05
+
+R02 thêm CRF nhưng ORG vẫn0/5, public.30394, code335.166s. R03 likelihood count tăng public lên.35301 và weak vector exact36.125%, nhưng valF1 vẫn.4444, ORG0/5 và lỗi biên5. Mười câu không đủ nhạy để chọn chắc; private chỉ lưu.
+
+**R04:** giữ R03, thêm byte-character embedding16d → CNN kernels3/5 mỗi nhánh32d → masked max pool → projection128d cộng vào wordBPE vector trước BiGRU. Không cắt byte, không vocab hoặc weights ngoài. Mượn ý tưởng biểu diễn hình thái từ Lample; thay charBiLSTM bằng CNN là adaptation, không nhận tái lập nguyên paper. Giả thuyết: mean pool BPE mất thứ tự bên trong từ, trong khi14/15 gold entities chứa từ chưa thấy. So R03 để kiểm nhánh ký tự, báo cả chi phí.
+
+**R05:** giữ encoder R03, thay weak loss bằng KL từ teacher CRF được tilt đồng thời theo năm moment đếm. Teacher `q ∝ p exp(lambda·N)`, dual `logZ(lambda)-lambda·target`, gradient `E_q[N]-target`. Chạy6 bước descent, rate.5 chia target+1, clamp lambda±10; q không có gradient về student. Dùng entropy teacher để tính KL cả chuỗi, không chỉ CE token. Đây là approximate PR cho ràng buộc equality với lambda tự do; không phải conditioning hard count và không bảo đảm residual bằng0. Mean batch countMAE trước/sau, KL teacher và số batch được ghi riêng, không gọi chúng là validationF1.
+
+Nguồn PR chính: Ganchev et al., §2.4–2.6, [paper](https://www.jmlr.org/papers/volume11/ganchev10a/ganchev10a.pdf). Code mới mở rộng canary: KL teacher phải khớp enumerate toàn chuỗi, q phải stop-gradient, residual trên toy phải giảm và gradient student finite. Chưa quan sát canary pass của source mới trước khi gửi T4; lỗi canary sẽ dừng trước train.
+
+R04/R05 đều scratch, giữ seed42 và split, trần480s, batch64/gold16, cùng checkpoint selection bằng10câuval. Teacher chỉ dùng count weaktrain; inference test vẫn CRF thường, không có count test. R05 dùng thời gian cho projection nên số bước thực tế có thể khác; so sánh phải kèm runtime/steps.
