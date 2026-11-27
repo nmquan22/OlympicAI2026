@@ -14,6 +14,32 @@ ALCHEMY_CONFIGS={
  7:dict(idea="Combine hard negatives, full-list CE and probability averaging",hard=True,full=True,layers=2,probability=True,sinkhorn=False)
 }
 
+
+ALCHEMY_CONFIGS[8]={**ALCHEMY_CONFIGS[3],"idea":"Commutative three-tower composer with a shared scratch BPE embedding","composer":True}
+
+class AlchemyComposer(nn.Module):
+    """Candidate embeddings share lexical features; item order is symmetric."""
+    def __init__(self,vocab,dim=96):
+        super().__init__()
+        self.embedding=nn.Embedding(vocab,dim,padding_idx=0)
+        self.item=nn.Sequential(nn.Linear(dim,dim),nn.GELU(),nn.LayerNorm(dim))
+        self.combine=nn.Sequential(nn.Linear(dim*3,dim*2),nn.GELU(),nn.Dropout(.1),nn.Linear(dim*2,dim))
+        self.result=nn.Linear(dim,dim,bias=False)
+        self.scale=nn.Parameter(torch.tensor(2.3))
+    def forward(self,ids):
+        segment=ids.eq(3).cumsum(1)
+        valid=ids.gt(4)
+        h=self.embedding(ids)
+        vectors=[]
+        for part in range(3):
+            mask=(segment.eq(part)&valid).unsqueeze(-1)
+            vectors.append((h*mask).sum(1)/mask.sum(1).clamp(min=1))
+        a,b=self.item(vectors[0]),self.item(vectors[1])
+        query=self.combine(torch.cat([a+b,(a-b).abs(),a*b],-1))
+        candidate=self.result(vectors[2])
+        return (F.normalize(query,dim=-1)*F.normalize(candidate,dim=-1)).sum(-1)*self.scale.exp().clamp(max=30)
+
+
 class AlchemyScorer(nn.Module):
     def __init__(self,vocab,layers):
         super().__init__()
@@ -49,7 +75,7 @@ def run_alchemy(run_id):
     tr_rev=encode(training,train_candidates,True).view_as(tr_fwd)
     val_fwd,val_rev=encode(validation,val_candidates),encode(validation,val_candidates,True)
     test_fwd,test_rev=encode(test,candidates),encode(test,candidates,True)
-    model=AlchemyScorer(tokenizer.get_vocab_size(),cfg['layers']).to(DEVICE)
+    model=(AlchemyComposer(tokenizer.get_vocab_size()) if cfg.get('composer',False) else AlchemyScorer(tokenizer.get_vocab_size(),cfg['layers'])).to(DEVICE)
     optimizer=torch.optim.AdamW(model.parameters(),lr=5e-4,weight_decay=.03)
     scaler=torch.amp.GradScaler('cuda')
     correct=torch.tensor([train_candidates.index(v) for v in training.result])

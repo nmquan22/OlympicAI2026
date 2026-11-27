@@ -25,3 +25,10 @@ Sau R06/R07, nếu vẫn không cải thiện: so BPE BiGRU được sửa paddi
 Giữ tối đa hai Saved Version. Batch còn lại Word Lookups dự kiến khoảng 14 phút, không mở trạng thái từng phút. Inverse R01 dùng canary bốn ví dụ và Transformers 4.57.1; chỉ kiểm tra sau khoảng 4–5 phút. Tách lỗi cài package, lỗi canary, runtime train và thời gian queue. Thí nghiệm lỗi không tính vào số đã hoàn tất.
 
 R08 Lost Interpreter đã chuẩn bị code: BiGRU train từ đầu với packed sequences, mean/max pooling có mask, SmoothL1 beta 0.2. So sánh cả một ứng viên (backbone + loss), không gọi là ablation chỉ đổi backbone. Thêm log chương trình train và nhóm lỗi theo độ dài để quyết định thử value channel; chưa có kết quả R08.
+
+
+## Alchemy R08: symmetry trong kiến trúc thay vì penalty
+
+Sau bảy lượt, hard negatives tốt nhất 4/30 so với 3/30 ban đầu. Chênh một câu chưa đủ vững. R08 dùng shared BPE embedding từ đầu, mean pool riêng item1/item2/result qua SEP, rồi ghép `[a+b, abs(a-b), a*b]`. Hai thứ tự có cùng representation theo cấu trúc; query và candidate được chấm cosine với scale học được, full-list CE và Hungarian giữ nguyên.
+
+Đây là ứng viên data-efficient để kiểm tra, không phải một SOTA được dẫn từ paper. Tính đối xứng được đảm bảo ở eval, còn semantic generalization vẫn phụ thuộc dữ liệu 120 train rules; có thể vẫn rất thấp. Không tải pretrained BERT để tăng điểm ngoài điều kiện của người học.

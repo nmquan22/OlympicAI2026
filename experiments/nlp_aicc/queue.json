@@ -367,7 +367,7 @@
       "competition_slug": "alchemy-aicc-round-4",
       "rules_accepted": true,
       "source_notebook": "round-4/alchemy.ipynb",
-      "status": "completed",
+      "status": "researching_extensions",
       "runs": [
         {
           "run_id": "R01",
@@ -494,6 +494,13 @@
             "duplicate_argmax_count": 21
           },
           "report_path": "alchemy/runs/R07/report.json"
+        },
+        {
+          "run_id": "R08",
+          "idea": "Composer a+b / |a-b| / a*b có tính giao hoán sẵn",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
         }
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",
