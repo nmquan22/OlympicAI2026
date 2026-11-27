@@ -1,0 +1,46 @@
+{
+  "task": "alchemy",
+  "run_id": "R03",
+  "config": {
+    "idea": "CE over the complete training candidate list",
+    "hard": false,
+    "full": true,
+    "layers": 2,
+    "probability": false,
+    "sinkhorn": false,
+    "steps": 240,
+    "budget_seconds": 180,
+    "bpe_vocab": 1024,
+    "pretrained": false
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
+  "status": "completed",
+  "elapsed_seconds": 29.182396173477173,
+  "validation": {
+    "metric": "bijective_holdout_accuracy",
+    "value": 0.1,
+    "direction": "maximize",
+    "samples": 30,
+    "split": "fixed_result_disjoint_train_holdout",
+    "hungarian_accuracy": 0.1,
+    "independent_accuracy": 0.06666666666666667,
+    "greedy_accuracy": 0.1,
+    "duplicate_argmax_count": 20
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 70,
+    "results_unique": true,
+    "allowed_results": true
+  },
+  "artifacts": {
+    "pretrained_weights": false,
+    "tokenizer": "train-only BPE",
+    "training_rows": 120
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}
