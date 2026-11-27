@@ -100,28 +100,31 @@
     "output_file": "alchemy/R09/submission.csv"
   },
   "tally": {
-    "run_id": "R03",
-    "selection_criterion": "exploratory_fixed_validation_tie_broken_by_public_F1; small10sentence_pilot_not_stable",
+    "run_id": "R06",
+    "selection_criterion": "highest_fixed_gold_validation_entity_span_F1; tiny10sentence_pilot_disagrees_with_public_rank",
     "validation": {
       "metric": "entity_span_micro_F1",
-      "value": 0.4444444444444444,
+      "value": 0.5714285714285714,
       "direction": "maximize",
       "samples": 10,
       "split": "fixed_gold_40_train_10_validation_seed42"
     },
-    "public_score": 0.35301,
-    "private_score": 0.353,
-    "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598",
-    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853890",
-    "notebook_version": 3,
-    "script_version_id": 374853890,
-    "output_file": "tally/R03/submission.csv",
+    "public_score": 0.34627,
+    "private_score": 0.35248,
+    "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374947843",
+    "notebook_version": 6,
+    "script_version_id": 374947843,
+    "output_file": "tally/R06/submission.csv",
     "public_leader_exploratory": {
-      "run_id": "R04",
-      "public_score": 0.37057,
-      "private_score": 0.3774,
-      "validation_f1": 0.42857142857142855,
-      "note": "Validation10sentences lower than R03; report public leader separately without using private for selection."
+      "run_id": "R07",
+      "public_score": 0.38386,
+      "private_score": 0.37104,
+      "validation_f1": 0.4827586206896552,
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374948086",
+      "script_version_id": 374948086,
+      "output_file": "tally/R07/submission.csv",
+      "note": "Public leader reported separately; private never used to choose upgrades."
     }
   }
 }

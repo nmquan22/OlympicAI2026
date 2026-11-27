@@ -1,10 +1,10 @@
 {
   "task": "tally",
   "competition_slug": "tally-aicc-round-11",
-  "status": "R06_R07_running",
+  "status": "completed",
   "rules_accepted": true,
-  "successful_unique_experiments": 5,
-  "scored_unique_submissions": 5,
+  "successful_unique_experiments": 7,
+  "scored_unique_submissions": 7,
   "minimum_successful_experiments": 7,
   "runnable_configurations": [
     "R01",
@@ -15,40 +15,9 @@
     "R06",
     "R07"
   ],
-  "active_saved_versions": [
-    {
-      "version": 6,
-      "script_version_id": 374947843,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374947843",
-      "run_ids": [
-        "R06"
-      ],
-      "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
-      "status": "running",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T18:23:17.757082+00:00",
-      "run_start_timestamp": 1795803725.095866,
-      "crf_teacher_canary_passed": true,
-      "representation_canary_passed": true
-    },
-    {
-      "version": 7,
-      "script_version_id": 374948086,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374948086",
-      "run_ids": [
-        "R07"
-      ],
-      "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
-      "status": "running",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T18:23:17.757082+00:00",
-      "run_start_timestamp": 1795803770.1689973,
-      "crf_teacher_canary_passed": true,
-      "representation_canary_passed": null
-    }
-  ],
-  "next_action": "Read R06/R07 results after completion; inspect boundary failures and singleton diagnostics, submit exact outputs once, then audit seven completed/scored configs. Do not duplicate running jobs or R01-R05 submissions.",
-  "code_verification": "R02/R03 T4 exhaustive CRF canaries passed; completed reports observed and both submissions scored.",
+  "active_saved_versions": [],
+  "next_action": "Authorized seven-configuration Tally practice completed, all outputs scored and reports audited. No additional training or duplicate submissions; stop condition watch after successful Git update.",
+  "code_verification": "All structured configurations passed exhaustive CRF canary on T4; R06/R07 also passed typed-boundary/padding/singleton-scope/finite-gradient representation canary.",
   "polling": {
     "unmeasured_train_budget_seconds": 480,
     "first_running_check_minutes": 15,
@@ -57,13 +26,15 @@
       30,
       60
     ],
-    "note": "R04 code330.592s/Kaggle363.0s; R05 code490.202s/Kaggle518.2s. R06/R07 traincap480s plus startup/evaluation; allow15minutes after RUN_START, queue separate.",
+    "note": "Completed. R06 code490.922s/Kaggle520.4s; R07 code480.813s/Kaggle506.7s. Previous polling estimates retained as history.",
     "background_check": "Hourly condition watch created; first scheduled check 21:19 Asia/Saigon on 27/11/2026. No repeated notifications while queued.",
     "measured_R01_code_seconds": 148.8752338886261,
     "measured_R01_kaggle_total_seconds": 175.5,
-    "next_configs_note": "R06/R07 each480s train cap plus startup/eval. Next useful result check at least15minutes after RUN_START; no repeated polling or duplicate launch.",
+    "next_configs_note": "No active jobs or planned additional configurations in this completed batch.",
     "measured_R04_code_seconds": 330.59193229675293,
-    "measured_R05_code_seconds": 490.20216488838196
+    "measured_R05_code_seconds": 490.20216488838196,
+    "measured_R06_code_seconds": 490.9220805168152,
+    "measured_R07_code_seconds": 480.812540769577
   },
   "rules_confirmation": {
     "user_message": "đồng ý hết giúp mình",
@@ -121,7 +92,35 @@
       "peak_gpu_memory_mb": 92.55078125,
       "version": 5,
       "script_version_id": 374929750
+    },
+    {
+      "run_id": "R06",
+      "validation_f1": 0.5714285714285714,
+      "public_score": 0.34627,
+      "private_score": 0.35248,
+      "code_seconds": 490.9220805168152,
+      "peak_gpu_memory_mb": 135.421875,
+      "version": 6,
+      "script_version_id": 374947843
+    },
+    {
+      "run_id": "R07",
+      "validation_f1": 0.4827586206896552,
+      "public_score": 0.38386,
+      "private_score": 0.37104,
+      "code_seconds": 480.812540769577,
+      "peak_gpu_memory_mb": 135.3955078125,
+      "version": 7,
+      "script_version_id": 374948086
     }
   ],
-  "new_source_verification": "R06/R07 RUN_START observed on TeslaT4x2 at immutable source469e5332a09dd0faf6bcf7970cdf7c1b33d33d02. CRF/count/teacher canaries passed both. Boundary/singleton representation canary passed R06; not yet observed for R07 at last snapshot. No final results yet."
+  "new_source_verification": "R06/R07 immutable source469e5332a09dd0faf6bcf7970cdf7c1b33d33d02 completed on T4, both NLP_RUN_RESULT and BATCH_RESULT observed; exact version/file submissions Complete(afterdeadline).",
+  "workflow_completed": true,
+  "completed_at_utc": "2026-11-27T19:25:19.316390+00:00",
+  "selection": {
+    "validation_leader": "R06",
+    "public_leader_exploratory": "R07",
+    "private_used_for_selection": false,
+    "note": "Fixed10sentence validation and public rank disagree; no stable/SOTA claim."
+  }
 }

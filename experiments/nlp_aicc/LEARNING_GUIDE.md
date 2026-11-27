@@ -72,3 +72,11 @@ Theo yêu cầu người học, các lượt đều scratch BPE. 120 rule train/
 - Một seed và 30 holdout không đủ khẳng định tăng một câu là ổn định.
 
 Nguồn gốc reference và SHA nằm ở SOURCES.json; hướng nghiên cứu và link paper ở RESEARCH_NEXT.md. Kết quả mới nhất ở STATUS.md và từng runs/Rxx/LEARNED.md. Toàn bộ41 thí nghiệm đã hoàn tất và được audit; điểm vẫn có giới hạn của split, seed, metric và điều kiện pretrained như ghi trong từng báo cáo.
+
+## 6. Tally: count đúng chưa cho biết span ở đâu
+
+Có 50 câu gán nhãn từ và 8.000 câu chỉ cho số thực thể từng loại. Đếm số **IO run**, không đếm token: `PERSON PERSON O PERSON` là hai thực thể. Model scratch dùng byte BPE → mean pool về từ → BiGRU → head IO/CRF. Gold loss học vị trí, weak loss tận dụng nhãn đếm.
+
+R01 matching expectation đạt public 0.29710; R03 dùng xác suất count qua DP từng loại đạt 0.35301. Đây là composite likelihood, không phải xác suất joint của vector năm count. R07 che whole-word vector của singleton trong train đạt public 0.38386: zero UNK vẫn cần regularization chống học thuộc tên.
+
+Đừng dùng proxy để tự kết luận: teacher R05 giảm residual count nhưng public còn 0.25020. R06 thêm head phụ start/end nâng validation từ 0.444444 lên 0.571429, ORG đúng 2/5, nhưng public 0.34627; validation chỉ 10 câu nên thứ hạng model dễ lệch. Head phụ chỉ train, không biến CRF token thành semi-CRF. [Bảng bảy lượt, chi phí và lỗi](tally/RESULTS.md) · [Năm paper](tally/RESEARCH.md).

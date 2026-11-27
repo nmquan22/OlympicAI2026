@@ -1,4 +1,6 @@
-# Kết quả 5 bài NLP
+# Kết quả thực nghiệm NLP AICC
+
+**Cập nhật 28/11/2026: sáu bài đã hoàn tất 58 cấu hình và 58 submissions có điểm; Tally đủ 7/7. [Bảng kết quả và bài học Tally](tally/RESULTS.md). Các phần ghi 51/52/54/56 bên dưới là snapshot lịch sử.**
 
 Đã hoàn tất và nộp Kaggle **51 cấu hình T4 duy nhất** trên 5 bài, vượt mức tối thiểu35. Mười cấu hình mới trong năm batch được thiết kế sau khi lọc [5 paper cho mỗi bài](research_v2/README.md). [Kết quả và bài học vòng2](research_v2/RESULTS.md). Không tính config chạy lặp, lỗi cài package, canary lỗi hay retry thành một thí nghiệm mới. Audit: [AUDIT.json](AUDIT.json).
 
@@ -60,3 +62,7 @@ Tổng54 cấu hình hoàn tất/scored, Tally3/7. R02 CRF expectations: val.444
 ### Tally R04/R05: hai kết luận khác nhau
 
 Tally5/7, tổng56 cấu hình hoàn tất/scored. R04 byte character CNN: val.428571, public.37057/private.37740,330.592s/156.699MiB. Public cao hơnR03 .35301 nhưng val thấp hơn; mười câu chưa đủ chọn ổn định. R05 approximate teacher KL: val.370370, public.25020/private.25609,490.202s/92.551MiB. Train-batch countMAE .270172→.159125 là chẩn đoán projection, không phải valF1; holdout countvector29.25% kémR03 36.125%. Giữ kết quả âm. [R04](tally/runs/R04/LEARNED.md), [R05](tally/runs/R05/LEARNED.md). Tiếp theo R06 auxiliary biên và R07 singleton masking, chưa có kết quả.
+
+## Tally hoàn tất 7/7
+
+R06 auxiliary biên đạt val 0.571429, public/private 0.34627/0.35248, code 490.922s. R07 singleton masking đạt val 0.482759, public/private 0.38386/0.37104, code 480.813s. R07 dẫn public, tăng từ R01 0.29710 lên 0.38386; R06 dẫn validation nhưng không dẫn public. Private chỉ báo cáo. [R06](tally/runs/R06/LEARNED.md), [R07](tally/runs/R07/LEARNED.md), [báo cáo cuối](tally/RESULTS.md). Không chạy thêm cấu hình trong batch đã hoàn tất.

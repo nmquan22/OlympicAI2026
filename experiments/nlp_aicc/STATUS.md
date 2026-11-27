@@ -1,6 +1,6 @@
 # Tiến độ thực nghiệm NLP
 
-**56 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 42 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**58 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 42 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
@@ -9,7 +9,7 @@
 | [Word Lookups](word-lookups/IDEAS.md) | 9/7 | R08: public 0.9150, private 0.9171 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 9/7 | R09: public 100.0000, private 100.0000 Competition score |
 | [Alchemy](alchemy/IDEAS.md) | 11/7 | R01: public 0.0285, private 0.0000 Accuracy |
-| [Tally](tally/IDEAS.md) | 5/7 | R04: public 0.3706, private 0.3774 Entity-span micro F1 |
+| [Tally](tally/IDEAS.md) | 7/7 | R07: public 0.38386, private 0.37104 Entity-span micro F1 |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -93,10 +93,10 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 
 | Run | Ý tưởng | Kết quả | Nhật ký |
 |---|---|---|---|
-| R01 | Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts | 0.44444 entity_span_micro_F1; Kaggle 0.2971/0.3008 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R01/LEARNED.md) |
-| R02 | CRF exact pair-marginal expected run counts | 0.44444 entity_span_micro_F1; Kaggle 0.3039/0.3035 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R02/LEARNED.md) |
-| R03 | CRF per-type count composite likelihood | 0.44444 entity_span_micro_F1; Kaggle 0.3530/0.3530 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R03/LEARNED.md) |
-| R04 | Byte character CNN supplements BPE count CRF | 0.42857 entity_span_micro_F1; Kaggle 0.3706/0.3774 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R04/LEARNED.md) |
-| R05 | Approximate joint moment CRF teacher and stop-gradient KL | 0.37037 entity_span_micro_F1; Kaggle 0.2502/0.2561 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R05/LEARNED.md) |
-| R06 | Typed start/end auxiliary supervision for truncated entity boundaries | running | Chưa có kết quả |
-| R07 | Train-singleton whole-word masking encourages contextual NER instead of name memorization | running | Chưa có kết quả |
+| R01 | Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts | 0.44444 entity_span_micro_F1; Kaggle 0.29710/0.30080 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R01/LEARNED.md) |
+| R02 | CRF exact pair-marginal expected run counts | 0.44444 entity_span_micro_F1; Kaggle 0.30394/0.30351 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R02/LEARNED.md) |
+| R03 | CRF per-type count composite likelihood | 0.44444 entity_span_micro_F1; Kaggle 0.35301/0.35300 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R03/LEARNED.md) |
+| R04 | Byte character CNN supplements BPE count CRF | 0.42857 entity_span_micro_F1; Kaggle 0.37057/0.37740 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R04/LEARNED.md) |
+| R05 | Approximate joint moment CRF teacher and stop-gradient KL | 0.37037 entity_span_micro_F1; Kaggle 0.25020/0.25609 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R05/LEARNED.md) |
+| R06 | Typed start/end auxiliary supervision for truncated entity boundaries | 0.57143 entity_span_micro_F1; Kaggle 0.34627/0.35248 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R06/LEARNED.md) |
+| R07 | Train-singleton whole-word masking encourages contextual NER instead of name memorization | 0.48276 entity_span_micro_F1; Kaggle 0.38386/0.37104 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R07/LEARNED.md) |

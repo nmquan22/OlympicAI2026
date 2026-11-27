@@ -1,0 +1,97 @@
+{
+  "f1": 0.4827586206896552,
+  "true_positive": 7,
+  "false_positive": 7,
+  "false_negative": 8,
+  "per_type": {
+    "PERSON": {
+      "gold": 7,
+      "predicted": 7,
+      "correct": 5,
+      "f1": 0.7142857142857143
+    },
+    "ORGANIZATION": {
+      "gold": 5,
+      "predicted": 2,
+      "correct": 1,
+      "f1": 0.2857142857142857
+    },
+    "LOCATION": {
+      "gold": 2,
+      "predicted": 3,
+      "correct": 1,
+      "f1": 0.4
+    },
+    "CREATIVE_WORK": {
+      "gold": 1,
+      "predicted": 2,
+      "correct": 0,
+      "f1": 0.0
+    },
+    "EVENT": {
+      "gold": 0,
+      "predicted": 0,
+      "correct": 0,
+      "f1": 0.0
+    }
+  },
+  "failure_modes": {
+    "overlap_right_type_wrong_boundary": 3,
+    "no_right_type_overlap": 5
+  },
+  "unseen_word_entity_recall": 0.5,
+  "unseen_word_gold_entities": 14,
+  "weak_holdout_count_mae": 0.22,
+  "weak_holdout_exact_count_vector": 0.36,
+  "weak_holdout_samples": 800,
+  "best_epoch": 20,
+  "optimizer_steps": 3324,
+  "per_type_gold_train_support": {
+    "LOCATION": 27,
+    "EVENT": 4,
+    "PERSON": 22,
+    "ORGANIZATION": 25,
+    "CREATIVE_WORK": 6
+  },
+  "weak_train_samples": 7200,
+  "max_words": 45,
+  "bpe_vocab": 2048,
+  "test_unk_pieces": 0,
+  "test_total_pieces": 216750,
+  "validation_cases": [
+    {
+      "text": "volume on the new matrellah stock exchange totaled 135.9 million shares .",
+      "truth": "O O O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O O O O O",
+      "prediction": "O O O ORGANIZATION ORGANIZATION O O O O O O O",
+      "missed": [
+        [
+          3,
+          7,
+          2
+        ]
+      ],
+      "spurious": [
+        [
+          3,
+          5,
+          2
+        ]
+      ]
+    },
+    {
+      "text": "democratic political strategist macdong dunkel is now a senior fellow at new dowmensus university 's graduate school in public service .",
+      "truth": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O",
+      "prediction": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O O O O O O O",
+      "missed": [
+        [
+          15,
+          20,
+          2
+        ]
+      ],
+      "spurious": []
+    }
+  ],
+  "retained_validation_cases": 2,
+  "original_failure_case_count": 7
+}

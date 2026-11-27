@@ -1,0 +1,234 @@
+{
+  "task": "tally",
+  "run_id": "R07",
+  "config": {
+    "idea": "Train-singleton whole-word masking encourages contextual NER instead of name memorization",
+    "objective": "crf_count_composite_likelihood",
+    "epochs": 35,
+    "budget_seconds": 480,
+    "batch_size": 64,
+    "gold_batch_size": 16,
+    "warmup_steps": 160,
+    "bpe_vocab": 2048,
+    "dim": 128,
+    "weak_weight": 0.5,
+    "lr": 0.001,
+    "patience": 8,
+    "structured": true,
+    "papers": [
+      "N16-1030"
+    ],
+    "singleton_mask_probability": 0.5
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "diagnostics": {
+    "f1": 0.4827586206896552,
+    "true_positive": 7,
+    "false_positive": 7,
+    "false_negative": 8,
+    "per_type": {
+      "PERSON": {
+        "gold": 7,
+        "predicted": 7,
+        "correct": 5,
+        "f1": 0.7142857142857143
+      },
+      "ORGANIZATION": {
+        "gold": 5,
+        "predicted": 2,
+        "correct": 1,
+        "f1": 0.2857142857142857
+      },
+      "LOCATION": {
+        "gold": 2,
+        "predicted": 3,
+        "correct": 1,
+        "f1": 0.4
+      },
+      "CREATIVE_WORK": {
+        "gold": 1,
+        "predicted": 2,
+        "correct": 0,
+        "f1": 0.0
+      },
+      "EVENT": {
+        "gold": 0,
+        "predicted": 0,
+        "correct": 0,
+        "f1": 0.0
+      }
+    },
+    "failure_modes": {
+      "overlap_right_type_wrong_boundary": 3,
+      "no_right_type_overlap": 5
+    },
+    "unseen_word_entity_recall": 0.5,
+    "unseen_word_gold_entities": 14,
+    "weak_holdout_count_mae": 0.22,
+    "weak_holdout_exact_count_vector": 0.36,
+    "weak_holdout_samples": 800,
+    "best_epoch": 20,
+    "optimizer_steps": 3324,
+    "per_type_gold_train_support": {
+      "LOCATION": 27,
+      "EVENT": 4,
+      "PERSON": 22,
+      "ORGANIZATION": 25,
+      "CREATIVE_WORK": 6
+    },
+    "weak_train_samples": 7200,
+    "max_words": 45,
+    "bpe_vocab": 2048,
+    "test_unk_pieces": 0,
+    "test_total_pieces": 216750,
+    "validation_cases": [
+      {
+        "text": "volume on the new matrellah stock exchange totaled 135.9 million shares .",
+        "truth": "O O O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O O O O O",
+        "prediction": "O O O ORGANIZATION ORGANIZATION O O O O O O O",
+        "missed": [
+          [
+            3,
+            7,
+            2
+          ]
+        ],
+        "spurious": [
+          [
+            3,
+            5,
+            2
+          ]
+        ]
+      },
+      {
+        "text": "democratic political strategist macdong dunkel is now a senior fellow at new dowmensus university 's graduate school in public service .",
+        "truth": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O",
+        "prediction": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O O O O O O O",
+        "missed": [
+          [
+            15,
+            20,
+            2
+          ]
+        ],
+        "spurious": []
+      }
+    ],
+    "retained_validation_cases": 2,
+    "original_failure_case_count": 7
+  },
+  "status": "completed",
+  "elapsed_seconds": 480.812540769577,
+  "peak_gpu_memory_mb": 135.3955078125,
+  "validation": {
+    "metric": "entity_span_micro_F1",
+    "value": 0.4827586206896552,
+    "direction": "maximize",
+    "samples": 10,
+    "split": "fixed_gold_40_train_10_validation_seed42"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 4000,
+    "word_tag_alignment": true,
+    "allowed_labels_only": true
+  },
+  "history": [
+    {
+      "epoch": 20,
+      "train_loss": 0.03559225766334386,
+      "validation_entity_f1": 0.4827586206896552,
+      "elapsed_training_seconds": 338.74062871932983
+    },
+    {
+      "epoch": 28,
+      "train_loss": 0.01956058914187999,
+      "validation_entity_f1": 0.37037037037037035,
+      "elapsed_training_seconds": 470.6844172477722
+    }
+  ],
+  "data_provenance": {
+    "train_counts.csv": "56bae23bc33b69d14463f566a27d20c9b80411646e83e84b2856efc06e6a15d2",
+    "train_tags.csv": "ef5fd06dab0402ce89f2da22d7eadfb809997683725735398acccb48ea7d72ad",
+    "test.csv": "9e30652a3c4ab0b1e255186fc96d68a11568d35db111d5d65ed82df37754553d"
+  },
+  "artifacts": {
+    "failure_analysis": "failure_analysis.json",
+    "model": "model.pt",
+    "tokenizer": "tokenizer.json"
+  },
+  "limitations": [
+    "Selected observed summary, best/final epochs and two of seven failure cases; full original output remains on Kaggle.",
+    "Ten gold validation sentences:15 entities,0 EVENT and1 CREATIVE_WORK; no significance/SOTA claim.",
+    "40 gold train; no full50 refit.",
+    "Weighted per-type count composite likelihood is not joint five-count likelihood.",
+    "Scratch model/BPE; no external data or test counts."
+  ],
+  "crf_canary": {
+    "partition_exact": true,
+    "run_expectation_exact": true,
+    "per_type_count_partition_exact": true,
+    "viterbi_exact": true,
+    "padding_invariant": true,
+    "finite_gradients": true,
+    "enumerated_paths": [
+      27,
+      9
+    ],
+    "masked_lengths": [
+      3,
+      2
+    ],
+    "tolerance": 1e-09,
+    "teacher_KL_matches_enumeration": true,
+    "teacher_stop_gradient": true,
+    "dual_residual_reduced": true
+  },
+  "leaderboard_public": 0.38386,
+  "leaderboard_private": 0.37104,
+  "representation_canary": {
+    "typed_boundary_targets_exact": true,
+    "padding_invariant": true,
+    "singleton_mask_scope_exact": true,
+    "zero_probability_identity": true,
+    "finite_gradients": true
+  },
+  "singleton_regularization": {
+    "probability": 0.5,
+    "eligibility": "word frequency exactly1 in goldtrain+weaktrain only",
+    "masked_word_observations": 399868,
+    "eligible_word_observations": 799751,
+    "replacement": "learned scratch MASK embedding, entire pooled word vector",
+    "inference_masking": false,
+    "unchanged_features": [
+      "train_frequency",
+      "word_length"
+    ]
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_metric": "Entity-span micro F1",
+  "leaderboard_direction": "maximize",
+  "score_precision": "5 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+    "run": "R07",
+    "public": 0.38386,
+    "private": 0.37104,
+    "version_id": 374948086,
+    "output_file": "tally/R07/submission.csv",
+    "description_note": "Post-contest practice Tally R07: frozen scratch experiment; version7/script374948086. Source/output verified; Complete(after deadline)."
+  }
+}

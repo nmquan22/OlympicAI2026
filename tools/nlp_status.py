@@ -15,7 +15,8 @@ def render_status():
    best=sorted(scored,key=lambda r:r['leaderboard_public'],reverse=direction=='maximize')[0]
    if task['id']=='inverse-translation':
     best=sorted(scored,key=lambda r:(-r['leaderboard_public'],-r['metric']['value'],json.loads((BASE/task['id']/'runs'/r['run_id']/'report.json').read_text())['elapsed_seconds']))[0]
-   metric=f"{best['run_id']}: public {best['leaderboard_public']:.4f}, private {best['leaderboard_private']:.4f} {best['leaderboard_metric']}"
+   precision=5 if task['id']=='tally' else 4
+   metric=f"{best['run_id']}: public {best['leaderboard_public']:.{precision}f}, private {best['leaderboard_private']:.{precision}f} {best['leaderboard_metric']}"
   elif completed and completed[0]['metric']['metric']=='BPE_LM_NLL_proxy':
    metric='Chưa xếp hạng segmentation: cần Boundary F1'
   elif completed:
@@ -27,7 +28,9 @@ def render_status():
   lines += [f"## {task['title']}",'','| Run | Ý tưởng | Kết quả | Nhật ký |','|---|---|---|---|']
   for r in task['runs']:
    m=r.get('metric');score=f"{m['value']:.5f} {m['metric']}" if m else r['status']
-   if r.get('leaderboard_public') is not None:score+=f"; Kaggle {r['leaderboard_public']:.4f}/{r['leaderboard_private']:.4f} {r['leaderboard_metric']} (public/private)"
+   if r.get('leaderboard_public') is not None:
+    precision=5 if task['id']=='tally' else 4
+    score+=f"; Kaggle {r['leaderboard_public']:.{precision}f}/{r['leaderboard_private']:.{precision}f} {r['leaderboard_metric']} (public/private)"
    link=f"[Đọc]({task['id']}/runs/{r['run_id']}/LEARNED.md)" if r['status']=='completed' else 'Chưa có kết quả'
    lines.append(f"| {r['run_id']} | {r['idea']} | {score} | {link} |")
   lines.append('')

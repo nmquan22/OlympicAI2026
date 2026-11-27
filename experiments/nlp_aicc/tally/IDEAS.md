@@ -1,6 +1,6 @@
 # Tally · học vị trí thực thể từ nhãn đếm
 
-Đây là bài thứ sáu, được chọn theo yêu cầu ngày 27/11/2026. **R01 đã hoàn tất và nộp:** valF1=0.444444 (10câu), Kaggle public0.29710/private0.30080; chưa đạt mục tiêu bảy. Năm bài trước có51 cấu hình; tổng hiện52 kết quả thật. Không cộng kế hoạch hoặc retry.
+Đây là bài thứ sáu, chọn ngày 27/11/2026 và **đã hoàn tất 7 cấu hình / 7 submissions có điểm ngày 28/11/2026**. Tổng sáu bài là 58 kết quả thật. [Báo cáo cuối](RESULTS.md): R07 dẫn public 0.38386, R06 dẫn validation 0.571429. Các đoạn tiến độ bên dưới là nhật ký lịch sử; trạng thái hiện tại ở [STATE.json](STATE.json). Không cộng kế hoạch hoặc retry.
 
 ## Vì sao bài này đáng học
 
@@ -78,3 +78,7 @@ Hai phép thử đã chốt từ lỗi validation trước score: R06 auxiliary 
 ## R06/R07 đã RUN_START
 
 Saved Version6/script374947843 và Version7/script374948086, immutable source `469e5332a09dd0faf6bcf7970cdf7c1b33d33d02`, TeslaT4x2. CRF/count/teacher canary pass cả hai; canary boundary/singleton pass R06, R07 chưa quan sát lúc snapshot cuối. Chưa có report cuối hoặc score; tổng vẫn56, Tally5/7. Notebook trongrepo là launch export chưa execute, không giả notebook đã chạy.
+
+## Đã chốt bảy lượt
+
+R06/R07 đã hoàn tất và nộp chính xác output; canary pass, không còn job active. R06 tăng ORG validation lên 2/5 nhưng public 0.34627; R07 tăng public lên 0.38386 dù validation thấp hơn R06. Tập 10 câu không đủ chọn chắc. Xem [RESULTS.md](RESULTS.md) cho toàn bộ bảng, baseline/reference, năm paper và các hướng chưa chạy.

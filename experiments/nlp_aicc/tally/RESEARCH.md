@@ -1,5 +1,7 @@
 # Năm paper ưu tiên theo độ sát Tally
 
+**Đã chốt bảy lượt ngày 28/11/2026: [kết quả và phản biện giả thuyết](RESULTS.md). Các mục “chưa có kết quả/chưa quan sát canary” là ghi chú trước thời điểm launch, không phải trạng thái hiện tại.**
+
 Đây là shortlist theo **mức liên quan**, không phải xếp hạng citation hay năm paper mới nhất. Đã đối chiếu nội dung nguồn chính: GE/Measurements/PR về giám sát gián tiếp, semi-CRF về suy luận span, Lample về biểu diễn và CRF. Các hướng dưới đây là adaptation cho Tally, không nhận là bản tái lập nguyên paper hoặc đã đạt số benchmark của paper. R01 đã hoàn tất: [lỗi và số đo](runs/R01/LEARNED.md). R02/R03 bên dưới được chọn sau khi đọc lỗi R01; chưa có kết quả của chúng.
 
 | Ưu tiên | Nguồn chính | Điểm lấy được | Điều kiện để đưa vào experiment |
@@ -57,3 +59,9 @@ R04 val.428571 thấp hơnR03 .444444, nhưng public.37057 cao hơn.35301; giữ
 **R07: che cả từ singleton, không che riêng subword.** Lample §4.1 thay singleton bằng UNK với xác suất.5. Ở đây từ có frequency đúng1 trên goldtrain+weaktrain được thay pooled BPE vector bằng learned scratch MASK vector với p=.5 trong train (gold warmup/replay và weaktrain). Giữ train-frequency/word-length features, không có nhánh character; inference dùng input nguyên vẹn. BPE không UNK vẫn có thể học thuộc tên hiếm. Sau R04 không tăng unseen entity recall6/14, kiểm giả thuyết dựa ngữ cảnh hợp lý hơn chỉ bổ sung hình thái. Đây là adaptation cho BPE/BiGRU/count supervision, không sử dụng pretrained word embedding của paper. R07 không ghép R06 để còn so riêng vớiR03.
 
 Đọc lại nguồn chính: [LamplePDF §2.4,§4.1–4.3](https://aclanthology.org/N16-1030.pdf), [SarawagiPDF §2.1–2.2](https://proceedings.neurips.cc/paper/2004/file/eb06b9db06012a7a4179b8f3cb5384d3-Paper.pdf). Không thêm paper thứ sáu chỉ để mở rộng danh sách. Canary T4 trước train kiểm target biên với padding, mask đúng singleton và p0/p1, gradient loss mới finite; CRF/count DP dùng lại exhaustive canary cũ. Chưa quan sát pass source mới tại lúc đóng băng. Chi phíR06/R07 chưa đo, trần480s train cộng startup/eval.
+
+## Kết quả R06/R07 và quyết định chốt
+
+Cả hai pass canary và hoàn tất T4. R06 thêm supervision biên: val 0.571429, ORG đúng 2/5, public 0.34627. R07 singleton masking: val 0.482759, PERSON đúng 5/7 nhưng LOCATION giảm còn 1/2, public 0.38386. Tổng 7/7 đã có điểm; không dùng private để chọn. R06 vẫn là token CRF, R07 không phải MLM hoặc pretrained model.
+
+Bằng chứng ủng hộ count likelihood và regularization theo ngữ cảnh ở mức pilot/public, đồng thời bác bỏ nhận định teacher residual giảm là span tốt hơn. Thứ hạng validation và public lệch nhau nên chưa có model tốt nhất ổn định. Nếu mở một đợt nghiên cứu mới, ưu tiên nhiều split/seed rồi mới kiểm semi-Markov span score với canary mới; không tự chạy thêm trong batch này.

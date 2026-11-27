@@ -1575,7 +1575,7 @@
       "title": "Tally",
       "competition_slug": "tally-aicc-round-11",
       "rules_accepted": true,
-      "status": "running_experiments",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -1735,20 +1735,66 @@
         {
           "run_id": "R06",
           "idea": "Typed start/end auxiliary supervision for truncated entity boundaries",
-          "status": "running",
+          "status": "completed",
           "notebook_version": 6,
           "script_version_id": 374947843,
           "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
-          "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374947843"
+          "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374947843",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.5714285714285714,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R06/report.json",
+          "leaderboard_public": 0.34627,
+          "leaderboard_private": 0.35248,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R06",
+            "public": 0.34627,
+            "private": 0.35248,
+            "version_id": 374947843,
+            "output_file": "tally/R06/submission.csv",
+            "description_note": "Post-contest practice Tally R06: frozen scratch experiment; version6/script374947843. Source/output verified; Complete(after deadline)."
+          }
         },
         {
           "run_id": "R07",
           "idea": "Train-singleton whole-word masking encourages contextual NER instead of name memorization",
-          "status": "running",
+          "status": "completed",
           "notebook_version": 7,
           "script_version_id": 374948086,
           "source_commit": "469e5332a09dd0faf6bcf7970cdf7c1b33d33d02",
-          "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374948086"
+          "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374948086",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.4827586206896552,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R07/report.json",
+          "leaderboard_public": 0.38386,
+          "leaderboard_private": 0.37104,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R07",
+            "public": 0.38386,
+            "private": 0.37104,
+            "version_id": 374948086,
+            "output_file": "tally/R07/submission.csv",
+            "description_note": "Post-contest practice Tally R07: frozen scratch experiment; version7/script374948086. Source/output verified; Complete(after deadline)."
+          }
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
