@@ -1,11 +1,11 @@
 # Tiến độ thực nghiệm NLP
 
-**11/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**12/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
 | [Moment Match](moment-match/IDEAS.md) | 7/7 | R04: 0.69122 accuracy |
-| [Lost Interpreter](lost-interpreter/IDEAS.md) | 4/7 | R01: 36.26026 MAE |
+| [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 0/7 | Chưa có kết quả |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 0/7 | Chưa có kết quả |
 | [Alchemy](alchemy/IDEAS.md) | 0/7 | Chưa có kết quả |
@@ -32,7 +32,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R02 | Thêm separator lệnh và marker số | 37.94136 MAE | [Đọc](lost-interpreter/runs/R02/LEARNED.md) |
 | R03 | Nhánh thống kê số fit trên train | 37.66859 MAE | [Đọc](lost-interpreter/runs/R03/LEARNED.md) |
 | R04 | Learned query attention pooling | 37.77339 MAE | [Đọc](lost-interpreter/runs/R04/LEARNED.md) |
-| R05 | Auxiliary loss dự đoán số lệnh | planned | Chưa có kết quả |
+| R05 | Auxiliary loss dự đoán số lệnh | 37.60918 MAE | [Đọc](lost-interpreter/runs/R05/LEARNED.md) |
 | R06 | Signed-log target để kiểm tra outlier | planned | Chưa có kết quả |
 | R07 | Kết hợp structure + numeric + query + auxiliary | planned | Chưa có kết quả |
 

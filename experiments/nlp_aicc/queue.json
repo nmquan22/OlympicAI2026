@@ -182,9 +182,16 @@
         {
           "run_id": "R05",
           "idea": "Auxiliary loss dự đoán số lệnh",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 5,
+          "metric": {
+            "metric": "MAE",
+            "value": 37.60917663574219,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R05/report.json"
         },
         {
           "run_id": "R06",
