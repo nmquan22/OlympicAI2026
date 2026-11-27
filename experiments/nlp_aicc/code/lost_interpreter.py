@@ -26,7 +26,7 @@ def program_text(value,structured):
 
 
 def numeric_features(program):
-    numbers=np.array([float(n) for n in re.findall(r"(?<![A-Za-z])[-+]?\d+",str(program))],dtype=float)
+    numbers=np.array([float(n) for n in re.findall(r"(?<![A-Za-z0-9_])[-+]?\d+",str(program))],dtype=float)
     if not len(numbers):numbers=np.array([0.])
     return np.array([len(str(program).split(";")),len(numbers),numbers.sum(),numbers.mean(),
                      numbers.min(),numbers.max(),numbers.std(),np.abs(numbers).sum()],dtype=np.float32)

@@ -46,3 +46,5 @@ R08 đạt68.93%, R09 max BPE alignment67.71%, đều chưa vượt IDF69.12%. �
 Giả thuyết: trung bình vector của nhiều từ vào cùng BPE piece làm nhòe nghĩa, nhất là noun/action hiếm. Đây là giả thuyết được kiểm tra, chưa có điểm R10. Tokenizer của model vẫn là BPE; nhánh phụ là lookup feature từ tài nguyên bài cấp. Điều kiện khác với reference word-only nên không gọi là tái lập exact SOTA.
 
 Alchemy R08 đạt3/30 dù symmetry gap0. R09 thử tied role space và query a+b+residual nhỏ để chuyển thông tin của các tên đã xuất hiện ở input sang result role. Đây là giả thuyết composition từ train rules, không thêm world facts hoặc pretrained.
+
+Kiểm tra parser sau khi xem chương trình thật: regex cũ đọc OP11 thành một operand1. Đã sửa để chặn chữ số sau chữ/số/underscore, kiểm tra counts và signed operands. Ghi hạn chế vào R03/R07; không đổi điểm lịch sử. R08 tốt nhất không dùng nhánh numeric, nên không gán kết quả15.31 cho sửa parser.
