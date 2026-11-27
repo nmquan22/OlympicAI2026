@@ -1,0 +1,14 @@
+{
+  "state": "completed",
+  "saved_version": 1,
+  "script_version_id": 374890664,
+  "kaggle_url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r02-scratch-prenorm-transformer?scriptVersionId=374890664",
+  "gpu": "Tesla T4",
+  "viewer_runtime_seconds": 75.4,
+  "training_report_seconds": 40.16460577699999,
+  "official_scorer_RMSE_VA": 1.6245915323732374,
+  "pretrained_weights": false,
+  "checkpoint_location": "Kaggle saved output R02/model/best.pt",
+  "test_evaluated": false,
+  "source_train_scratch_sha256": "4b83de42790b0c3d69ca7a8875cea18e9c974ab85c1b8f5acf3ecebbe6c38b11"
+}

@@ -9,11 +9,11 @@
   "github_connected": true,
   "kaggle_authenticated": true,
   "kaggle_dataset_uploaded": true,
-  "gpu_runs_started": 0,
+  "gpu_runs_started": 2,
   "cpu_controls_completed": 3,
   "test_evaluated": false,
   "blocker": null,
-  "neural_validation": "notebook cells and script syntax checked; saved versions waiting for worker; forward/backward not yet verified",
+  "neural_validation": "R02 completed and official dev score verified; R01 GPU startup verified",
   "next": "Read R01/R02 GPU logs and official dev scores; compare accuracy, runtime and error groups before selecting upgrades",
   "kaggle_username": "quannguyen0501",
   "gpu_runs_submitted": 2,
@@ -28,9 +28,10 @@
       "layers": 2,
       "width": 192,
       "learning_rate": 0.002,
-      "state": "submitted_waiting_worker",
+      "state": "running",
       "version": 1,
-      "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r01-scratch-bilstm-aspect-attention/edit"
+      "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r01-scratch-bilstm-aspect-attention?scriptVersionId=374890167",
+      "script_version_id": 374890167
     },
     {
       "run": "R02",
@@ -39,13 +40,19 @@
       "layers": 4,
       "width": 192,
       "learning_rate": 0.0005,
-      "state": "submitted_waiting_worker",
+      "state": "completed",
       "version": 1,
-      "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r02-scratch-prenorm-transformer/edit"
+      "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r02-scratch-prenorm-transformer?scriptVersionId=374890664",
+      "script_version_id": 374890664,
+      "official_dev_RMSE_VA": 1.6245915323732374,
+      "best_epoch": 15,
+      "train_seconds": 40.16460577699999,
+      "decision": "deprioritized: worse than Ridge with overfitting and negative-valence failures"
     }
   ],
   "abandoned_before_execution": [
     "plain BiGRU control",
     "BiGRU attention control"
-  ]
+  ],
+  "gpu_runs_completed": 1
 }

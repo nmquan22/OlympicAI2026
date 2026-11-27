@@ -1,0 +1,74 @@
+{
+  "status": "completed",
+  "config": {
+    "run": "R02",
+    "encoder": "transformer",
+    "pooling": "attention",
+    "loss": "mse",
+    "seed": 42,
+    "vocab": 3000,
+    "max_length": 160,
+    "width": 192,
+    "layers": 4,
+    "dropout": 0.2,
+    "batch_size": 32,
+    "epochs": 60,
+    "patience": 10,
+    "lr": 0.0005,
+    "seconds": 1200
+  },
+  "pretrained_weights": false,
+  "tokenizer_fit": "clean train text only",
+  "source_commit": "bdc93be1224106ae7d3eb95739c02a76ed4ae8a1",
+  "train_aspects": 2336,
+  "dev_aspects": 340,
+  "overlapping_train_rows_removed": 1,
+  "best_epoch": 15,
+  "parameters": 2534980,
+  "seconds": 40.16460577699999,
+  "device": "Tesla T4",
+  "torch_version": "2.11.0+cu130",
+  "test_evaluated": false,
+  "error_groups": {
+    "valence_below_5": {
+      "count": 56,
+      "official_RMSE_VA": 3.138964196152991,
+      "joint_coordinate_RMSE": 2.21958286900156,
+      "RMSE_V": 2.805724046887425,
+      "RMSE_A": 1.4074831428646108
+    },
+    "valence_at_least_5": {
+      "count": 284,
+      "official_RMSE_VA": 1.1031130688994124,
+      "joint_coordinate_RMSE": 0.7800187314342777,
+      "RMSE_V": 0.8290888855440142,
+      "RMSE_A": 0.7276469354323318
+    },
+    "arousal_below_6": {
+      "count": 49,
+      "official_RMSE_VA": 2.863022487269358,
+      "joint_coordinate_RMSE": 2.0244626154377388,
+      "RMSE_V": 2.3972667059447113,
+      "RMSE_A": 1.5652508115886783
+    },
+    "arousal_at_least_6": {
+      "count": 291,
+      "official_RMSE_VA": 1.305174997108672,
+      "joint_coordinate_RMSE": 0.9228980910906744,
+      "RMSE_V": 1.1036610437832777,
+      "RMSE_A": 0.6967166378900589
+    },
+    "text_over_30_words": {
+      "count": 11,
+      "official_RMSE_VA": 3.717769411477425,
+      "joint_coordinate_RMSE": 2.6288599617436073,
+      "RMSE_V": 3.5129294093511385,
+      "RMSE_A": 1.2170194582803764
+    }
+  },
+  "tokenizer_sha256": "61b59075a437bed9f5d001caf4fbaed8ed6b7dc5c3c180facf039757c672f269",
+  "official_RMSE_VA": 1.6245915200022354,
+  "joint_coordinate_RMSE": 1.1487596804517413,
+  "RMSE_V": 1.36775384339937,
+  "RMSE_A": 0.876668141732905
+}

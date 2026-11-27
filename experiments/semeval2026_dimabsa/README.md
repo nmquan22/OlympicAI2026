@@ -7,7 +7,7 @@ Phạm vi Quân chọn ngày 27/11/2026: **Track A, tiếng Anh–restaurant; b�
 - GitHub đã kết nối, có quyền ghi repo.
 - Đã tải train/dev/test từ commit BTC `bdc93be1224106ae7d3eb95739c02a76ed4ae8a1`; [manifest](DATA_MANIFEST.json) có SHA256 trên bản chuẩn hóa newline LF.
 - **Đã chạy ba control CPU trên dữ liệu thật**, đã đối chiếu bằng scorer BTC. Xem [report](runs/cpu_controls/report.json), [log scorer](runs/cpu_controls/C02_official_scorer.log).
-- **Kaggle đã kết nối: `QuanNguyen0501`. Dataset private đã tạo, hai Saved Version T4 đã gửi.** Đang chờ worker; chưa có metric neural. Hai bản BiGRU cũ đã bỏ trước khi chạy theo yêu cầu của Quân. [Trạng thái + link job](STATUS.json).
+- **Kaggle đã kết nối: `QuanNguyen0501`. Dataset private đã tạo, hai Saved Version T4 đã gửi.** R02 đã hoàn tất, R01 đã bắt đầu chạy. R02 RMSE_VA **1.62459**, kém Ridge **1.45154** nên bỏ cấu hình Transformer hiện tại; [bài học và nhóm lỗi](runs/R02/LEARNED.md). Hai bản BiGRU cũ đã bỏ trước khi chạy theo yêu cầu của Quân. [Trạng thái + link job](STATUS.json).
 - Chưa chấm test và chưa nộp Codabench. Điểm dưới đây là **official dev split, chấm cục bộ bằng scorer BTC**; không phải leaderboard.
 
 ## Control CPU để biết GPU cần vượt mốc nào
@@ -38,7 +38,7 @@ Các thứ hạng/điểm trong bảng này là **kết quả tác giả dưới
 | Run | Kiến trúc | So sánh muốn trả lời | Trạng thái |
 |---|---|---|---|
 | R01 | BPE train-only → embedding 192 random → 2-layer BiLSTM → mean/max text + aspect pool + aspect-conditioned attention → head VA | Cấu trúc recurrent với attention học composition và chọn ngữ cảnh theo aspect thế nào? | Saved Version 1 đã gửi, chờ worker |
-| R02 | BPE train-only → embedding 192 random → 4-layer Transformer pre-norm, 4 heads → mean/max + aspect-conditioned attention → head VA | Transformer có vượt BiLSTM attention trong cùng ngân sách thời gian không? | Saved Version 1 đã gửi, chờ worker |
+| R02 | BPE train-only → embedding 192 random → 4-layer Transformer pre-norm, 4 heads → mean/max + aspect-conditioned attention → head VA | Transformer có vượt BiLSTM attention trong cùng ngân sách thời gian không? | Hoàn tất: dev RMSE_VA 1.62459; bỏ cấu hình hiện tại |
 | R03 | Nâng cấp nhánh được chọn sau R01/R02 | Chỉ chọn theo lỗi và chi phí thực tế; bỏ nhánh yếu rõ ràng | chưa chọn cấu hình |
 | R04 | Encoder được chọn + learned log-variance trên hai loss | Điều chỉnh gradient V/A có tốt hơn MSE bằng nhau không? | planned, chưa chạy |
 

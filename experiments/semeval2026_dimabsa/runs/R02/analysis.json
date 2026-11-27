@@ -1,0 +1,208 @@
+{
+  "dev_sentences": 200,
+  "dev_aspects": 340,
+  "ridge_RMSE_VA": 1.4515384333628276,
+  "transformer_RMSE_VA": 1.6245915323732374,
+  "transformer_minus_ridge_RMSE_VA": 0.17305309901040977,
+  "paired_sentence_bootstrap_95pct_RMSE_difference": [
+    0.0036538250216940574,
+    0.3532936662396298
+  ],
+  "bootstrap_samples": 2000,
+  "seed": 42,
+  "groups": {
+    "valence_below_5": {
+      "count": 56,
+      "ridge_RMSE_VA": 2.5145576151681235,
+      "transformer_RMSE_VA": 3.1389642286224655
+    },
+    "valence_at_least_5": {
+      "count": 284,
+      "ridge_RMSE_VA": 1.12943912916052,
+      "transformer_RMSE_VA": 1.1031130724926732
+    },
+    "arousal_below_6": {
+      "count": 49,
+      "ridge_RMSE_VA": 2.0863091128319686,
+      "transformer_RMSE_VA": 2.8630225215991008
+    },
+    "text_over_30_words": {
+      "count": 11,
+      "ridge_RMSE_VA": 2.5960494462303156,
+      "transformer_RMSE_VA": 3.717769370322625
+    }
+  },
+  "worst_examples": [
+    {
+      "id": "rest26_aspect_va_dev_150",
+      "text": "The only downside , was that the service was really slow , and everything is extremely over priced",
+      "aspect": "everything",
+      "gold": [
+        1.33,
+        8.83
+      ],
+      "transformer": [
+        7.46,
+        7.57
+      ],
+      "ridge": [
+        5.2,
+        6.71
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_150",
+      "text": "The only downside , was that the service was really slow , and everything is extremely over priced",
+      "aspect": "service",
+      "gold": [
+        1.67,
+        8.33
+      ],
+      "transformer": [
+        7.47,
+        7.51
+      ],
+      "ridge": [
+        4.88,
+        6.67
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_28",
+      "text": "The service was lacking and the pizza sucked",
+      "aspect": "pizza",
+      "gold": [
+        3.0,
+        5.88
+      ],
+      "transformer": [
+        7.72,
+        7.7
+      ],
+      "ridge": [
+        5.29,
+        6.62
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_30",
+      "text": "Some of the fare on offer at That BBQ Place is wildly overpriced , especially given the fact that real cutlery , proper table service , and glassware are all missing",
+      "aspect": "real cutlery",
+      "gold": [
+        2.5,
+        7.17
+      ],
+      "transformer": [
+        7.52,
+        7.79
+      ],
+      "ridge": [
+        5.94,
+        6.8
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_29",
+      "text": "Sorry to say this curry was not great , the sauce was very heavy on the salt and tomato and the goat was tough as an old boot , the naan bread was below mediocre",
+      "aspect": "sauce",
+      "gold": [
+        3.0,
+        5.5
+      ],
+      "transformer": [
+        7.51,
+        7.57
+      ],
+      "ridge": [
+        5.01,
+        6.75
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_29",
+      "text": "Sorry to say this curry was not great , the sauce was very heavy on the salt and tomato and the goat was tough as an old boot , the naan bread was below mediocre",
+      "aspect": "goat",
+      "gold": [
+        3.25,
+        5.75
+      ],
+      "transformer": [
+        7.77,
+        7.79
+      ],
+      "ridge": [
+        4.91,
+        6.21
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_29",
+      "text": "Sorry to say this curry was not great , the sauce was very heavy on the salt and tomato and the goat was tough as an old boot , the naan bread was below mediocre",
+      "aspect": "curry",
+      "gold": [
+        3.25,
+        5.5
+      ],
+      "transformer": [
+        7.42,
+        7.5
+      ],
+      "ridge": [
+        5.26,
+        6.68
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_146",
+      "text": "Good salad but skimpy on the bread",
+      "aspect": "bread",
+      "gold": [
+        3.0,
+        4.67
+      ],
+      "transformer": [
+        6.91,
+        6.97
+      ],
+      "ridge": [
+        5.2,
+        6.24
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_156",
+      "text": "Dinner here last night was abysmal",
+      "aspect": "Dinner",
+      "gold": [
+        2.0,
+        7.88
+      ],
+      "transformer": [
+        5.95,
+        5.81
+      ],
+      "ridge": [
+        6.46,
+        6.85
+      ]
+    },
+    {
+      "id": "rest26_aspect_va_dev_44",
+      "text": "Drinks are tasty and Prices are not terrible",
+      "aspect": "Drinks",
+      "gold": [
+        7.33,
+        7.17
+      ],
+      "transformer": [
+        3.12,
+        5.93
+      ],
+      "ridge": [
+        4.2,
+        6.71
+      ]
+    }
+  ],
+  "decision": "deprioritize this Transformer configuration; no small-variation runs before an evidence-based new hypothesis"
+}
