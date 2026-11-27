@@ -367,7 +367,7 @@
       "competition_slug": "alchemy-aicc-round-4",
       "rules_accepted": true,
       "source_notebook": "round-4/alchemy.ipynb",
-      "status": "running_experiments",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -480,9 +480,20 @@
         {
           "run_id": "R07",
           "idea": "Kết hợp hard negatives + full-list CE + probability averaging",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.06666666666666667,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.06666666666666667,
+            "independent_accuracy": 0.06666666666666667,
+            "greedy_accuracy": 0.06666666666666667,
+            "duplicate_argmax_count": 21
+          },
+          "report_path": "alchemy/runs/R07/report.json"
         }
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",
