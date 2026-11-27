@@ -20,6 +20,21 @@ MOMENT_CONFIGS[9]={**MOMENT_CONFIGS[4],"idea":"Hard max word-piece alignment ins
 
 
 MOMENT_CONFIGS[10]={**MOMENT_CONFIGS[4],"idea":"Fuse scratch BPE matching with intact supplied word-vector matching","word_view":True}
+MOMENT_CONFIGS[11]={**MOMENT_CONFIGS[4],"idea":"Event-level decomposable cross attention with compare and aggregate","compare":True}
+MOMENT_CONFIGS[12]={**MOMENT_CONFIGS[4],"idea":"Soft-DTW event alignment as a learned residual score","soft_dtw":True}
+
+
+def soft_dtw_score(similarity,gamma=.1):
+    n,m=similarity.shape[-2:]
+    zero=similarity.new_zeros(similarity.shape[:-2]);large=zero+1e4
+    previous=[zero]+[large]*m
+    for i in range(n):
+        current=[large]
+        for j in range(m):
+            costs=torch.stack([previous[j],previous[j+1],current[-1]],-1)
+            current.append(1-similarity[...,i,j]-gamma*torch.logsumexp(-costs/gamma,-1))
+        previous=current
+    return -previous[-1]/(n+m)
 
 def monotonic_alignment(scores,gamma=0.15):
     """Mean score, softly averaged over strictly increasing subsequence paths.
@@ -75,6 +90,12 @@ class MomentMatcher(nn.Module):
                                   nn.Conv2d(32,32,3,padding=1),nn.GELU())
         self.head = nn.Sequential(nn.Flatten(),nn.Linear(32*5*9,96),nn.GELU(),
                                   nn.Dropout(0.2),nn.Linear(96,1))
+        if config.get('compare'):
+            self.attend=nn.Sequential(nn.Linear(dim,dim),nn.GELU(),nn.Linear(dim,dim))
+            self.compare=nn.Sequential(nn.Linear(dim*4,dim),nn.GELU(),nn.Dropout(.1),nn.Linear(dim,64))
+            self.aggregate=nn.Sequential(nn.Linear(128,64),nn.GELU(),nn.Linear(64,1))
+            self.compare_scale=nn.Parameter(torch.tensor(.1))
+        if config.get('soft_dtw'):self.dtw_scale=nn.Parameter(torch.tensor(.2))
 
         if config.get("word_view",False):
             self.word_emb=nn.Embedding.from_pretrained(torch.as_tensor(word_vectors),freeze=True,padding_idx=0)
@@ -133,6 +154,17 @@ class MomentMatcher(nn.Module):
             keep=torch.zeros(5,device=targets.device);keep[2]=1
             grids=grids*keep[None,None,None,:,None]
         scores=self.head(self.grid(grids.flatten(0,1))).reshape(-1,4)
+        if self.config.get('compare'):
+            ta=(tv*tw.unsqueeze(-1)).sum(-2)/tw.sum(-1,keepdim=True).clamp(min=1e-6)
+            cb=(cv*cw.unsqueeze(-1)).sum(-2)/cw.sum(-1,keepdim=True).clamp(min=1e-6)
+            a=ta[:,None].expand(-1,4,-1,-1);b=cb
+            alignment=torch.einsum('bctd,bced->bcte',self.attend(a),self.attend(b))/math.sqrt(a.shape[-1])
+            ab=alignment.softmax(-1)@b;ba=alignment.transpose(-1,-2).softmax(-1)@a
+            ca=self.compare(torch.cat([a,ab,(a-ab).abs(),a*ab],-1)).mean(-2)
+            cc=self.compare(torch.cat([b,ba,(b-ba).abs(),b*ba],-1)).mean(-2)
+            scores=scores+self.compare_scale*self.aggregate(torch.cat([ca,cc],-1)).squeeze(-1)
+        if self.config.get('soft_dtw'):
+            scores=scores+self.dtw_scale*soft_dtw_score((left+right)/2)
         if self.config.get("monotonic",False):
             alignment=monotonic_alignment((left+right)/2)
             scores=scores+self.alignment_scale*alignment
@@ -143,6 +175,12 @@ def run_moment(run_id):
     config={**MOMENT_CONFIGS[run_id], "epochs":30, "budget_seconds":240, "batch_size":48}
     info=start_run("moment-match",run_id,config)
     if config.get("monotonic",False):alignment_canary()
+    if config.get('soft_dtw'):
+        toy=torch.eye(3,device=DEVICE)[None].requires_grad_(True)
+        val=soft_dtw_score(toy);val.sum().backward()
+        assert torch.isfinite(val).all() and torch.isfinite(toy.grad).all()
+        assert float(soft_dtw_score(torch.ones(1,2,2,device=DEVICE),gamma=1e-4))>-.001
+        print('SOFT_DTW_CANARY_PASS',flush=True)
     root=find_data("moment-match-aicc-round-10")
     texts={s:json.loads((root/f"texts_{s}.json").read_text()) for s in ["train","validation","test"]}
     labels={s:np.load(root/f"labels_{s}.npy") for s in ["train","validation"]}

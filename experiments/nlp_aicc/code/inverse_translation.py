@@ -12,6 +12,8 @@ INVERSE_CONFIGS={
  6:dict(idea="Coordinate sweeps replace the full substitution grid",topk=32,loss="margin",search="coordinate",restart=0),
  7:dict(idea="Selective restarts spend compute only on non-exact rows",topk=32,loss="margin",search="coarse",restart=2)
 }
+INVERSE_CONFIGS[8]=dict(idea="Top8 exact search with contextual HotFlip fallback",topk=8,loss="margin",search="grid",restart=0,gradient=True,gradient_topk=16,gradient_steps=16)
+INVERSE_CONFIGS[9]=dict(idea="Contextual gradient coordinate search from top1 probe seeds",topk=8,loss="margin",search="gradient",restart=0,gradient=True,gradient_topk=16,gradient_steps=24)
 
 
 def run_inverse(run_id):
@@ -46,7 +48,7 @@ def run_inverse(run_id):
     def cached_positions(module,inputs,positions):
         return positions[:,:1].expand_as(positions)
     handle=model.model.decoder.embed_positions.register_forward_hook(cached_positions)
-    counters=dict(probe_batches=0,candidate_evaluations=0,model_calls=0)
+    counters=dict(probe_batches=0,candidate_evaluations=0,model_calls=0,gradient_calls=0)
     @torch.inference_mode()
     def probe():
         values=None;indices=None;tick=time.time()
@@ -88,6 +90,37 @@ def run_inverse(run_id):
         positions=torch.arange(length,device=DEVICE).repeat_interleave(k)
         candidates[rows,positions]=choices.flatten()
         return candidates
+    def contextual_choices(source,target):
+        # Gradients flow only to a temporary input embedding; all model weights stay frozen.
+        captured={}
+        def leaf_embedding(module,inputs,output):
+            leaf=output.detach().requires_grad_(True);captured['leaf']=leaf
+            return leaf
+        h=model.model.encoder.embed_tokens.register_forward_hook(leaf_embedding)
+        try:
+            with torch.enable_grad():
+                src=F.pad(source[None],(0,1),value=2)
+                decoder=F.pad(target[None,:-1],(1,0),value=2)
+                logits=model(input_ids=src,decoder_input_ids=decoder,use_cache=False).logits.float()
+                objective=F.cross_entropy(logits.reshape(-1,logits.shape[-1]),target)
+                gradient=torch.autograd.grad(objective,captured['leaf'])[0][0,:len(source)].detach()
+            assert torch.isfinite(gradient).all() and gradient.abs().sum()>0
+            weight=model.model.encoder.embed_tokens.weight.detach()
+            gains=-(gradient@weight[3:23224].T)
+            choices=gains.topk(cfg['gradient_topk'],dim=-1).indices+3
+            counters['gradient_calls']+=1;counters['model_calls']+=1
+            return choices
+        finally:h.remove()
+    def gradient_search(source,target):
+        source=source.clone();current=float(losses(source[None],target)[0])
+        for step in range(cfg['gradient_steps']):
+            if current<=1e-7 or time.time()-info['started']>cfg['budget_seconds']:break
+            choices=contextual_choices(source,target)
+            candidates=substitutions(source,choices)
+            costs=losses(candidates,target);best=int(costs.argmin());value=float(costs[best])
+            if value>=current-1e-7:break
+            source,current=candidates[best],value
+        return source,current
     def search(target,choices,source=None):
         source=choices[:,0].clone() if source is None else source.clone()
         current=float(losses(source[None],target)[0])
@@ -110,11 +143,20 @@ def run_inverse(run_id):
     for row in targets:
         target=torch.tensor(row["target_ids"],device=DEVICE)
         choices=dictionary[target[:-1]]
-        if cfg["search"]=="coarse":
+        if cfg['search']=='gradient':
+            source,cost=gradient_search(choices[:,0],target)
+        elif cfg["search"]=="coarse":
             source,cost=search(target,choices[:,:min(8,choices.shape[1])])
             source,cost=search(target,choices,source)
         else:source,cost=search(target,choices)
         generated=generate(source,row["target_content_tokens"]+16)
+        if cfg.get('gradient') and generated!=row['target_ids']:
+            source,cost=gradient_search(source,target)
+            generated=generate(source,row['target_content_tokens']+16)
+            # A frozen probe shortlist remains an explicit fallback, never hidden in cost reporting.
+            if generated!=row['target_ids']:
+                source,cost=search(target,choices,source)
+                generated=generate(source,row['target_content_tokens']+16)
         for attempt in range(cfg["restart"]):
             if generated==row["target_ids"]:break
             random_indices=torch.randint(0,choices.shape[1],(len(source),),device=DEVICE)

@@ -11,6 +11,8 @@ WORD_CONFIGS={
  6:dict(idea="Explicit punctuation boundaries enforce consistent BMES",reverse=False,normalize=False,cohesion=False,dp=False,punct=True),
  7:dict(idea="Combine bidirectional surprise, cohesion, DP and punctuation",reverse=True,normalize=True,cohesion=True,dp=True,punct=True)
 }
+WORD_CONFIGS[8]={**WORD_CONFIGS[7],"idea":"Accessor-variety lexical spans supplement boundary surprise","accessor":True}
+WORD_CONFIGS[9]={**WORD_CONFIGS[8],"idea":"Accessor spans plus BPE-dropout regularized scratch LM","bpe_dropout":.1}
 
 
 class BoundaryLanguageModel(nn.Module):
@@ -87,6 +89,13 @@ def run_word(run_id):
                 total+=float(loss);count+=int(x[:,1:].ne(0).sum())
         return total/max(count,1)
     for epoch in range(cfg["epochs"]):
+        if cfg.get('bpe_dropout'):
+            tokenizer.model.dropout=cfg['bpe_dropout']
+            try:
+                tr=lm_ids(corpus)
+                if cfg['reverse']:tr=np.concatenate([tr,lm_ids(corpus,True)],0)
+            finally:tokenizer.model.dropout=None
+            loader=DataLoader(TensorDataset(torch.from_numpy(tr)),batch_size=96,shuffle=True)
         model.train();losses=[]
         for (x,) in loader:
             x=x.to(DEVICE);optimizer.zero_grad(set_to_none=True)
@@ -109,6 +118,26 @@ def run_word(run_id):
     corpus_count=sum(unigram.values())
     bpe_lengths=[end-start for s in corpus[:4000] for start,end in tokenizer.encode(s).offsets if end>start]
     mean_length=float(np.clip(np.mean(bpe_lengths),1.4,3.0))
+    lexical_bonus={}
+    if cfg.get('accessor'):
+        frequency=Counter(s[i:i+k] for s in corpus for k in [2,3,4] for i in range(max(0,len(s)-k+1)))
+        retained={s for s,c in frequency.items() if c>=5}
+        left={s:set() for s in retained};right={s:set() for s in retained}
+        starts=Counter();ends=Counter()
+        for s in corpus:
+            for k in [2,3,4]:
+                for i in range(max(0,len(s)-k+1)):
+                    word=s[i:i+k]
+                    if word not in retained:continue
+                    if i:left[word].add(s[i-1])
+                    else:starts[word]+=1
+                    if i+k<len(s):right[word].add(s[i+k])
+                    else:ends[word]+=1
+        for word in retained:
+            av=min(len(left[word])+starts[word],len(right[word])+ends[word])
+            if av>=2:lexical_bonus[word]=min(.5,.2*math.log1p(av))
+        del frequency,left,right,retained
+        print('ACCESSOR_LEXICON '+json.dumps(dict(entries=len(lexical_bonus),min_frequency=5,max_span=4,weight=.2,cap=.5)),flush=True)
     @torch.inference_mode()
     def token_surprise(text,reverse=False):
         raw=text[::-1] if reverse else text
@@ -161,7 +190,7 @@ def run_word(run_id):
                     length=end-start
                     interior=float(np.log1p(-probability[start:end-1]).sum())
                     boundary=float(math.log(probability[end-1])) if end<n else 0.
-                    value=dp[start]+interior+boundary-0.08*(length-mean_length)**2
+                    value=dp[start]+interior+boundary-0.08*(length-mean_length)**2+lexical_bonus.get(text[start:end],0.)
                     if value>dp[end]:dp[end]=value;prev[end]=start
             boundaries=set();end=n
             while end>0:
@@ -181,8 +210,10 @@ def run_word(run_id):
     return finish_run(info,dict(metric="BPE_LM_NLL_proxy",value=best,direction="minimize",
           samples=len(va_idx),split="train_only_10pct",boundary_f1=None),sub,checks,history,
           artifacts=dict(tokenizer="tokenizer.json",pretrained_weights=False,train_only_statistics=True,
-                         threshold=threshold,mean_bpe_length=mean_length),
+                         threshold=threshold,mean_bpe_length=mean_length,accessor_lexicon_entries=len(lexical_bonus)),
           limitations=["LM NLL is a proxy, not segmentation F1; no segmentation gold labels were used.",
                        "BPE boundaries and linguistic words differ; decoding is a testable hypothesis.",
-                       "Only training text is used for vocabulary, LM fitting and threshold calibration."])
+                       "Only training text is used for vocabulary, LM fitting and threshold calibration.",
+                       "Accessor bonus is a transfer hypothesis, not a full segmental neural LM or Bayesian word model.",
+                       "BPE-dropout uses tokenizers stochastic merges; seed42 alone does not guarantee identical merge samples across library versions."])
 
