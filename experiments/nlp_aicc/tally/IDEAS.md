@@ -50,3 +50,11 @@ Trước khi có số T4, 480 giây là **trần train cấu hình**, không ph�
 - [Correction IOAI](https://ioai.artix.tech/problems/aicc-2026-r11-tally/correction) đang yêu cầu tài khoản thành viên. Chưa đọc được nội dung; không gọi đó là SOTA đã tái lập.
 - [Năm paper và cách chuyển ý tưởng](RESEARCH.md). Chỉ chọn triển khai sau khi đối chiếu lỗi; đọc paper không đồng nghĩa đã chạy phương pháp đó.
 - Đã chấp nhận quy định riêng Tally sau xác nhận “đồng ý hết giúp mình” ngày 27/11/2026 và quan sát thông báo thành công của Kaggle. [R01 Saved Version 1](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445), nguồn `08c63dcfb7af4f7c08c21bf0487e78dee5ee9585`, đã chạy xong và nộp Complete(afterdeadline). Không tính queue/retry là cấu hình mới.
+
+
+## Hai phép thử tiếp đã gửi lên T4
+
+- R02: Saved Version2/script374853542, CRF expected count từ pair marginals; [job](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853542).
+- R03: Saved Version3/script374853890, CRF per-type count composite likelihood; [job](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853890).
+
+Cả hai dùng nguồn bất biến `dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598`, trần480s train/lượt, đang queued T4x2 lúc20:47 giờ Việt Nam. Chưa có kết quả hoặc canary pass được quan sát của R02/R03. Không cần Quân điều chỉnh từng lượt; lịch sẽ tự đọc kết quả, chọn nâng cấp trong phạm vi đã cho phép, ghi Git và thông báo khi có số mới.

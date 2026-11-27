@@ -1575,7 +1575,7 @@
       "title": "Tally",
       "competition_slug": "tally-aicc-round-11",
       "rules_accepted": true,
-      "status": "running_experiments",
+      "status": "queued",
       "runs": [
         {
           "run_id": "R01",
@@ -1607,6 +1607,22 @@
             "output_file": "tally/R01/submission.csv",
             "description_note": "Post-contest practice Tally R01: frozen scratch experiment; version1/script374844445. Verified Complete(after deadline)."
           }
+        },
+        {
+          "run_id": "R02",
+          "idea": "CRF exact pair-marginal expected run counts",
+          "status": "queued",
+          "notebook_version": 2,
+          "script_version_id": 374853542,
+          "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598"
+        },
+        {
+          "run_id": "R03",
+          "idea": "CRF per-type count composite likelihood",
+          "status": "queued",
+          "notebook_version": 3,
+          "script_version_id": 374853890,
+          "source_commit": "dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598"
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
@@ -1635,7 +1651,7 @@
   "phase": "tally_in_progress",
   "successful_unique_experiments": 52,
   "minimum_successful_experiments": 42,
-  "saved_versions_observed": 28,
+  "saved_versions_observed": 30,
   "counting_note": "Completed unique model/decoder configurations counted from run records; queued jobs, retries and Saved Versions are not additional completed configurations.",
   "saved_versions_count_note": "Unique task/version pairs referenced by queued or completed run records; failed/unrecorded versions may be absent."
 }
