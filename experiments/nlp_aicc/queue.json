@@ -307,14 +307,27 @@
       "competition_slug": "inverse-translation-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/inverse-translation.ipynb",
-      "status": "prepared",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
           "idea": "Probe streaming giữ top-32, margin search",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 4,
+          "metric": {
+            "metric": "official_score_0_100",
+            "value": 100.0,
+            "direction": "maximize",
+            "samples": 24,
+            "split": "explicit_public_targets",
+            "official": {
+              "score": 100.0,
+              "exact_rate": 1.0,
+              "mean_similarity": 1.0,
+              "valid_rate": 1.0
+            }
+          },
+          "report_path": "inverse-translation/runs/R01/report.json"
         },
         {
           "run_id": "R02",
@@ -358,7 +371,8 @@
           "notebook_version": null,
           "metric": null
         }
-      ]
+      ],
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683"
     },
     {
       "order": 5,
