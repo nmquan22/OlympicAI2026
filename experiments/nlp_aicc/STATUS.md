@@ -96,3 +96,5 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R01 | Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts | 0.44444 entity_span_micro_F1; Kaggle 0.2971/0.3008 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R01/LEARNED.md) |
 | R02 | CRF exact pair-marginal expected run counts | 0.44444 entity_span_micro_F1; Kaggle 0.3039/0.3035 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R02/LEARNED.md) |
 | R03 | CRF per-type count composite likelihood | 0.44444 entity_span_micro_F1; Kaggle 0.3530/0.3530 Entity-span micro F1 (public/private) | [Đọc](tally/runs/R03/LEARNED.md) |
+| R04 | Byte character CNN supplements BPE count CRF | running | Chưa có kết quả |
+| R05 | Approximate joint moment CRF teacher and stop-gradient KL | running | Chưa có kết quả |

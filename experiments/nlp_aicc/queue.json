@@ -1669,6 +1669,22 @@
             "output_file": "tally/R03/submission.csv",
             "description_note": "Post-contest practice Tally R03: frozen scratch experiment; version3/script374853890. Source/output verified; Complete(after deadline)."
           }
+        },
+        {
+          "run_id": "R04",
+          "idea": "Byte character CNN supplements BPE count CRF",
+          "status": "running",
+          "notebook_version": 4,
+          "script_version_id": 374929474,
+          "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612"
+        },
+        {
+          "run_id": "R05",
+          "idea": "Approximate joint moment CRF teacher and stop-gradient KL",
+          "status": "running",
+          "notebook_version": 5,
+          "script_version_id": 374929750,
+          "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612"
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
@@ -1697,7 +1713,7 @@
   "phase": "tally_in_progress",
   "successful_unique_experiments": 54,
   "minimum_successful_experiments": 42,
-  "saved_versions_observed": 30,
+  "saved_versions_observed": 32,
   "counting_note": "Completed unique model/decoder configurations counted from run records; queued jobs, retries and Saved Versions are not additional completed configurations.",
   "saved_versions_count_note": "Unique task/version pairs referenced by queued or completed run records; failed/unrecorded versions may be absent."
 }

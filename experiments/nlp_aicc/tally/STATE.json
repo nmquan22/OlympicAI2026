@@ -1,7 +1,7 @@
 {
   "task": "tally",
   "competition_slug": "tally-aicc-round-11",
-  "status": "preparing_R04_R05",
+  "status": "R04_R05_running",
   "rules_accepted": true,
   "successful_unique_experiments": 3,
   "scored_unique_submissions": 3,
@@ -13,8 +13,35 @@
     "R04",
     "R05"
   ],
-  "active_saved_versions": [],
-  "next_action": "Prepare scratch character features and approximate posterior projection from measured R02/R03 failures; then launch at most2 T4 saved versions.",
+  "active_saved_versions": [
+    {
+      "version": 4,
+      "script_version_id": 374929474,
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374929474",
+      "run_ids": [
+        "R04"
+      ],
+      "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
+      "status": "running",
+      "accelerator": "GPU T4 x2",
+      "observed_at_utc": "2026-11-27T17:26:01.409938+00:00",
+      "crf_teacher_canary_passed": true
+    },
+    {
+      "version": 5,
+      "script_version_id": 374929750,
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374929750",
+      "run_ids": [
+        "R05"
+      ],
+      "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
+      "status": "running",
+      "accelerator": "GPU T4 x2",
+      "observed_at_utc": "2026-11-27T17:26:01.409938+00:00",
+      "crf_teacher_canary_passed": true
+    }
+  ],
+  "next_action": "Read exact R04/R05 reports after completion, submit each output once, compare actual span errors and projection residuals, then choose R06/R07. Do not re-run or re-submit R01-R03.",
   "code_verification": "R02/R03 T4 exhaustive CRF canaries passed; completed reports observed and both submissions scored.",
   "polling": {
     "unmeasured_train_budget_seconds": 480,
@@ -24,7 +51,7 @@
       30,
       60
     ],
-    "note": "No training ETA measured yet. Startup, encoding, evaluation and queue delay are separate.",
+    "note": "Measured code runtimes: R01 148.875s, R02 335.166s, R03 374.102s. R04/R05 cost still unmeasured, train cap480s plus startup/eval; queue separate.",
     "background_check": "Hourly condition watch created; first scheduled check 21:19 Asia/Saigon on 27/11/2026. No repeated notifications while queued.",
     "measured_R01_code_seconds": 148.8752338886261,
     "measured_R01_kaggle_total_seconds": 175.5,
@@ -68,5 +95,5 @@
       "script_version_id": 374853890
     }
   ],
-  "new_source_verification": "R04/R05 source AST valid; new teacher-KL canary and character model await actual T4 execution."
+  "new_source_verification": "R04/R05 T4 CRF/count/teacher-KL exhaustive canaries passed; both RUN_START and T4 device observed. R04 epoch1 finite loss observed. No final results yet."
 }

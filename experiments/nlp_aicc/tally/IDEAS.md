@@ -63,3 +63,8 @@ Cả hai dùng nguồn bất biến `dddb8442bdc9ea57f8d474b07ad4eaf0c8cba598`, 
 ## Kết quả R02/R03 (đã chấm)
 
 Tally hiện3/7, tổng NLP54 cấu hình/scored. R02: val.444444, public.30394/private.30351,335.166s. R03: val.444444, public.35301/private.35300,374.102s. Canary cả hai pass. R03 cải thiện public và count vector nhưng ORG vẫn0/5, năm span hụt biên; chưa giải quyết được vị trí. [R03 LEARNED](runs/R03/LEARNED.md). Chuẩn bị R04 character features và R05 approximate posterior projection; chưa có kết quả của hai hướng đó.
+
+
+## R04/R05 đang chạy
+
+R04 Saved Version4/script374929474 và R05 Saved Version5/script374929750 đã RUN_START trên TeslaT4, nguồn bất biến `2127e5331fe50b6f7b102ca1943db2c55ec49612`. Canary mở rộng đã pass ở cả hai: partition/count/Viterbi/padding, KL teacher khớp brute-force enumeration, teacher stop-gradient và residual giảm trên toy. R04 đã có epoch1 với loss hữu hạn; chưa có kết quả cuối hai lượt này. Không cộng vào54 hoàn tất/scored.
