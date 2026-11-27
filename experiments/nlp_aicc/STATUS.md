@@ -1,10 +1,10 @@
 # Tiến độ thực nghiệm NLP
 
-**39 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**40 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
-| [Moment Match](moment-match/IDEAS.md) | 9/7 | R04: 0.69122 accuracy |
+| [Moment Match](moment-match/IDEAS.md) | 10/7 | R04: 0.69122 accuracy |
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 8/7 | R08: 15.30885 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 7/7 | R07: public 0.9097, private 0.9113 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 7/7 | R01: 100.00000 official_score_0_100 |
@@ -25,7 +25,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R07 | Kết hợp token attention + IDF, dựa trên R03/R04 | 0.66478 accuracy | [Đọc](moment-match/runs/R07/LEARNED.md) |
 | R08 | IDF + prior căn chỉnh đơn điệu khả vi | 0.68933 accuracy | [Đọc](moment-match/runs/R08/LEARNED.md) |
 | R09 | IDF + max alignment gần reference | 0.67705 accuracy | [Đọc](moment-match/runs/R09/LEARNED.md) |
-| R10 | BPE view + nguyên word-vector feature view được cấp | planned | Chưa có kết quả |
+| R10 | BPE view + nguyên word-vector feature view được cấp | 0.64873 accuracy | [Đọc](moment-match/runs/R10/LEARNED.md) |
 
 ## Lost Interpreter
 
@@ -76,3 +76,4 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R06 | Sinkhorn loss để học cạnh tranh toàn cục trước Hungarian | 0.10000 bijective_holdout_accuracy | [Đọc](alchemy/runs/R06/LEARNED.md) |
 | R07 | Kết hợp hard negatives + full-list CE + probability averaging | 0.06667 bijective_holdout_accuracy | [Đọc](alchemy/runs/R07/LEARNED.md) |
 | R08 | Composer a+b / |a-b| / a*b có tính giao hoán sẵn | 0.10000 bijective_holdout_accuracy | [Đọc](alchemy/runs/R08/LEARNED.md) |
+| R09 | Tied input/result role space + residual additive composition | planned | Chưa có kết quả |

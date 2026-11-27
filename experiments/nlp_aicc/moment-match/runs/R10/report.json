@@ -1,0 +1,46 @@
+{
+  "task": "moment-match",
+  "run_id": "R10",
+  "config": {
+    "idea": "Fuse scratch BPE matching with intact supplied word-vector matching",
+    "vocab": 2048,
+    "token_layers": 0,
+    "event_context": false,
+    "soft": true,
+    "temperature": 0.2,
+    "idf": true,
+    "center": false,
+    "word_view": true,
+    "epochs": 30,
+    "budget_seconds": 240,
+    "batch_size": 48
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "bcb25f1977a86dcf2cfa8d674acc263d18d7515d",
+  "status": "completed",
+  "elapsed_seconds": 67.37308478355408,
+  "peak_gpu_memory_mb": 220.11962890625,
+  "validation": {
+    "metric": "accuracy",
+    "value": 0.6487252124645893,
+    "direction": "maximize",
+    "samples": 1059,
+    "split": "provided_validation"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 1970,
+    "labels_valid": true
+  },
+  "artifacts": {
+    "word_view_canary_passed": true,
+    "word_ids_shifted": 1,
+    "empty_word_view_finite": true,
+    "weights": "provided_fastText_only",
+    "word_feature_view": true
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}
