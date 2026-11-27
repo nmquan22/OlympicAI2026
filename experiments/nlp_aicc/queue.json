@@ -138,6 +138,13 @@
             "split": "provided_validation"
           },
           "report_path": "moment-match/runs/R09/report.json"
+        },
+        {
+          "run_id": "R10",
+          "idea": "BPE view + nguyên word-vector feature view được cấp",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"

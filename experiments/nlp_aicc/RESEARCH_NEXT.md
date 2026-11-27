@@ -37,3 +37,10 @@ Sau bảy lượt, hard negatives tốt nhất 4/30 so với 3/30 ban đầu. Ch
 ### Source preflight
 
 Lượt gọi Lost R08 dùng nhầm source SHA cũ, nên R06/R07 hoàn tất nhưng R08 gặp KeyError trước khi train. Lỗi ở loader đã chuẩn bị, không phải model. Đổi generator nhận SHA bằng tham số tường minh, kiểm tra SHA cụ thể trong text và validate toàn bộ config IDs trước khi chạy lượt đầu. Các lượt research lỗi không tính thêm. Chạy lại batch sạch R06–R08 để có một version hoàn tất đầy đủ.
+
+
+## Moment R10: giữ nguyên thông tin word vectors được cấp
+
+R08 đạt68.93%, R09 max BPE alignment67.71%, đều chưa vượt IDF69.12%. Đọc lại reference cho thấy họ pad thêm một hàng 0 vào embedding matrix rồi shift word IDs +1; word vectors trong data bắt đầu ở index0 thật. R10 giữ tokenizer BPE, thêm một nhánh **feature** từ nguyên word vectors được đề cấp (frozen) → projection → max late interaction. Ghép hai grid BPE + word ở mức feature map, CNN nhận bốn channel. Không tải model/tokenizer bên ngoài.
+
+Giả thuyết: trung bình vector của nhiều từ vào cùng BPE piece làm nhòe nghĩa, nhất là noun/action hiếm. Đây là giả thuyết được kiểm tra, chưa có điểm R10. Tokenizer của model vẫn là BPE; nhánh phụ là lookup feature từ tài nguyên bài cấp. Điều kiện khác với reference word-only nên không gọi là tái lập exact SOTA.

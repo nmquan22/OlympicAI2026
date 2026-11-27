@@ -19,6 +19,8 @@ MOMENT_CONFIGS[8]={**MOMENT_CONFIGS[4],"idea":"IDF plus a differentiable monoton
 MOMENT_CONFIGS[9]={**MOMENT_CONFIGS[4],"idea":"Hard max word-piece alignment instead of soft matching","hard":True}
 
 
+MOMENT_CONFIGS[10]={**MOMENT_CONFIGS[4],"idea":"Fuse scratch BPE matching with intact supplied word-vector matching","word_view":True}
+
 def monotonic_alignment(scores,gamma=0.15):
     """Mean score, softly averaged over strictly increasing subsequence paths.
 
@@ -52,7 +54,7 @@ def alignment_canary():
 
 
 class MomentMatcher(nn.Module):
-    def __init__(self, initial, idf, config, dim=96):
+    def __init__(self, initial, idf, config, dim=96, word_vectors=None):
         super().__init__()
         self.config = config
         self.emb = nn.Embedding.from_pretrained(torch.as_tensor(initial), freeze=False, padding_idx=0)
@@ -69,11 +71,14 @@ class MomentMatcher(nn.Module):
                                                activation="gelu", norm_first=True)
             self.events = nn.TransformerEncoder(block, 1, enable_nested_tensor=False)
             self.context_gate = nn.Parameter(torch.tensor(0.0))
-        self.grid = nn.Sequential(nn.Conv2d(2,32,3,padding=1),nn.GELU(),
+        self.grid = nn.Sequential(nn.Conv2d(4 if config.get("word_view",False) else 2,32,3,padding=1),nn.GELU(),
                                   nn.Conv2d(32,32,3,padding=1),nn.GELU())
         self.head = nn.Sequential(nn.Flatten(),nn.Linear(32*5*9,96),nn.GELU(),
                                   nn.Dropout(0.2),nn.Linear(96,1))
 
+        if config.get("word_view",False):
+            self.word_emb=nn.Embedding.from_pretrained(torch.as_tensor(word_vectors),freeze=True,padding_idx=0)
+            self.word_projection=nn.Linear(word_vectors.shape[1],dim,bias=False)
         if config.get("monotonic",False):
             self.alignment_scale=nn.Parameter(torch.tensor(.2))
 
@@ -93,7 +98,7 @@ class MomentMatcher(nn.Module):
             x=x+torch.sigmoid(self.context_gate)*e.reshape(event.shape).unsqueeze(-2)
         return F.normalize(x,dim=-1)
 
-    def forward(self, targets,candidates):
+    def forward(self, targets,candidates,word_targets=None,word_candidates=None):
         tm,cm=targets.ne(0),candidates.ne(0)
         tv,cv=self.representations(targets),self.representations(candidates)
         sim=torch.einsum("btwd,bcevd->bctewv",tv,cv).float()
@@ -112,6 +117,16 @@ class MomentMatcher(nn.Module):
         left=(left*tw[:,None,:,None,:]).sum(-1)/tw[:,None,:,None,:].sum(-1).clamp(min=1e-6)
         right=(right*cw[:,:,None,:,:]).sum(-1)/cw[:,:,None,:,:].sum(-1).clamp(min=1e-6)
         grids=torch.stack([left,right],dim=2)
+        if self.config.get("word_view",False):
+            wtm,wcm=word_targets.ne(0),word_candidates.ne(0)
+            wtv=F.normalize(self.word_projection(self.word_emb(word_targets)),dim=-1)
+            wcv=F.normalize(self.word_projection(self.word_emb(word_candidates)),dim=-1)
+            ws=torch.einsum("btwd,bcevd->bctewv",wtv,wcv).float()
+            wvalid=wtm[:,None,:,None,:,None]&wcm[:,:,None,:,None,:]
+            ws=ws.masked_fill(~wvalid,-1e4)
+            wl=(ws.amax(-1)*wtm[:,None,:,None,:]).sum(-1)/wtm[:,None,:,None,:].sum(-1).clamp(min=1)
+            wr=(ws.amax(-2)*wcm[:,:,None,:,:]).sum(-1)/wcm[:,:,None,:,:].sum(-1).clamp(min=1)
+            grids=torch.cat([grids,torch.stack([wl,wr],dim=2)],dim=2)
         if self.config["center"]:
             keep=torch.zeros(5,device=targets.device);keep[2]=1
             grids=grids*keep[None,None,None,:,None]
@@ -150,32 +165,44 @@ def run_moment(run_id):
     df=Counter(token for event in events for token in set(tokenizer.encode(event).ids))
     idf=np.array([math.log((len(events)+1)/(df[i]+1))+1 for i in range(len(initial))],dtype=np.float32)
     idf[0]=0
+    # The organizer word vocabulary starts at 0, so reserve padding by adding 1.
+    word_vectors=np.pad(provided.astype(np.float32),((1,0),(0,0))) if config.get("word_view",False) else None
+    def word_ids(sequence):
+        result=np.zeros((len(sequence),12),dtype=np.int64)
+        for j,event in enumerate(sequence):
+            values=[int(vocab[w])+1 for w in event.split() if w in vocab][:12]
+            result[j,:len(values)]=values
+        return result
     encoded={}
     for split,t in texts.items():
         a=np.stack([encode_texts(tokenizer,seq,24) for seq in t["target"]])
         b=np.stack([np.stack([encode_texts(tokenizer,seq,24) for seq in cands]) for cands in t["candidates"]])
         encoded[split]=(torch.from_numpy(a),torch.from_numpy(b))
+        if config.get("word_view",False):
+            wa=np.stack([word_ids(seq) for seq in t["target"]])
+            wb=np.stack([np.stack([word_ids(seq) for seq in cands]) for cands in t["candidates"]])
+            encoded[split]+=torch.from_numpy(wa),torch.from_numpy(wb)
     train_data=TensorDataset(*encoded["train"],torch.as_tensor(labels["train"],dtype=torch.long))
     loader=DataLoader(train_data,batch_size=config["batch_size"],shuffle=True,num_workers=0)
-    model=MomentMatcher(initial,idf,config).to(DEVICE)
+    model=MomentMatcher(initial,idf,config,word_vectors=word_vectors).to(DEVICE)
     optimizer=torch.optim.AdamW(model.parameters(),lr=8e-4,weight_decay=1e-4)
     history=[];best=-1;best_state=None;bad=0;tick=time.time()
     def infer(split):
         model.eval();result=[]
         with torch.inference_mode():
-            for a,b in DataLoader(TensorDataset(*encoded[split]),batch_size=48):
+            for batch in DataLoader(TensorDataset(*encoded[split]),batch_size=48):
                 with torch.autocast("cuda",dtype=torch.float16):
-                    scores=model(a.to(DEVICE),b.to(DEVICE))
+                    scores=model(*[value.to(DEVICE) for value in batch])
                 assert torch.isfinite(scores).all()
                 result.append(scores.float().cpu())
         return torch.cat(result)
     scaler=torch.amp.GradScaler("cuda")
     for epoch in range(config["epochs"]):
         model.train();losses=[]
-        for a,b,y in loader:
+        for *features,y in loader:
             optimizer.zero_grad(set_to_none=True)
             with torch.autocast("cuda",dtype=torch.float16):
-                scores=model(a.to(DEVICE),b.to(DEVICE));loss=F.cross_entropy(scores,y.to(DEVICE))
+                scores=model(*[value.to(DEVICE) for value in features]);loss=F.cross_entropy(scores,y.to(DEVICE))
             assert torch.isfinite(loss)
             scaler.scale(loss).backward();scaler.unscale_(optimizer)
             nn.utils.clip_grad_norm_(model.parameters(),1)
@@ -211,7 +238,7 @@ def run_moment(run_id):
                 row_count=len(sub),labels_valid=bool(sub.label.between(0,3).all()))
     return finish_run(info,dict(metric="accuracy",value=best,direction="maximize",
           samples=len(labels["validation"]),split="provided_validation"),sub,checks,history,
-          artifacts=dict(tokenizer="tokenizer.json",weights="provided_fastText_only",
+          artifacts=dict(tokenizer="tokenizer.json",weights="provided_fastText_only",word_feature_view=bool(config.get("word_view",False)),
                          source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest() if "__file__" in globals() and Path(__file__).exists() else None),
           limitations=["BPE vocabulary trained on train text only; supplied fastText initializes its vectors.",
                        "Reference architecture is adapted, not claimed to reproduce its 0.7243 result."])
