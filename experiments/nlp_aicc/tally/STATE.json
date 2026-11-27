@@ -1,47 +1,22 @@
 {
   "task": "tally",
   "competition_slug": "tally-aicc-round-11",
-  "status": "R04_R05_running",
+  "status": "R04_R05_completed_R06_R07_prepared",
   "rules_accepted": true,
-  "successful_unique_experiments": 3,
-  "scored_unique_submissions": 3,
+  "successful_unique_experiments": 5,
+  "scored_unique_submissions": 5,
   "minimum_successful_experiments": 7,
   "runnable_configurations": [
     "R01",
     "R02",
     "R03",
     "R04",
-    "R05"
+    "R05",
+    "R06",
+    "R07"
   ],
-  "active_saved_versions": [
-    {
-      "version": 4,
-      "script_version_id": 374929474,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374929474",
-      "run_ids": [
-        "R04"
-      ],
-      "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
-      "status": "running",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T17:26:01.409938+00:00",
-      "crf_teacher_canary_passed": true
-    },
-    {
-      "version": 5,
-      "script_version_id": 374929750,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374929750",
-      "run_ids": [
-        "R05"
-      ],
-      "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
-      "status": "running",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T17:26:01.409938+00:00",
-      "crf_teacher_canary_passed": true
-    }
-  ],
-  "next_action": "Read exact R04/R05 reports after completion, submit each output once, compare actual span errors and projection residuals, then choose R06/R07. Do not re-run or re-submit R01-R03.",
+  "active_saved_versions": [],
+  "next_action": "Freeze and launch R06 typed boundary auxiliary loss and R07 singleton whole-word masking on R03; no duplicate R01-R05 submissions. Hypotheses chosen from validation failures before reading R04/R05 scores.",
   "code_verification": "R02/R03 T4 exhaustive CRF canaries passed; completed reports observed and both submissions scored.",
   "polling": {
     "unmeasured_train_budget_seconds": 480,
@@ -51,11 +26,13 @@
       30,
       60
     ],
-    "note": "Measured code runtimes: R01 148.875s, R02 335.166s, R03 374.102s. R04/R05 cost still unmeasured, train cap480s plus startup/eval; queue separate.",
+    "note": "R04 code330.592s/Kaggle363.0s; R05 code490.202s/Kaggle518.2s. R06/R07 traincap480s plus startup/evaluation; allow15minutes after RUN_START, queue separate.",
     "background_check": "Hourly condition watch created; first scheduled check 21:19 Asia/Saigon on 27/11/2026. No repeated notifications while queued.",
     "measured_R01_code_seconds": 148.8752338886261,
     "measured_R01_kaggle_total_seconds": 175.5,
-    "next_configs_note": "CRF/DP cost is unmeasured; allow up to480s training/config plus startup/eval. Automated condition checks remain hourly."
+    "next_configs_note": "CRF/DP cost is unmeasured; allow up to480s training/config plus startup/eval. Automated condition checks remain hourly.",
+    "measured_R04_code_seconds": 330.59193229675293,
+    "measured_R05_code_seconds": 490.20216488838196
   },
   "rules_confirmation": {
     "user_message": "đồng ý hết giúp mình",
@@ -93,7 +70,27 @@
       "peak_gpu_memory_mb": 136.32763671875,
       "version": 3,
       "script_version_id": 374853890
+    },
+    {
+      "run_id": "R04",
+      "validation_f1": 0.42857142857142855,
+      "public_score": 0.37057,
+      "private_score": 0.3774,
+      "code_seconds": 330.59193229675293,
+      "peak_gpu_memory_mb": 156.69873046875,
+      "version": 4,
+      "script_version_id": 374929474
+    },
+    {
+      "run_id": "R05",
+      "validation_f1": 0.37037037037037035,
+      "public_score": 0.2502,
+      "private_score": 0.25609,
+      "code_seconds": 490.20216488838196,
+      "peak_gpu_memory_mb": 92.55078125,
+      "version": 5,
+      "script_version_id": 374929750
     }
   ],
-  "new_source_verification": "R04/R05 T4 CRF/count/teacher-KL exhaustive canaries passed; both RUN_START and T4 device observed. R04 epoch1 finite loss observed. No final results yet."
+  "new_source_verification": "R04/R05 completed T4; CRF/count/teacher canaries passed. R06/R07 code and AST prepared; representation canary not observed on T4 yet."
 }

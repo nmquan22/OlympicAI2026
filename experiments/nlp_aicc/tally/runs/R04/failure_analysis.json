@@ -1,0 +1,110 @@
+{
+  "f1": 0.42857142857142855,
+  "true_positive": 6,
+  "false_positive": 7,
+  "false_negative": 9,
+  "per_type": {
+    "PERSON": {
+      "gold": 7,
+      "predicted": 7,
+      "correct": 4,
+      "f1": 0.5714285714285714
+    },
+    "ORGANIZATION": {
+      "gold": 5,
+      "predicted": 1,
+      "correct": 0,
+      "f1": 0.0
+    },
+    "LOCATION": {
+      "gold": 2,
+      "predicted": 5,
+      "correct": 2,
+      "f1": 0.5714285714285714
+    },
+    "CREATIVE_WORK": {
+      "gold": 1,
+      "predicted": 0,
+      "correct": 0,
+      "f1": 0.0
+    },
+    "EVENT": {
+      "gold": 0,
+      "predicted": 0,
+      "correct": 0,
+      "f1": 0.0
+    }
+  },
+  "failure_modes": {
+    "overlap_right_type_wrong_boundary": 3,
+    "no_right_type_overlap": 5,
+    "correct_boundary_wrong_type": 1,
+    "all_O_sentences": 1
+  },
+  "unseen_word_entity_recall": 0.42857142857142855,
+  "unseen_word_gold_entities": 14,
+  "weak_holdout_count_mae": 0.20425,
+  "weak_holdout_exact_count_vector": 0.38875,
+  "weak_holdout_samples": 800,
+  "best_epoch": 8,
+  "optimizer_steps": 1968,
+  "per_type_gold_train_support": {
+    "LOCATION": 27,
+    "EVENT": 4,
+    "PERSON": 22,
+    "ORGANIZATION": 25,
+    "CREATIVE_WORK": 6
+  },
+  "weak_train_samples": 7200,
+  "max_words": 45,
+  "bpe_vocab": 2048,
+  "test_unk_pieces": 0,
+  "test_total_pieces": 216750,
+  "validation_cases": [
+    {
+      "text": "volume on the new matrellah stock exchange totaled 135.9 million shares .",
+      "truth": "O O O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O O O O O",
+      "prediction": "O O O ORGANIZATION ORGANIZATION ORGANIZATION O O O O O O",
+      "missed": [
+        [
+          3,
+          7,
+          2
+        ]
+      ],
+      "spurious": [
+        [
+          3,
+          6,
+          2
+        ]
+      ]
+    },
+    {
+      "text": "democratic political strategist macdong dunkel is now a senior fellow at new dowmensus university 's graduate school in public service .",
+      "truth": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O",
+      "prediction": "O O O PERSON PERSON O O O O O O O LOCATION O O O O O O O O",
+      "missed": [
+        [
+          11,
+          14,
+          2
+        ],
+        [
+          15,
+          20,
+          2
+        ]
+      ],
+      "spurious": [
+        [
+          12,
+          13,
+          3
+        ]
+      ]
+    }
+  ],
+  "retained_validation_cases": 2,
+  "original_failure_case_count": 6
+}

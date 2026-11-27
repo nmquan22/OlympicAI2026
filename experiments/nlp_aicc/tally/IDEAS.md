@@ -68,3 +68,9 @@ Tally hiện3/7, tổng NLP54 cấu hình/scored. R02: val.444444, public.30394/
 ## R04/R05 đang chạy
 
 R04 Saved Version4/script374929474 và R05 Saved Version5/script374929750 đã RUN_START trên TeslaT4, nguồn bất biến `2127e5331fe50b6f7b102ca1943db2c55ec49612`. Canary mở rộng đã pass ở cả hai: partition/count/Viterbi/padding, KL teacher khớp brute-force enumeration, teacher stop-gradient và residual giảm trên toy. R04 đã có epoch1 với loss hữu hạn; chưa có kết quả cuối hai lượt này. Không cộng vào54 hoàn tất/scored.
+
+## R04/R05 đã nộp và chấm, R06/R07 đã chọn
+
+Tally5/7; tổng56 cấu hình/scored. R04: val.428571/public.37057/private.37740,330.592s/156.699MiB. R05: val.370370/public.25020/private.25609,490.202s/92.551MiB. Cả hai Complete(afterdeadline), canariespass. Count proxy tốt hơn không bảo đảm spanF1: R04 countvector38.875% nhưng val giảm, còn R05 giảm residual teacher nhưng holdout tệ. R04 hiện dẫn public; R03 giữ lựa chọn theo validation. Private chỉ báo cáo.
+
+Hai phép thử đã chốt từ lỗi validation trước score: R06 auxiliary start/end, R07 singleton whole-word masking. Cả hai độc lập xuất phátR03, không pretrained và không thêm dữ liệu; [chi tiết giả thuyết](RESEARCH.md). Chưa tính vào56 trước khi có kết quả.

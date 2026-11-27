@@ -1,0 +1,113 @@
+{
+  "f1": 0.37037037037037035,
+  "true_positive": 5,
+  "false_positive": 7,
+  "false_negative": 10,
+  "per_type": {
+    "PERSON": {
+      "gold": 7,
+      "predicted": 8,
+      "correct": 3,
+      "f1": 0.4
+    },
+    "ORGANIZATION": {
+      "gold": 5,
+      "predicted": 0,
+      "correct": 0,
+      "f1": 0.0
+    },
+    "LOCATION": {
+      "gold": 2,
+      "predicted": 4,
+      "correct": 2,
+      "f1": 0.6666666666666666
+    },
+    "CREATIVE_WORK": {
+      "gold": 1,
+      "predicted": 0,
+      "correct": 0,
+      "f1": 0.0
+    },
+    "EVENT": {
+      "gold": 0,
+      "predicted": 0,
+      "correct": 0,
+      "f1": 0.0
+    }
+  },
+  "failure_modes": {
+    "no_right_type_overlap": 6,
+    "all_O_sentences": 2,
+    "overlap_right_type_wrong_boundary": 4
+  },
+  "unseen_word_entity_recall": 0.35714285714285715,
+  "unseen_word_gold_entities": 14,
+  "weak_holdout_count_mae": 0.25225,
+  "weak_holdout_exact_count_vector": 0.2925,
+  "weak_holdout_samples": 800,
+  "best_epoch": 14,
+  "optimizer_steps": 2008,
+  "per_type_gold_train_support": {
+    "LOCATION": 27,
+    "EVENT": 4,
+    "PERSON": 22,
+    "ORGANIZATION": 25,
+    "CREATIVE_WORK": 6
+  },
+  "weak_train_samples": 7200,
+  "max_words": 45,
+  "bpe_vocab": 2048,
+  "test_unk_pieces": 0,
+  "test_total_pieces": 216750,
+  "validation_cases": [
+    {
+      "text": "volume on the new matrellah stock exchange totaled 135.9 million shares .",
+      "truth": "O O O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O O O O O",
+      "prediction": "O O O O O O O O O O O O",
+      "missed": [
+        [
+          3,
+          7,
+          2
+        ]
+      ],
+      "spurious": []
+    },
+    {
+      "text": "democratic political strategist macdong dunkel is now a senior fellow at new dowmensus university 's graduate school in public service .",
+      "truth": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O",
+      "prediction": "O O O O PERSON O O O O O O O O LOCATION O O O O O O O",
+      "missed": [
+        [
+          3,
+          5,
+          1
+        ],
+        [
+          11,
+          14,
+          2
+        ],
+        [
+          15,
+          20,
+          2
+        ]
+      ],
+      "spurious": [
+        [
+          4,
+          5,
+          1
+        ],
+        [
+          13,
+          14,
+          3
+        ]
+      ]
+    }
+  ],
+  "retained_validation_cases": 2,
+  "original_failure_case_count": 7
+}

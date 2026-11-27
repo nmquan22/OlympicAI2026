@@ -115,6 +115,13 @@
     "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374853890",
     "notebook_version": 3,
     "script_version_id": 374853890,
-    "output_file": "tally/R03/submission.csv"
+    "output_file": "tally/R03/submission.csv",
+    "public_leader_exploratory": {
+      "run_id": "R04",
+      "public_score": 0.37057,
+      "private_score": 0.3774,
+      "validation_f1": 0.42857142857142855,
+      "note": "Validation10sentences lower than R03; report public leader separately without using private for selection."
+    }
   }
 }

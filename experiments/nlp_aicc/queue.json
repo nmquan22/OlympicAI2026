@@ -1673,18 +1673,74 @@
         {
           "run_id": "R04",
           "idea": "Byte character CNN supplements BPE count CRF",
-          "status": "running",
+          "status": "completed",
           "notebook_version": 4,
           "script_version_id": 374929474,
-          "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612"
+          "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.42857142857142855,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R04/report.json",
+          "leaderboard_public": 0.37057,
+          "leaderboard_private": 0.3774,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R04",
+            "public": 0.37057,
+            "private": 0.3774,
+            "version_id": 374929474,
+            "output_file": "tally/R04/submission.csv",
+            "description_note": "Post-contest practice Tally R04: frozen scratch experiment; version4/script374929474. Source/output verified; Complete(after deadline)."
+          }
         },
         {
           "run_id": "R05",
           "idea": "Approximate joint moment CRF teacher and stop-gradient KL",
-          "status": "running",
+          "status": "completed",
           "notebook_version": 5,
           "script_version_id": 374929750,
-          "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612"
+          "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.37037037037037035,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R05/report.json",
+          "leaderboard_public": 0.2502,
+          "leaderboard_private": 0.25609,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R05",
+            "public": 0.2502,
+            "private": 0.25609,
+            "version_id": 374929750,
+            "output_file": "tally/R05/submission.csv",
+            "description_note": "Post-contest practice Tally R05: frozen scratch experiment; version5/script374929750. Source/output verified; Complete(after deadline)."
+          }
+        },
+        {
+          "run_id": "R06",
+          "idea": "Typed start/end auxiliary supervision for truncated entity boundaries",
+          "status": "prepared"
+        },
+        {
+          "run_id": "R07",
+          "idea": "Train-singleton whole-word masking encourages contextual NER instead of name memorization",
+          "status": "prepared"
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",

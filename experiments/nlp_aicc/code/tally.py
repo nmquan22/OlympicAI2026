@@ -25,6 +25,10 @@ TALLY_CONFIGS[4] = {**TALLY_CONFIGS[3], 'idea': 'Byte character CNN supplements 
 TALLY_CONFIGS[5] = {**TALLY_CONFIGS[3], 'idea': 'Approximate joint moment-constrained CRF teacher and stop-gradient KL student',
                    'objective': 'approximate_posterior_projection', 'pr_steps': 6, 'pr_rate': .5,
                    'papers': ['ganchev10a', 'P08-1099', 'N16-1030']}
+TALLY_CONFIGS[6] = {**TALLY_CONFIGS[3], 'idea': 'Typed start/end auxiliary supervision for truncated entity boundaries',
+                   'boundary_aux': True, 'boundary_weight': .1, 'papers': ['N16-1030', 'semiCRF2004']}
+TALLY_CONFIGS[7] = {**TALLY_CONFIGS[3], 'idea': 'Train-singleton whole-word masking encourages contextual NER instead of name memorization',
+                   'singleton_mask_probability': .5, 'papers': ['N16-1030']}
 
 
 def tally_spans(tags):
@@ -298,13 +302,77 @@ def tally_crf_canary():
         torch.set_rng_state(cpu_rng); torch.cuda.set_rng_state_all(gpu_rng)
 
 
+def tally_boundary_targets(labels, mask, classes=6):
+    """Typed IO run starts/ends; padding cannot create an extra boundary."""
+    y=labels.masked_fill(~mask,0)
+    previous=torch.cat([torch.zeros_like(y[:,:1]),y[:,:-1]],dim=1)
+    following=torch.cat([y[:,1:],torch.zeros_like(y[:,:1])],dim=1)
+    typed=F.one_hot(y.long(),classes)[...,1:].to(torch.float32)
+    starts=typed*(y.ne(previous)&mask)[:,:,None]
+    ends=typed*(y.ne(following)&mask)[:,:,None]
+    return torch.cat([starts,ends],dim=-1)
+
+
+def tally_boundary_loss(logits, labels, mask):
+    targets=tally_boundary_targets(labels,mask)
+    losses=F.binary_cross_entropy_with_logits(logits.float(),targets,reduction='none')
+    valid=mask[:,:,None].expand_as(targets)
+    # Balance positive/negative positions per type and boundary direction.
+    pos=targets*valid; neg=(1-targets)*valid
+    return (.5*(losses*pos).sum((0,1))/pos.sum((0,1)).clamp(min=1)
+           +.5*(losses*neg).sum((0,1))/neg.sum((0,1)).clamp(min=1)).mean()
+
+
+def tally_mask_singletons(h, features, mask, replacement, probability):
+    eligible=features[...,2].bool()&mask
+    dropped=eligible&(torch.rand(mask.shape,device=h.device)<probability)
+    return torch.where(dropped[:,:,None],replacement,h),dropped
+
+
+def tally_representation_canary():
+    """Verify boundary targets, singleton mask scope and finite new-loss gradients."""
+    cpu_rng=torch.get_rng_state(); gpu_rng=torch.cuda.get_rng_state_all()
+    try:
+        labels=torch.tensor([[1,1,0,2,2,2],[0,3,3,0,-100,-100]],device=DEVICE)
+        mask=labels.ne(-100); target=tally_boundary_targets(labels,mask)
+        expected=torch.zeros_like(target)
+        expected[0,0,0]=1; expected[0,1,5]=1
+        expected[0,3,1]=1; expected[0,5,6]=1
+        expected[1,1,2]=1; expected[1,2,7]=1
+        assert torch.equal(target,expected)
+        altered=labels.clone(); altered[~mask]=5
+        assert torch.equal(target,tally_boundary_targets(altered,mask))
+        logits=torch.zeros_like(target,requires_grad=True)
+        loss=tally_boundary_loss(logits,labels,mask);loss.backward()
+        assert bool(torch.isfinite(logits.grad).all()) and not bool(logits.grad[~mask].any())
+        features=torch.zeros(2,6,3,device=DEVICE);features[:,:,2]=1;features[0,2,2]=0
+        h=torch.randn(2,6,4,device=DEVICE,requires_grad=True)
+        replacement=torch.randn(4,device=DEVICE,requires_grad=True)
+        changed,dropped=tally_mask_singletons(h,features,mask,replacement,1.)
+        assert torch.equal(dropped,features[...,2].bool()&mask)
+        assert torch.equal(changed[~dropped],h[~dropped])
+        assert torch.equal(changed[dropped],replacement.expand(int(dropped.sum()),-1))
+        unchanged,none=tally_mask_singletons(h,features,mask,replacement,0.)
+        assert torch.equal(unchanged,h) and not bool(none.any())
+        changed.square().mean().backward()
+        assert bool(torch.isfinite(h.grad).all()) and bool(torch.isfinite(replacement.grad).all())
+        result=dict(typed_boundary_targets_exact=True,padding_invariant=True,
+                    singleton_mask_scope_exact=True,zero_probability_identity=True,finite_gradients=True)
+        print('TALLY_REPRESENTATION_CANARY '+json.dumps(result),flush=True);return result
+    finally:
+        torch.set_rng_state(cpu_rng);torch.cuda.set_rng_state_all(gpu_rng)
+
+
 class TallyModel(nn.Module):
-    def __init__(self, vocab, dim, structured=False, char_cnn=False):
+    def __init__(self, vocab, dim, structured=False, char_cnn=False, boundary_aux=False, singleton_mask_probability=0.):
         super().__init__()
         self.embedding = nn.Embedding(vocab, dim, padding_idx=0)
         self.gru = nn.GRU(dim+2, dim, 2, batch_first=True, bidirectional=True, dropout=.15)
         self.head = nn.Sequential(nn.Dropout(.2), nn.Linear(dim*2, 6))
         self.crf = TallyCRF() if structured else None
+        self.boundary_head=nn.Linear(dim*2,10) if boundary_aux else None
+        self.singleton_mask_probability=singleton_mask_probability
+        self.masked_word_observations=0;self.eligible_word_observations=0
         self.char_cnn=char_cnn
         if char_cnn:
             self.char_embedding=nn.Embedding(257,16,padding_idx=0)
@@ -312,9 +380,13 @@ class TallyModel(nn.Module):
             self.char_project=nn.Linear(64,dim)
             self.char_dropout=nn.Dropout(.15)
 
-    def forward(self, pieces, features, mask, chars=None):
+    def forward(self, pieces, features, mask, chars=None, return_aux=False):
         keep = pieces.ne(0).unsqueeze(-1)
         h = (self.embedding(pieces)*keep).sum(2)/keep.sum(2).clamp(min=1)
+        if self.training and self.singleton_mask_probability:
+            h,dropped=tally_mask_singletons(h,features,mask,self.embedding.weight[2],self.singleton_mask_probability)
+            self.masked_word_observations+=int(dropped.sum())
+            self.eligible_word_observations+=int((features[...,2].bool()&mask).sum())
         if self.char_cnn:
             assert chars is not None
             shape=chars.shape; flat=chars.reshape(-1,shape[-1]); valid=flat.ne(0)
@@ -322,16 +394,19 @@ class TallyModel(nn.Module):
             cv=[F.gelu(conv(ce)).masked_fill(~valid[:,None,:],-10000.).amax(-1) for conv in self.char_convs]
             ch=torch.cat(cv,dim=1).masked_fill(~valid.any(1)[:,None],0.)
             h=h+self.char_dropout(self.char_project(ch).reshape(shape[0],shape[1],-1))*mask[:,:,None]
-        packed = nn.utils.rnn.pack_padded_sequence(torch.cat([h, features], -1),
+        packed = nn.utils.rnn.pack_padded_sequence(torch.cat([h, features[...,:2]], -1),
                     mask.sum(1).cpu(), batch_first=True, enforce_sorted=False)
         h, _ = self.gru(packed)
         h, _ = nn.utils.rnn.pad_packed_sequence(h, batch_first=True, total_length=pieces.shape[1])
-        return self.head(h)
+        logits=self.head(h)
+        return (logits,self.boundary_head(h)) if return_aux else logits
 
 
 def run_tally(run_id):
     config = deepcopy(TALLY_CONFIGS[run_id]); info = start_run('tally', run_id, config)
     if config.get('structured'): info['crf_canary']=tally_crf_canary()
+    if config.get('boundary_aux') or config.get('singleton_mask_probability'):
+        info['representation_canary']=tally_representation_canary()
     root = find_data('tally-aicc-round-11')
     weak = pd.read_csv(root/'train_counts.csv'); gold = pd.read_csv(root/'train_tags.csv')
     test = pd.read_csv(root/'test.csv'); sample = pd.read_csv(root/'sample_submission.csv')
@@ -361,14 +436,14 @@ def run_tally(run_id):
             if word not in cache: cache[word] = tok.encode(word).ids
         return dict(text=text, words=words, pieces=[cache[w] for w in words],
                     chars=[[v+1 for v in w.encode('utf-8')] for w in words] if config.get('char_cnn') else None,
-                    features=[[math.log1p(freq[w])/8, math.log1p(len(w))/3] for w in words])
+                    features=[[math.log1p(freq[w])/8, math.log1p(len(w))/3]+([float(freq[w]==1)] if config.get('singleton_mask_probability') else []) for w in words])
     gx = [encode(s) for s in gold.text]; wx = [encode(s) for s in weak.text]
     tx = [encode(s) for s in test.text]
     def batch(examples):
         b = len(examples); length = max(len(x['words']) for x in examples)
         parts = max(len(p) for x in examples for p in x['pieces'])
         ids = torch.zeros(b,length,parts,dtype=torch.long)
-        ft = torch.zeros(b,length,2); mask = torch.zeros(b,length,dtype=torch.bool)
+        ft = torch.zeros(b,length,3 if config.get('singleton_mask_probability') else 2); mask = torch.zeros(b,length,dtype=torch.bool)
         chars=torch.zeros(b,length,max(len(v) for x in examples for v in x['chars']),dtype=torch.long) if config.get('char_cnn') else None
         for j,x in enumerate(examples):
             n = len(x['words']); mask[j,:n] = True; ft[j,:n] = torch.tensor(x['features'])
@@ -380,8 +455,12 @@ def run_tally(run_id):
         examples = [gx[i] for i in indices]; ids,ft,mask,chars = batch(examples)
         labels = torch.full(mask.shape,-100,dtype=torch.long,device=DEVICE)
         for j,i in enumerate(indices): labels[j,:len(truth[i])] = torch.tensor(truth[i],device=DEVICE)
-        logits = model(ids,ft,mask,chars)
-        if model.crf is not None: return model.crf.gold_nll(logits,labels,mask)
+        output = model(ids,ft,mask,chars,return_aux=config.get('boundary_aux',False))
+        logits,boundary=output if config.get('boundary_aux') else (output,None)
+        if model.crf is not None:
+            loss=model.crf.gold_nll(logits,labels,mask)
+            if boundary is not None:loss=loss+config['boundary_weight']*tally_boundary_loss(boundary,labels,mask)
+            return loss
         return F.cross_entropy(logits.float().reshape(-1,6), labels.reshape(-1))
     def predict(examples):
         result = []; model.eval()
@@ -393,7 +472,8 @@ def run_tally(run_id):
                 result += [p[:len(r['words'])] for p,r in zip(pred,rows)]
         return result
     counts = weak[TALLY_LABELS[1:]].to_numpy(dtype=np.float32)
-    model = TallyModel(tok.get_vocab_size(), config['dim'],config.get('structured',False),config.get('char_cnn',False)).to(DEVICE)
+    model = TallyModel(tok.get_vocab_size(), config['dim'],config.get('structured',False),config.get('char_cnn',False),
+                       config.get('boundary_aux',False),config.get('singleton_mask_probability',0.)).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=config['lr'], weight_decay=.01)
     scaler = torch.amp.GradScaler('cuda'); history = []; tick = time.time(); pr_rows=[]
     def update(loss):
@@ -461,6 +541,16 @@ def run_tally(run_id):
     assert all(len(tags.split())==len(text.split()) for tags,text in zip(submission.tags,test.text))
     assert set(' '.join(submission.tags).split()).issubset(TALLY_LABELS)
     info['diagnostics'] = diagnostic
+    if config.get('boundary_aux'):
+        info['boundary_auxiliary']=dict(weight=config['boundary_weight'],directions=['start','end'],types=5,
+            training_only=True,decode='ordinary six-label IO CRF; auxiliary heads not used at inference',
+            semi_markov=False)
+    if config.get('singleton_mask_probability'):
+        info['singleton_regularization']=dict(probability=config['singleton_mask_probability'],
+            eligibility='word frequency exactly1 in goldtrain+weaktrain only',
+            masked_word_observations=model.masked_word_observations,eligible_word_observations=model.eligible_word_observations,
+            replacement='learned scratch MASK embedding, entire pooled word vector',inference_masking=False,
+            unchanged_features=['train_frequency','word_length'])
     if pr_rows:
         info['posterior_projection']=dict(steps=config['pr_steps'],exact=False,training_batches=len(pr_rows),
             mean_batch_count_mae_before=float(np.mean([x['before_count_mae'] for x in pr_rows])),

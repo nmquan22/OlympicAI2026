@@ -1,0 +1,229 @@
+{
+  "task": "tally",
+  "run_id": "R04",
+  "config": {
+    "idea": "Byte character CNN supplements mean-pooled BPE for unseen entity words",
+    "objective": "crf_count_composite_likelihood",
+    "epochs": 35,
+    "budget_seconds": 480,
+    "batch_size": 64,
+    "gold_batch_size": 16,
+    "warmup_steps": 160,
+    "bpe_vocab": 2048,
+    "dim": 128,
+    "weak_weight": 0.5,
+    "lr": 0.001,
+    "patience": 8,
+    "structured": true,
+    "papers": [
+      "N16-1030",
+      "ICML2009-393"
+    ],
+    "char_cnn": true
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "2127e5331fe50b6f7b102ca1943db2c55ec49612",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "diagnostics": {
+    "f1": 0.42857142857142855,
+    "true_positive": 6,
+    "false_positive": 7,
+    "false_negative": 9,
+    "per_type": {
+      "PERSON": {
+        "gold": 7,
+        "predicted": 7,
+        "correct": 4,
+        "f1": 0.5714285714285714
+      },
+      "ORGANIZATION": {
+        "gold": 5,
+        "predicted": 1,
+        "correct": 0,
+        "f1": 0.0
+      },
+      "LOCATION": {
+        "gold": 2,
+        "predicted": 5,
+        "correct": 2,
+        "f1": 0.5714285714285714
+      },
+      "CREATIVE_WORK": {
+        "gold": 1,
+        "predicted": 0,
+        "correct": 0,
+        "f1": 0.0
+      },
+      "EVENT": {
+        "gold": 0,
+        "predicted": 0,
+        "correct": 0,
+        "f1": 0.0
+      }
+    },
+    "failure_modes": {
+      "overlap_right_type_wrong_boundary": 3,
+      "no_right_type_overlap": 5,
+      "correct_boundary_wrong_type": 1,
+      "all_O_sentences": 1
+    },
+    "unseen_word_entity_recall": 0.42857142857142855,
+    "unseen_word_gold_entities": 14,
+    "weak_holdout_count_mae": 0.20425,
+    "weak_holdout_exact_count_vector": 0.38875,
+    "weak_holdout_samples": 800,
+    "best_epoch": 8,
+    "optimizer_steps": 1968,
+    "per_type_gold_train_support": {
+      "LOCATION": 27,
+      "EVENT": 4,
+      "PERSON": 22,
+      "ORGANIZATION": 25,
+      "CREATIVE_WORK": 6
+    },
+    "weak_train_samples": 7200,
+    "max_words": 45,
+    "bpe_vocab": 2048,
+    "test_unk_pieces": 0,
+    "test_total_pieces": 216750,
+    "validation_cases": [
+      {
+        "text": "volume on the new matrellah stock exchange totaled 135.9 million shares .",
+        "truth": "O O O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O O O O O",
+        "prediction": "O O O ORGANIZATION ORGANIZATION ORGANIZATION O O O O O O",
+        "missed": [
+          [
+            3,
+            7,
+            2
+          ]
+        ],
+        "spurious": [
+          [
+            3,
+            6,
+            2
+          ]
+        ]
+      },
+      {
+        "text": "democratic political strategist macdong dunkel is now a senior fellow at new dowmensus university 's graduate school in public service .",
+        "truth": "O O O PERSON PERSON O O O O O O ORGANIZATION ORGANIZATION ORGANIZATION O ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION ORGANIZATION O",
+        "prediction": "O O O PERSON PERSON O O O O O O O LOCATION O O O O O O O O",
+        "missed": [
+          [
+            11,
+            14,
+            2
+          ],
+          [
+            15,
+            20,
+            2
+          ]
+        ],
+        "spurious": [
+          [
+            12,
+            13,
+            3
+          ]
+        ]
+      }
+    ],
+    "retained_validation_cases": 2,
+    "original_failure_case_count": 6
+  },
+  "status": "completed",
+  "elapsed_seconds": 330.59193229675293,
+  "peak_gpu_memory_mb": 156.69873046875,
+  "validation": {
+    "metric": "entity_span_micro_F1",
+    "value": 0.42857142857142855,
+    "direction": "maximize",
+    "samples": 10,
+    "split": "fixed_gold_40_train_10_validation_seed42"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 4000,
+    "word_tag_alignment": true,
+    "allowed_labels_only": true
+  },
+  "history": [
+    {
+      "epoch": 8,
+      "train_loss": 0.0853067178575866,
+      "validation_entity_f1": 0.42857142857142855,
+      "elapsed_training_seconds": 165.78641867637634
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.03272260130440767,
+      "validation_entity_f1": 0.26666666666666666,
+      "elapsed_training_seconds": 317.45102429389954
+    }
+  ],
+  "data_provenance": {
+    "train_counts.csv": "56bae23bc33b69d14463f566a27d20c9b80411646e83e84b2856efc06e6a15d2",
+    "train_tags.csv": "ef5fd06dab0402ce89f2da22d7eadfb809997683725735398acccb48ea7d72ad",
+    "test.csv": "9e30652a3c4ab0b1e255186fc96d68a11568d35db111d5d65ed82df37754553d"
+  },
+  "artifacts": {
+    "failure_analysis": "failure_analysis.json",
+    "model": "model.pt",
+    "tokenizer": "tokenizer.json"
+  },
+  "limitations": [
+    "Selected observed summary, best/final epochs and two of 6 failure cases; full original output remains on Kaggle.",
+    "Ten gold validation sentences:15 entities,0 EVENT and1 CREATIVE_WORK; no significance/SOTA claim.",
+    "40 gold train; no full50 refit.",
+    "Weighted per-type count composite likelihood is not joint five-count likelihood.",
+    "Scratch model/BPE; no external data or test counts."
+  ],
+  "crf_canary": {
+    "partition_exact": true,
+    "run_expectation_exact": true,
+    "per_type_count_partition_exact": true,
+    "viterbi_exact": true,
+    "padding_invariant": true,
+    "finite_gradients": true,
+    "enumerated_paths": [
+      27,
+      9
+    ],
+    "masked_lengths": [
+      3,
+      2
+    ],
+    "tolerance": 1e-09,
+    "teacher_KL_matches_enumeration": true,
+    "teacher_stop_gradient": true,
+    "dual_residual_reduced": true
+  },
+  "leaderboard_public": 0.37057,
+  "leaderboard_private": 0.3774,
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_metric": "Entity-span micro F1",
+  "leaderboard_direction": "maximize",
+  "score_precision": "5 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+    "run": "R04",
+    "public": 0.37057,
+    "private": 0.3774,
+    "version_id": 374929474,
+    "output_file": "tally/R04/submission.csv",
+    "description_note": "Post-contest practice Tally R04: frozen scratch experiment; version4/script374929474. Source/output verified; Complete(after deadline)."
+  }
+}

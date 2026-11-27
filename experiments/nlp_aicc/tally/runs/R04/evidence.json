@@ -1,0 +1,16 @@
+{
+  "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374929474",
+  "version": 4,
+  "script_version_id": 374929474,
+  "status": "completed",
+  "evidence_method": "observed_rendered_kaggle_output",
+  "full_notebook_export_available": false,
+  "batch_result_observed": true,
+  "crf_canary_observed": true,
+  "kaggle_runtime_seconds_displayed": 363.0,
+  "batch_elapsed_seconds": 330.9718039035797,
+  "source_sha256": {
+    "common.py": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "tally.py": "7f2c8737a10eae95c2102a5eddc9560c7e3708d75af7b5c5f827b8ddf77679ec"
+  }
+}

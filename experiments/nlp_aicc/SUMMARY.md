@@ -56,3 +56,7 @@ R01 đã hoàn tất T4: code148.875s, peak92.439MiB; val spanF1.444444 trên10c
 ### Tally R02/R03 đã hoàn tất và nộp
 
 Tổng54 cấu hình hoàn tất/scored, Tally3/7. R02 CRF expectations: val.444444, public.30394/private.30351,335.166s/92.445MiB. R03 count composite likelihood: val.444444, public.35301/private.35300,374.102s/136.328MiB. Cả hai pass exhaustive CRF canary. R03 weak exact count vector36.125% so31.5% củaR01, nhưng ORG vẫn0/5 và lỗi biên cùng loại5 so3. Xem [R02](tally/runs/R02/LEARNED.md), [R03](tally/runs/R03/LEARNED.md).
+
+### Tally R04/R05: hai kết luận khác nhau
+
+Tally5/7, tổng56 cấu hình hoàn tất/scored. R04 byte character CNN: val.428571, public.37057/private.37740,330.592s/156.699MiB. Public cao hơnR03 .35301 nhưng val thấp hơn; mười câu chưa đủ chọn ổn định. R05 approximate teacher KL: val.370370, public.25020/private.25609,490.202s/92.551MiB. Train-batch countMAE .270172→.159125 là chẩn đoán projection, không phải valF1; holdout countvector29.25% kémR03 36.125%. Giữ kết quả âm. [R04](tally/runs/R04/LEARNED.md), [R05](tally/runs/R05/LEARNED.md). Tiếp theo R06 auxiliary biên và R07 singleton masking, chưa có kết quả.

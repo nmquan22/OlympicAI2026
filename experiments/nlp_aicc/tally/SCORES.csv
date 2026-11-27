@@ -2,3 +2,5 @@ run,public,private,version_id,output_file,description_note
 R01,0.2971,0.3008,374844445,tally/R01/submission.csv,Post-contest practice Tally R01: frozen scratch experiment; version1/script374844445. Verified Complete(after deadline).
 R02,0.30394,0.30351,374853542,tally/R02/submission.csv,Post-contest practice Tally R02: frozen scratch experiment; version2/script374853542. Source/output verified; Complete(after deadline).
 R03,0.35301,0.353,374853890,tally/R03/submission.csv,Post-contest practice Tally R03: frozen scratch experiment; version3/script374853890. Source/output verified; Complete(after deadline).
+R04,0.37057,0.3774,374929474,tally/R04/submission.csv,Post-contest practice Tally R04: frozen scratch experiment; version4/script374929474. Source/output verified; Complete(after deadline).
+R05,0.2502,0.25609,374929750,tally/R05/submission.csv,Post-contest practice Tally R05: frozen scratch experiment; version5/script374929750. Source/output verified; Complete(after deadline).
