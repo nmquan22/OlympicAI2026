@@ -1,0 +1,19 @@
+{
+  "task": "tally",
+  "competition_slug": "tally-aicc-round-11",
+  "status": "prepared_waiting_for_competition_terms_confirmation",
+  "rules_accepted": false,
+  "successful_unique_experiments": 0,
+  "scored_unique_submissions": 0,
+  "minimum_successful_experiments": 7,
+  "runnable_configurations": ["R01"],
+  "active_saved_versions": [],
+  "next_action": "After explicit Tally terms confirmation, accept on Kaggle, create a T4 notebook, inspect baseline source and execute immutable R01. Read measured failures before freezing R02.",
+  "code_verification": "AST plus pure IO-span/grammar and exhaustive independent expected-count canaries passed locally; torch/tokenizers unavailable locally, GPU execution remains unverified.",
+  "polling": {
+    "unmeasured_train_budget_seconds": 480,
+    "first_running_check_minutes": 15,
+    "queued_backoff_minutes": [15, 30, 60],
+    "note": "No training ETA measured yet. Startup, encoding, evaluation and queue delay are separate."
+  }
+}

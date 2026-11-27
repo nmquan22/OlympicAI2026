@@ -15,7 +15,8 @@ MODULES={
  'lost-interpreter':('lost_interpreter','run_lost'),
  'word-lookups':('word_lookups','run_word'),
  'inverse-translation':('inverse_translation','run_inverse'),
- 'alchemy':('alchemy','run_alchemy')}
+ 'alchemy':('alchemy','run_alchemy'),
+ 'tally':('tally','run_tally')}
 
 def run_batch(task,run_ids,source_commit):
  module,entry=MODULES[task]
@@ -25,7 +26,7 @@ def run_batch(task,run_ids,source_commit):
  # Verify every requested configuration before training the first experiment.
  preflight={'SOURCE_COMMIT':source_commit,'__name__':'__main__'}
  for name,source in code.items():exec(compile(source,name,'exec'),preflight)
- table_name={'moment-match':'MOMENT_CONFIGS','lost-interpreter':'LOST_CONFIGS','word-lookups':'WORD_CONFIGS','inverse-translation':'INVERSE_CONFIGS','alchemy':'ALCHEMY_CONFIGS'}[task]
+ table_name={'moment-match':'MOMENT_CONFIGS','lost-interpreter':'LOST_CONFIGS','word-lookups':'WORD_CONFIGS','inverse-translation':'INVERSE_CONFIGS','alchemy':'ALCHEMY_CONFIGS','tally':'TALLY_CONFIGS'}[task]
  available=set(preflight[table_name])
  missing=set(run_ids)-available
  if missing:raise ValueError(f'Requested config IDs missing from immutable source {source_commit}: {sorted(missing)}; available={sorted(available)}')

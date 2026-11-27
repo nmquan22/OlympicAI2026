@@ -1,7 +1,7 @@
 """Generate a reviewable Kaggle notebook with immutable source provenance."""
 import argparse,json,re
 from pathlib import Path
-MODULES={'moment-match','lost-interpreter','word-lookups','inverse-translation','alchemy'}
+MODULES={'moment-match','lost-interpreter','word-lookups','inverse-translation','alchemy','tally'}
 def generate(task,runs,commit,dest):
  assert task in MODULES and runs and all(isinstance(i,int) and i>0 for i in runs)
  assert re.fullmatch('[0-9a-f]{40}',commit)

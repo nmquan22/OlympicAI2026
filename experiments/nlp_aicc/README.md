@@ -2,7 +2,7 @@
 
 Đọc [LEARNING_GUIDE.md](LEARNING_GUIDE.md) để nắm idea; [STATUS.md](STATUS.md) để xem số đã đo. Mỗi `runs/Rxx/LEARNED.md` có kết luận và giới hạn của thí nghiệm.
 
-Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. Đã hoàn tất **41 thí nghiệm T4 duy nhất**, mỗi bài ít nhất 7. Chi tiết ở [SUMMARY.md](SUMMARY.md), [41 dòng metric](EXPERIMENTS.csv), [cấu hình đã chọn](BEST_CONFIGS.json) và [audit](AUDIT.json). Lượt lỗi/chạy lặp không tính thêm. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
+Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. Đã hoàn tất **51 thí nghiệm T4 duy nhất**, mỗi bài ít nhất 7. Chi tiết ở [SUMMARY.md](SUMMARY.md), [bảng metric](EXPERIMENTS.csv), [cấu hình đã chọn](BEST_CONFIGS.json) và [audit](AUDIT.json). Lượt lỗi/chạy lặp không tính thêm. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
 
 | Bài | Idea chính | Weights |
 |---|---|---|
@@ -26,3 +26,7 @@ Theo dõi tiến độ và kết quả thật tại [STATUS.md](STATUS.md). Mỗ
 Runtime đã đo: Moment Match 81–168 giây cả khởi động; Lost Interpreter R05 114 giây; Word Lookups R01 138 giây; Alchemy R01 có phần model 12.8 giây. Ước lượng batch từ tổng runtime của các thí nghiệm cộng overhead khởi động, chỉ kiểm tra khi gần mốc đó. Thời gian chờ queue được ghi riêng, không xem là thời gian train.
 
 Dự đoán mốc kiểm tra từ dữ liệu thật: `python tools/nlp_eta.py --task word-lookups --runs 2 3 4 5 6 7`. Audit bằng chứng và số lượt duy nhất: `python tools/nlp_audit.py`. Hai lệnh này không gọi Kaggle, không cần credential. Ước lượng không bao gồm queue delay.
+
+## Bài tiếp theo: Tally
+
+Theo yêu cầu ngày 27/11/2026, bắt đầu [Tally — học NER từ nhãn đếm](tally/IDEAS.md). [Năm paper ưu tiên](tally/RESEARCH.md), [trạng thái riêng](tally/STATE.json) và code scratch BPE đã chuẩn bị. Tally hiện có **0 lượt GPU hoàn tất, 0 submission**; chưa cộng vào 51 lượt của năm bài trước. Chờ xác nhận quy định riêng của Tally trước khi mở data chạy T4.
