@@ -11,7 +11,7 @@
       "competition_slug": "moment-match-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/moment-match.ipynb",
-      "status": "completed_with_research",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -302,6 +302,64 @@
             "output_file": "moment-match/R10/submission.csv",
             "description_note": "Source version/output verified; description is correct."
           }
+        },
+        {
+          "run_id": "R11",
+          "idea": "Event-level decomposable cross attention with compare and aggregate",
+          "status": "completed",
+          "notebook_version": 11,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6572237960339944,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R11/report.json",
+          "leaderboard_public": 0.6304,
+          "leaderboard_private": 0.6233,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R11",
+            "public": 0.6304,
+            "private": 0.6233,
+            "version_id": 374734057,
+            "output_file": "moment-match/R11/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
+        },
+        {
+          "run_id": "R12",
+          "idea": "Soft-DTW event alignment as a learned residual score",
+          "status": "completed",
+          "notebook_version": 11,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6940509915014165,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R12/report.json",
+          "leaderboard_public": 0.6456,
+          "leaderboard_private": 0.6253,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+            "run": "R12",
+            "public": 0.6456,
+            "private": 0.6253,
+            "version_id": 374734057,
+            "output_file": "moment-match/R12/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"
@@ -313,7 +371,7 @@
       "competition_slug": "lost-interpreter-aicc-round-5",
       "rules_accepted": true,
       "source_notebook": "round-5/lost-interpreter.ipynb",
-      "status": "completed_with_research",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -546,6 +604,64 @@
             "output_file": "lost-interpreter/R08/submission.csv",
             "description_note": "Source version/output verified; description is correct."
           }
+        },
+        {
+          "run_id": "R09",
+          "idea": "Typed instruction BPE plus exact operand channels and recurrent execution",
+          "status": "completed",
+          "notebook_version": 8,
+          "metric": {
+            "metric": "MAE",
+            "value": 15.813640594482422,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R09/report.json",
+          "leaderboard_public": 14.9744,
+          "leaderboard_private": 17.8852,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R09",
+            "public": 14.9744,
+            "private": 17.8852,
+            "version_id": 374731593,
+            "output_file": "lost-interpreter/R09/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
+        },
+        {
+          "run_id": "R10",
+          "idea": "Typed instruction model with mixed easy/full curriculum",
+          "status": "completed",
+          "notebook_version": 8,
+          "metric": {
+            "metric": "MAE",
+            "value": 16.317798614501953,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R10/report.json",
+          "leaderboard_public": 15.248,
+          "leaderboard_private": 18.4884,
+          "leaderboard_metric": "MAE",
+          "leaderboard_direction": "minimize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+            "run": "R10",
+            "public": 15.248,
+            "private": 18.4884,
+            "version_id": 374731593,
+            "output_file": "lost-interpreter/R10/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-lost-interpreter-learning-experiments"
@@ -557,7 +673,7 @@
       "competition_slug": "aicc-round-9-word-lookups",
       "rules_accepted": true,
       "source_notebook": "round-9/word-lookups.ipynb",
-      "status": "completed_with_research",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -684,6 +800,64 @@
           "leaderboard_public": 0.9097,
           "leaderboard_private": 0.9113,
           "leaderboard_metric": "Boundary F1"
+        },
+        {
+          "run_id": "R08",
+          "idea": "Accessor-variety lexical spans supplement boundary surprise",
+          "status": "completed",
+          "notebook_version": 3,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 5.802002440784768,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct"
+          },
+          "report_path": "word-lookups/runs/R08/report.json",
+          "leaderboard_public": 0.915,
+          "leaderboard_private": 0.9171,
+          "leaderboard_metric": "Boundary F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups/submissions",
+            "run": "R08",
+            "public": 0.915,
+            "private": 0.9171,
+            "version_id": 374733892,
+            "output_file": "word-lookups/R08/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
+        },
+        {
+          "run_id": "R09",
+          "idea": "Accessor spans plus BPE-dropout regularized scratch LM",
+          "status": "completed",
+          "notebook_version": 3,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 5.789452881850572,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct"
+          },
+          "report_path": "word-lookups/runs/R09/report.json",
+          "leaderboard_public": 0.9145,
+          "leaderboard_private": 0.9168,
+          "leaderboard_metric": "Boundary F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/aicc-round-9-word-lookups/submissions",
+            "run": "R09",
+            "public": 0.9145,
+            "private": 0.9168,
+            "version_id": 374733892,
+            "output_file": "word-lookups/R09/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-word-lookups-learning-experiments"
@@ -952,7 +1126,7 @@
       "competition_slug": "alchemy-aicc-round-4",
       "rules_accepted": true,
       "source_notebook": "round-4/alchemy.ipynb",
-      "status": "completed_with_research",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -1249,6 +1423,64 @@
             "version_id": 374715624,
             "output_file": "alchemy/R09/submission.csv",
             "description_note": "Source version/output verified; description is correct."
+          }
+        },
+        {
+          "run_id": "R10",
+          "idea": "Square bijective minibatches with row/column CE and balanced Sinkhorn",
+          "status": "completed",
+          "notebook_version": 5,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.16666666666666666,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout"
+          },
+          "report_path": "alchemy/runs/R10/report.json",
+          "leaderboard_public": 0.0285,
+          "leaderboard_private": 0.1142,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R10",
+            "public": 0.0285,
+            "private": 0.1142,
+            "version_id": 374731690,
+            "output_file": "alchemy/R10/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+          }
+        },
+        {
+          "run_id": "R11",
+          "idea": "ESZSL-inspired bilinear BPE and character attribute compatibility",
+          "status": "completed",
+          "notebook_version": 5,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.03333333333333333,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout"
+          },
+          "report_path": "alchemy/runs/R11/report.json",
+          "leaderboard_public": 0.0,
+          "leaderboard_private": 0.0,
+          "leaderboard_metric": "Accuracy",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+            "run": "R11",
+            "public": 0.0,
+            "private": 0.0,
+            "version_id": 374731690,
+            "output_file": "alchemy/R11/submission.csv",
+            "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
           }
         }
       ],

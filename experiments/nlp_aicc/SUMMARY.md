@@ -1,16 +1,16 @@
 # Kết quả 5 bài NLP
 
-Đã hoàn tất **41 thí nghiệm GPU T4 duy nhất** trên 5 bài, vượt mức tối thiểu35. Chúng chạy trong27 Saved Version, tối đa hai version đồng thời. Không tính config chạy lặp, lỗi cài package, canary lỗi hay retry thành một thí nghiệm mới. Audit: [AUDIT.json](AUDIT.json).
+Đã hoàn tất và nộp Kaggle **49 cấu hình T4 duy nhất** trên 5 bài, vượt mức tối thiểu35. Tám cấu hình mới trong bốn batch được thiết kế sau khi lọc [5 paper cho mỗi bài](research_v2/README.md). [Kết quả và bài học vòng2](research_v2/RESULTS.md). Không tính config chạy lặp, lỗi cài package, canary lỗi hay retry thành một thí nghiệm mới. Audit: [AUDIT.json](AUDIT.json).
 
 | Bài | Số thí nghiệm | Cấu hình chọn | Metric thật | Idea đáng giữ |
 |---|---:|---|---|---|
-| Moment Match | 10 | R04 | Validation accuracy **69.12%** /1,059 mẫu | IDF cho late interaction; thêm ba ứng viên research chưa vượt bản này |
-| Lost Interpreter | 8 | R08 | Holdout MAE **15.31**, từ36.26 /3,000 mẫu | BPE BiGRU + packing/masking + SmoothL1; giảm57.8%, đổi cả backbone/loss |
-| Word Lookups | 7 | R07 | Boundary F1 **public0.9097 / private0.9113** | Hai chiều + cohesion PMI + DP + dấu câu; từpublic0.7559 |
+| Moment Match | 12 | R12 theo val | Validation **69.41%**; Kaggle **.6456/.6253** | Soft-DTW tăng3/1059 câu val nhưng chưa tăng private; chưa khẳng định ổn định |
+| Lost Interpreter | 10 | R08 | Holdout MAE **15.31**; Kaggle **14.1608/16.7920** | Typed instructions và curriculum mới chưa vượt BiGRU BPE |
+| Word Lookups | 9 | R08 | Boundary F1 **public.9150 / private.9171** | Accessor-variety spans tăng từR07 .9097/.9113 ở cùng LM recipe |
 | Inverse Translation | 7 | R06 | Official **100, exact24/24**; code11.97s | Coordinate search giữ điểm, giảm9624→7832 candidate evaluations |
-| Alchemy | 9 | R09 | Result-disjoint holdout **5/30 (16.67%)** | Shared input/result role space + commutative composition; mẫu nhỏ |
+| Alchemy | 11 | R09 | Holdout **5/30**; Kaggle **.0285/.1142** | Square matching không tăng; 24/30 tên val chưa thấy trong train dù0 UNK |
 
-Các metric khác nhau, không lấy cột số để xếp hạng giữa các bài. Lost/Alchemy là validation, Word là late-submission test score sau khi đóng băng bảy preset, Inverse là evaluator gốc trên target đã được đề cung cấp. Một seed và30 mẫu Alchemy chưa đủ kết luận chắc. Reference pretrained và random-init là điều kiện riêng; không tuyên bố đạt SOTA.
+Các metric khác nhau, không lấy cột số để xếp hạng giữa các bài. Điểm Kaggle ghi public/private; mỗi preset đóng băng trước lần chấm của nó. Inverse đã xác nhận100/100 trên Kaggle. Một seed và30 mẫu Alchemy chưa đủ kết luận chắc. Reference pretrained và random-init là điều kiện riêng; không tuyên bố đạt SOTA. Không dùng private để chọn checkpoint.
 
 ## Ý tưởng đã được kiểm tra
 

@@ -1,17 +1,17 @@
 {
   "success": true,
-  "successful_unique_experiments": 41,
+  "successful_unique_experiments": 49,
   "by_task": {
     "moment-match": {
-      "successful_unique": 10,
+      "successful_unique": 12,
       "minimum_seven_met": true
     },
     "lost-interpreter": {
-      "successful_unique": 8,
+      "successful_unique": 10,
       "minimum_seven_met": true
     },
     "word-lookups": {
-      "successful_unique": 7,
+      "successful_unique": 9,
       "minimum_seven_met": true
     },
     "inverse-translation": {
@@ -19,7 +19,7 @@
       "minimum_seven_met": true
     },
     "alchemy": {
-      "successful_unique": 9,
+      "successful_unique": 11,
       "minimum_seven_met": true
     }
   },

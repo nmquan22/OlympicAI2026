@@ -1,0 +1,68 @@
+{
+  "task": "moment-match",
+  "run_id": "R12",
+  "config": {
+    "idea": "Soft-DTW event alignment as a learned residual score",
+    "vocab": 2048,
+    "token_layers": 0,
+    "event_context": false,
+    "soft": true,
+    "temperature": 0.2,
+    "idf": true,
+    "center": false,
+    "soft_dtw": true,
+    "epochs": 30,
+    "budget_seconds": 240,
+    "batch_size": 48
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "elapsed_seconds": 86.56071758270264,
+  "peak_gpu_memory_mb": 211.8720703125,
+  "validation": {
+    "metric": "accuracy",
+    "value": 0.6940509915014165,
+    "direction": "maximize",
+    "samples": 1059,
+    "split": "provided_validation"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 1970
+  },
+  "artifacts": {
+    "weights": "provided_fastText_only",
+    "word_feature_view": false
+  },
+  "limitations": [
+    "Compact fields observed in rendered output; full per-epoch history remains on Kaggle.",
+    "Single seed, no statistical significance claim."
+  ],
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_public": 0.6456,
+  "leaderboard_private": 0.6253,
+  "leaderboard_metric": "Accuracy",
+  "leaderboard_direction": "maximize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/moment-match-aicc-round-10/submissions",
+    "run": "R12",
+    "public": 0.6456,
+    "private": 0.6253,
+    "version_id": 374734057,
+    "output_file": "moment-match/R12/submission.csv",
+    "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+  }
+}

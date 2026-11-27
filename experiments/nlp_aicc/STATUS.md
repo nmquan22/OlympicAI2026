@@ -1,14 +1,14 @@
 # Tiến độ thực nghiệm NLP
 
-**41 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**49 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
-| [Moment Match](moment-match/IDEAS.md) | 10/7 | R07: public 0.6619, private 0.6162 Accuracy |
-| [Lost Interpreter](lost-interpreter/IDEAS.md) | 8/7 | R08: public 14.1608, private 16.7920 MAE |
-| [Word Lookups](word-lookups/IDEAS.md) | 7/7 | R07: public 0.9097, private 0.9113 Boundary F1 |
+| [Moment Match](moment-match/IDEAS.md) | 12/7 | R07: public 0.6619, private 0.6162 Accuracy |
+| [Lost Interpreter](lost-interpreter/IDEAS.md) | 10/7 | R08: public 14.1608, private 16.7920 MAE |
+| [Word Lookups](word-lookups/IDEAS.md) | 9/7 | R08: public 0.9150, private 0.9171 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 7/7 | R01: public 100.0000, private 100.0000 Competition score |
-| [Alchemy](alchemy/IDEAS.md) | 9/7 | R01: public 0.0285, private 0.0000 Accuracy |
+| [Alchemy](alchemy/IDEAS.md) | 11/7 | R01: public 0.0285, private 0.0000 Accuracy |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -26,6 +26,8 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R08 | IDF + prior căn chỉnh đơn điệu khả vi | 0.68933 accuracy; Kaggle 0.6477/0.6253 Accuracy (public/private) | [Đọc](moment-match/runs/R08/LEARNED.md) |
 | R09 | IDF + max alignment gần reference | 0.67705 accuracy; Kaggle 0.6467/0.6182 Accuracy (public/private) | [Đọc](moment-match/runs/R09/LEARNED.md) |
 | R10 | BPE view + nguyên word-vector feature view được cấp | 0.64873 accuracy; Kaggle 0.6162/0.5969 Accuracy (public/private) | [Đọc](moment-match/runs/R10/LEARNED.md) |
+| R11 | Event-level decomposable cross attention with compare and aggregate | 0.65722 accuracy; Kaggle 0.6304/0.6233 Accuracy (public/private) | [Đọc](moment-match/runs/R11/LEARNED.md) |
+| R12 | Soft-DTW event alignment as a learned residual score | 0.69405 accuracy; Kaggle 0.6456/0.6253 Accuracy (public/private) | [Đọc](moment-match/runs/R12/LEARNED.md) |
 
 ## Lost Interpreter
 
@@ -39,6 +41,8 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R06 | Signed-log target để kiểm tra outlier | 38.02840 MAE; Kaggle 37.9180/40.7816 MAE (public/private) | [Đọc](lost-interpreter/runs/R06/LEARNED.md) |
 | R07 | Kết hợp structure + numeric + query + auxiliary | 37.57629 MAE; Kaggle 37.0200/39.9584 MAE (public/private) | [Đọc](lost-interpreter/runs/R07/LEARNED.md) |
 | R08 | BPE BiGRU + packed masking + SmoothL1 theo cùng holdout | 15.30885 MAE; Kaggle 14.1608/16.7920 MAE (public/private) | [Đọc](lost-interpreter/runs/R08/LEARNED.md) |
+| R09 | Typed instruction BPE plus exact operand channels and recurrent execution | 15.81364 MAE; Kaggle 14.9744/17.8852 MAE (public/private) | [Đọc](lost-interpreter/runs/R09/LEARNED.md) |
+| R10 | Typed instruction model with mixed easy/full curriculum | 16.31780 MAE; Kaggle 15.2480/18.4884 MAE (public/private) | [Đọc](lost-interpreter/runs/R10/LEARNED.md) |
 
 ## Word Lookups
 
@@ -51,6 +55,8 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R05 | DP với prior độ dài từ | 6.10684 BPE_LM_NLL_proxy; Kaggle 0.7578/0.7583 Boundary F1 (public/private) | [Đọc](word-lookups/runs/R05/LEARNED.md) |
 | R06 | Punctuation-aware BMES constraints | 6.10684 BPE_LM_NLL_proxy; Kaggle 0.8196/0.8215 Boundary F1 (public/private) | [Đọc](word-lookups/runs/R06/LEARNED.md) |
 | R07 | Kết hợp hai chiều + cohesion + DP | 5.80200 BPE_LM_NLL_proxy; Kaggle 0.9097/0.9113 Boundary F1 (public/private) | [Đọc](word-lookups/runs/R07/LEARNED.md) |
+| R08 | Accessor-variety lexical spans supplement boundary surprise | 5.80200 BPE_LM_NLL_proxy; Kaggle 0.9150/0.9171 Boundary F1 (public/private) | [Đọc](word-lookups/runs/R08/LEARNED.md) |
+| R09 | Accessor spans plus BPE-dropout regularized scratch LM | 5.78945 BPE_LM_NLL_proxy; Kaggle 0.9145/0.9168 Boundary F1 (public/private) | [Đọc](word-lookups/runs/R09/LEARNED.md) |
 
 ## Inverse Translation
 
@@ -77,3 +83,5 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R07 | Kết hợp hard negatives + full-list CE + probability averaging | 0.06667 bijective_holdout_accuracy; Kaggle 0.0285/0.0000 Accuracy (public/private) | [Đọc](alchemy/runs/R07/LEARNED.md) |
 | R08 | Composer a+b / |a-b| / a*b có tính giao hoán sẵn | 0.10000 bijective_holdout_accuracy; Kaggle 0.0000/0.0000 Accuracy (public/private) | [Đọc](alchemy/runs/R08/LEARNED.md) |
 | R09 | Tied input/result role space + residual additive composition | 0.16667 bijective_holdout_accuracy; Kaggle 0.0285/0.1142 Accuracy (public/private) | [Đọc](alchemy/runs/R09/LEARNED.md) |
+| R10 | Square bijective minibatches with row/column CE and balanced Sinkhorn | 0.16667 bijective_holdout_accuracy; Kaggle 0.0285/0.1142 Accuracy (public/private) | [Đọc](alchemy/runs/R10/LEARNED.md) |
+| R11 | ESZSL-inspired bilinear BPE and character attribute compatibility | 0.03333 bijective_holdout_accuracy; Kaggle 0.0000/0.0000 Accuracy (public/private) | [Đọc](alchemy/runs/R11/LEARNED.md) |

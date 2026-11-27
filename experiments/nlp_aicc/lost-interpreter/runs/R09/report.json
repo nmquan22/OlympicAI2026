@@ -1,0 +1,88 @@
+{
+  "task": "lost-interpreter",
+  "run_id": "R09",
+  "config": {
+    "idea": "Typed instruction BPE plus exact operand channels and recurrent execution",
+    "curriculum": false,
+    "papers": [
+      "1410.4615",
+      "1511.06279",
+      "2001.05016"
+    ],
+    "epochs": 60,
+    "budget_seconds": 300,
+    "batch_size": 128,
+    "bpe_vocab": 2048,
+    "pretrained": false
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "342c70da46ccb69e3a99f46313088efbcb0d09db",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "elapsed_seconds": 102.09048461914062,
+  "peak_gpu_memory_mb": 47.61962890625,
+  "validation": {
+    "metric": "MAE",
+    "value": 15.813640594482422,
+    "direction": "minimize",
+    "samples": 3000,
+    "split": "fixed_train_holdout_15pct"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 5000
+  },
+  "artifacts": {
+    "pretrained_weights": false,
+    "tokenizer": "train-only BPE",
+    "max_instructions": 10,
+    "max_operands": 5,
+    "max_tokens_per_instruction": 11,
+    "error_by_length": {
+      "bins": [
+        "(0,4]",
+        "(4,8]",
+        "(8,16]"
+      ],
+      "mean": [
+        5.1723341942,
+        17.5331497192,
+        23.0000934601
+      ],
+      "count": [
+        757,
+        1475,
+        768
+      ]
+    }
+  },
+  "limitations": [
+    "Compact fields observed in rendered output; full per-epoch history remains on Kaggle.",
+    "Single seed, no statistical significance claim."
+  ],
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_public": 14.9744,
+  "leaderboard_private": 17.8852,
+  "leaderboard_metric": "MAE",
+  "leaderboard_direction": "minimize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/lost-interpreter-aicc-round-5/submissions",
+    "run": "R09",
+    "public": 14.9744,
+    "private": 17.8852,
+    "version_id": 374731593,
+    "output_file": "lost-interpreter/R09/submission.csv",
+    "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+  }
+}

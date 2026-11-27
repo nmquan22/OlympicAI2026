@@ -8,7 +8,12 @@ def record(task, rows, metric, direction, url):
     target=BASE/task/'SCORES.csv'
     previous={}
     if target.exists():
-        previous={r['run']:r for r in csv.DictReader(target.open())}
+        for r in csv.DictReader(target.open()):
+            if 'public' not in r:
+                evidence=json.loads((BASE/task/'runs'/r['run']/'evidence.json').read_text())
+                r=dict(run=r['run'],public=r['public_boundary_f1'],private=r['private_boundary_f1'],
+                    version_id=evidence['script_version_id'],output_file='submission.csv' if r['run']=='R01' else f"{task}/{r['run']}/submission.csv",description_note='Previously recorded frozen experiment.')
+            previous[r['run']]=r
     for row in rows:
         run=row['run'];public=row['public'];private=row['private']
         fields=dict(leaderboard_public=public,leaderboard_private=private,

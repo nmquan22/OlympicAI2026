@@ -1,0 +1,96 @@
+{
+  "task": "alchemy",
+  "run_id": "R10",
+  "config": {
+    "idea": "Square bijective minibatches with row/column CE and balanced Sinkhorn",
+    "hard": false,
+    "full": true,
+    "layers": 2,
+    "probability": false,
+    "sinkhorn": false,
+    "composer": true,
+    "tied_roles": true,
+    "square": true,
+    "papers": [
+      "1802.08665",
+      "1911.11763",
+      "1703.06114"
+    ],
+    "steps": 240,
+    "budget_seconds": 180,
+    "bpe_vocab": 1024,
+    "pretrained": false
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "342c70da46ccb69e3a99f46313088efbcb0d09db",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "elapsed_seconds": 13.601986408233643,
+  "peak_gpu_memory_mb": 26.595703125,
+  "validation": {
+    "metric": "bijective_holdout_accuracy",
+    "value": 0.16666666666666666,
+    "direction": "maximize",
+    "samples": 30,
+    "split": "fixed_result_disjoint_train_holdout"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 70
+  },
+  "artifacts": {
+    "pretrained_weights": false,
+    "tokenizer": "train-only BPE",
+    "training_rows": 120,
+    "coverage_diagnostics": {
+      "unique_train_names": 206,
+      "heldout_results": {
+        "count": 30,
+        "seen_any": 6,
+        "seen_as_input": 6,
+        "unk_tokens": 0
+      },
+      "test_candidates": {
+        "count": 70,
+        "seen_any": 17,
+        "seen_as_input": 17,
+        "unk_tokens": 0
+      },
+      "test_input_names": {
+        "count": 140,
+        "seen_any": 88,
+        "seen_as_input": 79,
+        "unk_tokens": 0
+      }
+    }
+  },
+  "limitations": [
+    "Compact fields observed in rendered output; full per-epoch history remains on Kaggle.",
+    "Single seed, no statistical significance claim."
+  ],
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_public": 0.0285,
+  "leaderboard_private": 0.1142,
+  "leaderboard_metric": "Accuracy",
+  "leaderboard_direction": "maximize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/alchemy-aicc-round-4/submissions",
+    "run": "R10",
+    "public": 0.0285,
+    "private": 0.1142,
+    "version_id": 374731690,
+    "output_file": "alchemy/R10/submission.csv",
+    "description_note": "Paper-guided preset frozen before scoring; source version and path checked in submission form."
+  }
+}

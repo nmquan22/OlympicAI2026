@@ -1,8 +1,10 @@
-run,public_boundary_f1,private_boundary_f1,frozen_before_scoring
-R01,0.7559,0.7560,True
-R02,0.8179,0.8214,True
-R03,0.7604,0.7594,True
-R04,0.8766,0.8775,True
-R05,0.7578,0.7583,True
-R06,0.8196,0.8215,True
-R07,0.9097,0.9113,True
+run,public,private,version_id,output_file,description_note
+R01,0.7559,0.7560,374524939,submission.csv,Previously recorded frozen experiment.
+R02,0.8179,0.8214,374702140,word-lookups/R02/submission.csv,Previously recorded frozen experiment.
+R03,0.7604,0.7594,374702140,word-lookups/R03/submission.csv,Previously recorded frozen experiment.
+R04,0.8766,0.8775,374702140,word-lookups/R04/submission.csv,Previously recorded frozen experiment.
+R05,0.7578,0.7583,374702140,word-lookups/R05/submission.csv,Previously recorded frozen experiment.
+R06,0.8196,0.8215,374702140,word-lookups/R06/submission.csv,Previously recorded frozen experiment.
+R07,0.9097,0.9113,374702140,word-lookups/R07/submission.csv,Previously recorded frozen experiment.
+R08,0.915,0.9171,374733892,word-lookups/R08/submission.csv,Paper-guided preset frozen before scoring; source version and path checked in submission form.
+R09,0.9145,0.9168,374733892,word-lookups/R09/submission.csv,Paper-guided preset frozen before scoring; source version and path checked in submission form.
