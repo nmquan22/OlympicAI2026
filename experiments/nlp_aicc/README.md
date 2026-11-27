@@ -29,4 +29,4 @@ Dự đoán mốc kiểm tra từ dữ liệu thật: `python tools/nlp_eta.py -
 
 ## Bài tiếp theo: Tally
 
-Theo yêu cầu ngày 27/11/2026, bắt đầu [Tally — học NER từ nhãn đếm](tally/IDEAS.md). [Năm paper ưu tiên](tally/RESEARCH.md), [trạng thái riêng](tally/STATE.json) và code scratch BPE đã chuẩn bị. Tally hiện có **0 lượt GPU hoàn tất, 0 submission**; chưa cộng vào 51 lượt của năm bài trước. Chờ xác nhận quy định riêng của Tally trước khi mở data chạy T4.
+Theo yêu cầu ngày 27/11/2026, bắt đầu [Tally — học NER từ nhãn đếm](tally/IDEAS.md). [Năm paper ưu tiên](tally/RESEARCH.md), [trạng thái riêng](tally/STATE.json) và code scratch BPE đã chuẩn bị. Tally hiện có **0 lượt GPU hoàn tất, 0 submission**; chưa cộng vào 51 lượt của năm bài trước. Đã chấp nhận quy định Tally theo xác nhận riêng của Quân; R01 đã lưu Version 1 và đang chờ T4. Xem [job](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445). Theo dõi kết quả có lịch kiểm theo giờ, không mở queue liên tục.

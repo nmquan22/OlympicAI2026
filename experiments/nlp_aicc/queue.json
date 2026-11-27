@@ -1568,6 +1568,27 @@
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-alchemy-learning-experiments"
+    },
+    {
+      "order": 6,
+      "id": "tally",
+      "title": "Tally",
+      "competition_slug": "tally-aicc-round-11",
+      "rules_accepted": true,
+      "status": "queued",
+      "runs": [
+        {
+          "run_id": "R01",
+          "idea": "Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts",
+          "status": "queued",
+          "notebook_version": 1,
+          "script_version_id": 374844445,
+          "source_commit": "08c63dcfb7af4f7c08c21bf0487e78dee5ee9585"
+        }
+      ],
+      "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision",
+      "state_path": "tally/STATE.json"
     }
   ],
   "execution_mode": "independent_gpu_experiments_batched_in_saved_versions",
@@ -1577,7 +1598,8 @@
       "lost-interpreter": 180,
       "word-lookups": 180,
       "alchemy": 90,
-      "inverse-translation": 240
+      "inverse-translation": 240,
+      "tally": 900
     },
     "batch_check": "sum of measured runtimes plus startup buffer; work on research while waiting",
     "queued_backoff_seconds": [
@@ -1587,9 +1609,10 @@
       900
     ]
   },
-  "phase": "completed",
-  "successful_unique_experiments": 41,
-  "minimum_successful_experiments": 35,
-  "saved_versions_observed": 27,
-  "counting_note": "41 unique successful GPU experiment configurations; failed attempts and repeated configurations excluded. This is not a count of 41 Saved Versions."
+  "phase": "tally_in_progress",
+  "successful_unique_experiments": 51,
+  "minimum_successful_experiments": 42,
+  "saved_versions_observed": 28,
+  "counting_note": "Completed unique model/decoder configurations counted from run records; queued jobs, retries and Saved Versions are not additional completed configurations.",
+  "saved_versions_count_note": "Unique task/version pairs referenced by queued or completed run records; failed/unrecorded versions may be absent."
 }

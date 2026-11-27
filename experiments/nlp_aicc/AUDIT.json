@@ -1,5 +1,5 @@
 {
-  "success": true,
+  "success": false,
   "successful_unique_experiments": 51,
   "scored_unique_submissions": 51,
   "by_task": {
@@ -22,11 +22,17 @@
     "alchemy": {
       "successful_unique": 11,
       "minimum_seven_met": true
+    },
+    "tally": {
+      "successful_unique": 0,
+      "minimum_seven_met": false
     }
   },
   "problems": [],
   "notes": [
     "Counts unique completed model/decoder configurations, not Saved Versions or retry attempts.",
     "This is an evidence/schema audit; it does not replay GPU training or establish statistical significance."
-  ]
+  ],
+  "workflow_status": "in_progress",
+  "interpretation": "Completed-run evidence/schema must have zero problems; overall success remains false until Tally also has seven completed unique configurations."
 }

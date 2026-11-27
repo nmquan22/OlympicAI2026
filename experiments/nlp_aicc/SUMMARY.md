@@ -41,3 +41,8 @@ Các metric khác nhau, không lấy cột số để xếp hạng giữa các b
 Các checkpoint Lost/Alchemy được chọn từ training fold, chưa refit toàn train. Bảy preset Word đã cố định trước khi xem public/private score; không fit threshold bằng gold test. Phần lớn báo cáo lưu trường đo đọc từ output Kaggle cùng URL/source SHA, một số có notebook execute đầy đủ; `evidence.json` phân biệt rõ, không giả lập stdout hay notebook. Audit kiểm tra chứng cứ/schema/count, không chạy lại toàn bộ training và không chứng minh ý nghĩa thống kê.
 
 Kiểm tra code cuối còn phát hiện regex numeric ở các source cũ có thể lẫn chữ số OP11/OP12. Đã sửa và kiểm tra operand parsing; R03/R07 ghi rõ hạn chế. Không đổi số lịch sử, chưa gán score mới cho bản sửa; R08 tốt nhất không dùng numeric branch.
+
+
+## Bài thứ sáu đang chạy: Tally
+
+Tổng51 kết quả và51 submissions ở trên thuộc năm bài đã hoàn tất. [Tally](tally/IDEAS.md) mới có R01 Saved Version1 đang queued T4x2, chưa có metric hay submission. Mục tiêu hiện tại là thêm ít nhất7 cấu hình có ý tưởng khác nhau; xem [STATUS.md](STATUS.md) và [trạng thái Tally](tally/STATE.json). Audit đã kiểm bằng chứng51 lượt cũ không có lỗi schema, nhưng mục tiêu toàn workflow còn pending vì Tally chưa đủ bảy. Không cộng job đang queue vào tổng thành công.

@@ -1,6 +1,6 @@
 # Tiến độ thực nghiệm NLP
 
-**51 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**51 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 42 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
@@ -9,6 +9,7 @@
 | [Word Lookups](word-lookups/IDEAS.md) | 9/7 | R08: public 0.9150, private 0.9171 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 9/7 | R09: public 100.0000, private 100.0000 Competition score |
 | [Alchemy](alchemy/IDEAS.md) | 11/7 | R01: public 0.0285, private 0.0000 Accuracy |
+| [Tally](tally/IDEAS.md) | 0/7 | Chưa có kết quả |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -87,3 +88,9 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R09 | Tied input/result role space + residual additive composition | 0.16667 bijective_holdout_accuracy; Kaggle 0.0285/0.1142 Accuracy (public/private) | [Đọc](alchemy/runs/R09/LEARNED.md) |
 | R10 | Square bijective minibatches with row/column CE and balanced Sinkhorn | 0.16667 bijective_holdout_accuracy; Kaggle 0.0285/0.1142 Accuracy (public/private) | [Đọc](alchemy/runs/R10/LEARNED.md) |
 | R11 | ESZSL-inspired bilinear BPE and character attribute compatibility | 0.03333 bijective_holdout_accuracy; Kaggle 0.0000/0.0000 Accuracy (public/private) | [Đọc](alchemy/runs/R11/LEARNED.md) |
+
+## Tally
+
+| Run | Ý tưởng | Kết quả | Nhật ký |
+|---|---|---|---|
+| R01 | Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts | queued | Chưa có kết quả |

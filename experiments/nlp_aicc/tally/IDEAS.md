@@ -46,7 +46,7 @@ Trước khi có số T4, 480 giây là **trần train cấu hình**, không ph�
 
 ## Nguồn lời giải và giới hạn hiện tại
 
-- [Baseline BTC trên Kaggle](https://www.kaggle.com/code/antoningorokva/baseline-tally-aicc-round-11). Trang Code hiển thị score 0.68172; phần đề ghi baseline 0.66/reference 0.83. Đây là số **của nguồn**, chưa xác minh cùng split/weights với scratch và không phải kết quả của chúng ta. Chưa trích được source notebook để phân tích architecture chính xác; không đoán nó dùng loss nào.
+- [Baseline BTC trên Kaggle](https://www.kaggle.com/code/antoningorokva/baseline-tally-aicc-round-11). Trang Code hiển thị score 0.68172; phần đề ghi baseline 0.66/reference 0.83. Đây là số **của nguồn**, chưa xác minh cùng split/weights với scratch và không phải kết quả của chúng ta. Đã đọc source version3 (script355168523): xem [phân tích baseline](BASELINE_REVIEW.md). Viewer đồng thời ghi best score0.67398 ởV2; chưa xác minh vì sao khác listing, không dùng hai số này để kết luận cải thiện.
 - [Correction IOAI](https://ioai.artix.tech/problems/aicc-2026-r11-tally/correction) đang yêu cầu tài khoản thành viên. Chưa đọc được nội dung; không gọi đó là SOTA đã tái lập.
 - [Năm paper và cách chuyển ý tưởng](RESEARCH.md). Chỉ chọn triển khai sau khi đối chiếu lỗi; đọc paper không đồng nghĩa đã chạy phương pháp đó.
-- Kaggle đang yêu cầu chấp nhận quy định riêng Tally trước khi tạo notebook gắn data. Các xác nhận cũ chỉ dành cho Cosmos và năm bài trước; đang chờ xác nhận Tally, chưa bấm Accept.
+- Đã chấp nhận quy định riêng Tally sau xác nhận “đồng ý hết giúp mình” ngày 27/11/2026 và quan sát thông báo thành công của Kaggle. [R01 Saved Version 1](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445), nguồn `08c63dcfb7af4f7c08c21bf0487e78dee5ee9585`, đang queued T4x2 lúc 20:18 giờ Việt Nam. Không tính lượt queue là kết quả.
