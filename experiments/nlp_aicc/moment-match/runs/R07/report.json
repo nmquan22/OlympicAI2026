@@ -1,0 +1,51 @@
+{
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.23.3"
+  },
+  "status": "completed",
+  "leaderboard_public": null,
+  "leaderboard_private": null,
+  "task": "moment-match",
+  "run_id": "R07",
+  "config": {
+    "idea": "Combine token contextualization and IDF after R03/R04 evidence",
+    "vocab": 2048,
+    "token_layers": 1,
+    "event_context": false,
+    "soft": true,
+    "temperature": 0.2,
+    "idf": true,
+    "center": false,
+    "epochs": 30,
+    "budget_seconds": 240,
+    "batch_size": 48
+  },
+  "source_commit": "de4c0874772967616c261665afd8584d76de0b65",
+  "elapsed_seconds": 105.03381562232971,
+  "validation": {
+    "metric": "accuracy",
+    "value": 0.6647780925401322,
+    "direction": "maximize",
+    "samples": 1059,
+    "split": "provided_validation"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 1970,
+    "labels_valid": true
+  },
+  "peak_gpu_memory_mb": 371.84814453125,
+  "artifacts": {
+    "tokenizer": "tokenizer.json",
+    "weights": "provided_fastText_only"
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}

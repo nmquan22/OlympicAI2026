@@ -11,7 +11,7 @@
       "competition_slug": "moment-match-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/moment-match.ipynb",
-      "status": "running_experiments",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -100,9 +100,16 @@
         {
           "run_id": "R07",
           "idea": "Kết hợp token attention + IDF, dựa trên R03/R04",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 7,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6647780925401322,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R07/report.json"
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"

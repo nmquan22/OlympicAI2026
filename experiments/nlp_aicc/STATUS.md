@@ -1,10 +1,10 @@
 # Tiến độ thực nghiệm NLP
 
-**9/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**10/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
-| [Moment Match](moment-match/IDEAS.md) | 6/7 | R04: 0.69122 accuracy |
+| [Moment Match](moment-match/IDEAS.md) | 7/7 | R04: 0.69122 accuracy |
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 3/7 | R01: 36.26026 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 0/7 | Chưa có kết quả |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 0/7 | Chưa có kết quả |
@@ -22,7 +22,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R04 | IDF weighting cho alignment | 0.69122 accuracy | [Đọc](moment-match/runs/R04/LEARNED.md) |
 | R05 | Giảm nhiệt độ soft alignment | 0.66100 accuracy | [Đọc](moment-match/runs/R05/LEARNED.md) |
 | R06 | Chỉ giữ sự kiện trung tâm để đo vai trò ngữ cảnh | 0.49103 accuracy | [Đọc](moment-match/runs/R06/LEARNED.md) |
-| R07 | Kết hợp token attention + IDF, dựa trên R03/R04 | planned | Chưa có kết quả |
+| R07 | Kết hợp token attention + IDF, dựa trên R03/R04 | 0.66478 accuracy | [Đọc](moment-match/runs/R07/LEARNED.md) |
 
 ## Lost Interpreter
 
