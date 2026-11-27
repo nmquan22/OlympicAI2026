@@ -11,7 +11,7 @@
       "competition_slug": "moment-match-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/moment-match.ipynb",
-      "status": "completed",
+      "status": "researching_extensions",
       "runs": [
         {
           "run_id": "R01",
@@ -110,6 +110,20 @@
             "split": "provided_validation"
           },
           "report_path": "moment-match/runs/R07/report.json"
+        },
+        {
+          "run_id": "R08",
+          "idea": "IDF + prior căn chỉnh đơn điệu khả vi",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
+        },
+        {
+          "run_id": "R09",
+          "idea": "IDF + max alignment gần reference",
+          "status": "planned",
+          "notebook_version": null,
+          "metric": null
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-moment-match-learning-experiments"

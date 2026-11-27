@@ -14,6 +14,43 @@ MOMENT_CONFIGS = {
 }
 
 
+# Hypotheses added after the first seven measured experiments.
+MOMENT_CONFIGS[8]={**MOMENT_CONFIGS[4],"idea":"IDF plus a differentiable monotonic subsequence alignment prior","monotonic":True}
+MOMENT_CONFIGS[9]={**MOMENT_CONFIGS[4],"idea":"Hard max word-piece alignment instead of soft matching","hard":True}
+
+
+def monotonic_alignment(scores,gamma=0.15):
+    """Mean score, softly averaged over strictly increasing subsequence paths.
+
+    Not the complete Soft-DTW algorithm: no repeats or horizontal moves. This
+    small task-specific prior is inspired by differentiable dynamic programming.
+    """
+    from math import comb
+    n,m=scores.shape[-2:]
+    if n>m:raise ValueError("A strict subsequence needs n <= m")
+    dp=scores[...,0,:]
+    for i in range(1,n):
+        values=[]
+        for j in range(m):
+            if j<i:values.append(scores.new_full(scores.shape[:-2],-1e4))
+            else:values.append(scores[...,i,j]+gamma*torch.logsumexp(dp[..., :j]/gamma,dim=-1))
+        dp=torch.stack(values,dim=-1)
+    log_partition=gamma*torch.logsumexp(dp[...,n-1:]/gamma,dim=-1)
+    return (log_partition-gamma*math.log(comb(m,n)))/n
+
+
+def alignment_canary():
+    from itertools import combinations
+    toy=(torch.arange(15,device=DEVICE,dtype=torch.float32).reshape(1,1,3,5)%7)/7
+    toy.requires_grad_(True);gamma=.15
+    got=monotonic_alignment(toy,gamma)
+    paths=torch.stack([sum(toy[...,i,j] for i,j in enumerate(path)) for path in combinations(range(5),3)],-1)
+    expected=(gamma*torch.logsumexp(paths/gamma,-1)-gamma*math.log(paths.shape[-1]))/3
+    assert torch.allclose(got,expected,atol=1e-6)
+    got.sum().backward();assert torch.isfinite(toy.grad).all() and (toy.grad>=0).all()
+    print("DP_CANARY_PASS "+json.dumps(dict(enumerated_paths=10,value=float(got.detach().cpu().item()))),flush=True)
+
+
 class MomentMatcher(nn.Module):
     def __init__(self, initial, idf, config, dim=96):
         super().__init__()
@@ -36,6 +73,9 @@ class MomentMatcher(nn.Module):
                                   nn.Conv2d(32,32,3,padding=1),nn.GELU())
         self.head = nn.Sequential(nn.Flatten(),nn.Linear(32*5*9,96),nn.GELU(),
                                   nn.Dropout(0.2),nn.Linear(96,1))
+
+        if config.get("monotonic",False):
+            self.alignment_scale=nn.Parameter(torch.tensor(.2))
 
     def representations(self, ids):
         shape=ids.shape
@@ -60,8 +100,11 @@ class MomentMatcher(nn.Module):
         valid=tm[:,None,:,None,:,None]&cm[:,:,None,:,None,:]
         sim=sim.masked_fill(~valid,-1e4)
         temp=self.config["temperature"]
-        left=(sim*(sim/temp).softmax(-1)).sum(-1)
-        right=(sim*(sim/temp).softmax(-2)).sum(-2)
+        if self.config.get("hard",False):
+            left,right=sim.amax(-1),sim.amax(-2)
+        else:
+            left=(sim*(sim/temp).softmax(-1)).sum(-1)
+            right=(sim*(sim/temp).softmax(-2)).sum(-2)
         tw=self.idf[targets] if self.config["idf"] else tm.float()
         cw=self.idf[candidates] if self.config["idf"] else cm.float()
         tw=tw*tm
@@ -72,12 +115,17 @@ class MomentMatcher(nn.Module):
         if self.config["center"]:
             keep=torch.zeros(5,device=targets.device);keep[2]=1
             grids=grids*keep[None,None,None,:,None]
-        return self.head(self.grid(grids.flatten(0,1))).reshape(-1,4)
+        scores=self.head(self.grid(grids.flatten(0,1))).reshape(-1,4)
+        if self.config.get("monotonic",False):
+            alignment=monotonic_alignment((left+right)/2)
+            scores=scores+self.alignment_scale*alignment
+        return scores
 
 
 def run_moment(run_id):
     config={**MOMENT_CONFIGS[run_id], "epochs":30, "budget_seconds":240, "batch_size":48}
     info=start_run("moment-match",run_id,config)
+    if config.get("monotonic",False):alignment_canary()
     root=find_data("moment-match-aicc-round-10")
     texts={s:json.loads((root/f"texts_{s}.json").read_text()) for s in ["train","validation","test"]}
     labels={s:np.load(root/f"labels_{s}.npy") for s in ["train","validation"]}

@@ -28,7 +28,7 @@ def read_executed_notebook(path):
     checks=report.get("submission_checks",{})
     if checks.get("ids_unique") is not True or checks.get("schema_valid") is not True or checks.get("row_count",0)<=0:
         raise ValueError("Submission checks did not pass")
-    if report.get("run_id") not in {f"R{i:02d}" for i in range(1,8)}:
+    if not __import__("re").fullmatch(r"R[0-9]{2,}",report.get("run_id", "")) or int(report["run_id"][1:])<1:
         raise ValueError("Unexpected run identifier")
     return notebook,log,report
 
