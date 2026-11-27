@@ -444,9 +444,20 @@
         {
           "run_id": "R05",
           "idea": "Trung bình xác suất hai thứ tự thay trung bình logits",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.06666666666666667,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.06666666666666667,
+            "independent_accuracy": 0.03333333333333333,
+            "greedy_accuracy": 0.06666666666666667,
+            "duplicate_argmax_count": 23
+          },
+          "report_path": "alchemy/runs/R05/report.json"
         },
         {
           "run_id": "R06",
