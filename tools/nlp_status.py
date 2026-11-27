@@ -13,6 +13,8 @@ def render_status():
   if scored:
    direction=scored[0].get('leaderboard_direction','maximize')
    best=sorted(scored,key=lambda r:r['leaderboard_public'],reverse=direction=='maximize')[0]
+   if task['id']=='inverse-translation':
+    best=sorted(scored,key=lambda r:(-r['leaderboard_public'],-r['metric']['value'],json.loads((BASE/task['id']/'runs'/r['run_id']/'report.json').read_text())['elapsed_seconds']))[0]
    metric=f"{best['run_id']}: public {best['leaderboard_public']:.4f}, private {best['leaderboard_private']:.4f} {best['leaderboard_metric']}"
   elif completed and completed[0]['metric']['metric']=='BPE_LM_NLL_proxy':
    metric='Chưa xếp hạng segmentation: cần Boundary F1'

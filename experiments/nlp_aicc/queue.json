@@ -869,7 +869,7 @@
       "competition_slug": "inverse-translation-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/inverse-translation.ipynb",
-      "status": "completed_with_research",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -1119,32 +1119,86 @@
         {
           "run_id": "R08",
           "idea": "Top8 exact search with contextual HotFlip fallback",
-          "status": "queued",
+          "status": "completed",
           "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
           "notebook_version": 5,
-          "script_version_id": 374816257
+          "script_version_id": 374816257,
+          "metric": {
+            "metric": "official_score_0_100",
+            "value": 97.27777777777777,
+            "direction": "maximize",
+            "samples": 24,
+            "split": "explicit_public_targets",
+            "official": {
+              "score": 97.27777777777777,
+              "exact_rate": 0.9583333333333334,
+              "mean_similarity": 0.9944444444444445,
+              "valid_rate": 1.0
+            }
+          },
+          "report_path": "inverse-translation/runs/R08/report.json",
+          "leaderboard_public": 94.5555,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R08",
+            "public": 94.5555,
+            "private": 100.0,
+            "version_id": 374816257,
+            "output_file": "inverse-translation/R08/submission.csv",
+            "description_note": "Post-contest practice inverse-translation R08: paper-guided frozen experiment; source/version/path verified; Complete (after deadline)."
+          }
         },
         {
           "run_id": "R09",
           "idea": "Contextual gradient coordinate search from top1 probe seeds",
-          "status": "queued",
+          "status": "completed",
           "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
           "notebook_version": 5,
-          "script_version_id": 374816257
+          "script_version_id": 374816257,
+          "metric": {
+            "metric": "official_score_0_100",
+            "value": 100.0,
+            "direction": "maximize",
+            "samples": 24,
+            "split": "explicit_public_targets",
+            "official": {
+              "score": 100.0,
+              "exact_rate": 1.0,
+              "mean_similarity": 1.0,
+              "valid_rate": 1.0
+            }
+          },
+          "report_path": "inverse-translation/runs/R09/report.json",
+          "leaderboard_public": 100.0,
+          "leaderboard_private": 100.0,
+          "leaderboard_metric": "Competition score",
+          "leaderboard_direction": "maximize",
+          "score_precision": "4 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+            "run": "R09",
+            "public": 100.0,
+            "private": 100.0,
+            "version_id": 374816257,
+            "output_file": "inverse-translation/R09/submission.csv",
+            "description_note": "Post-contest practice inverse-translation R09: paper-guided frozen experiment; source/version/path verified; Complete (after deadline)."
+          }
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683",
-      "pending_research_batch": {
-        "observed_status": "Queued",
-        "gpu": "T4 x2",
-        "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
-        "script_version_id": 374816257,
-        "url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374816257",
+      "completed_research_batch": {
+        "observed_status": "Completed",
         "runs": [
           "R08",
           "R09"
         ],
-        "followup": "Hourly conditional check, submit both outputs when completed, record measured results and push Git; stop when done; maximum8 checks."
+        "followup": "Both predictions submitted and scored; reports recorded. No duplicate job started."
       }
     },
     {

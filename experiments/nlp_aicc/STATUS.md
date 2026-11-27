@@ -1,13 +1,13 @@
 # Tiến độ thực nghiệm NLP
 
-**49 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**51 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
 | [Moment Match](moment-match/IDEAS.md) | 12/7 | R07: public 0.6619, private 0.6162 Accuracy |
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 10/7 | R08: public 14.1608, private 16.7920 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 9/7 | R08: public 0.9150, private 0.9171 Boundary F1 |
-| [Inverse Translation](inverse-translation/IDEAS.md) | 7/7 | R01: public 100.0000, private 100.0000 Competition score |
+| [Inverse Translation](inverse-translation/IDEAS.md) | 9/7 | R09: public 100.0000, private 100.0000 Competition score |
 | [Alchemy](alchemy/IDEAS.md) | 11/7 | R01: public 0.0285, private 0.0000 Accuracy |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
@@ -69,8 +69,8 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R05 | Coarse-to-fine top-8→32 | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R05/LEARNED.md) |
 | R06 | Coordinate sweep thay full replacement grid | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R06/LEARNED.md) |
 | R07 | Restart chỉ cho case chưa exact, đo tổng chi phí | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R07/LEARNED.md) |
-| R08 | Top8 exact search with contextual HotFlip fallback | queued | Chưa có kết quả |
-| R09 | Contextual gradient coordinate search from top1 probe seeds | queued | Chưa có kết quả |
+| R08 | Top8 exact search with contextual HotFlip fallback | 97.27778 official_score_0_100; Kaggle 94.5555/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R08/LEARNED.md) |
+| R09 | Contextual gradient coordinate search from top1 probe seeds | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R09/LEARNED.md) |
 
 ## Alchemy
 

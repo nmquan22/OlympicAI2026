@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 BASE=ROOT/'experiments/nlp_aicc'
 
 def audit():
- queue=json.loads((BASE/'queue.json').read_text());seen=set();by_task={};problems=[]
+ queue=json.loads((BASE/'queue.json').read_text());seen=set();by_task={};problems=[];scored=0
  for task in queue['items']:
   passed=[]
   for row in task['runs']:
@@ -28,6 +28,11 @@ def audit():
     assert (folder/'LEARNED.md').stat().st_size>100
     if evidence.get('full_notebook_export_available') is False:assert 'capture_note' in report
     else:assert (folder/'notebook.ipynb').exists()
+    if report.get('leaderboard_public') is not None:
+     assert math.isfinite(report['leaderboard_public']) and math.isfinite(report['leaderboard_private'])
+     assert report['leaderboard_public']==row['leaderboard_public'] and report['leaderboard_private']==row['leaderboard_private']
+     assert report['frozen_before_scoring'] is True
+     scored+=1
     if task['id']=='word-lookups':
      assert report['leaderboard_metric']=='Boundary F1'
      assert 0<=report['leaderboard_public']<=1 and 0<=report['leaderboard_private']<=1
@@ -40,7 +45,7 @@ def audit():
   try:ast.parse(path.read_text())
   except SyntaxError as exc:problems.append(str(exc))
  return dict(success=not problems and all(x['minimum_seven_met'] for x in by_task.values()),
-             successful_unique_experiments=len(seen),by_task=by_task,problems=problems,
+             successful_unique_experiments=len(seen),scored_unique_submissions=scored,by_task=by_task,problems=problems,
              notes=['Counts unique completed model/decoder configurations, not Saved Versions or retry attempts.',
                     'This is an evidence/schema audit; it does not replay GPU training or establish statistical significance.'])
 if __name__=='__main__':

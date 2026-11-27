@@ -1,0 +1,56 @@
+{
+  "task": "inverse-translation",
+  "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+  "run_ids": [
+    8,
+    9
+  ],
+  "completed": [
+    {
+      "run_id": "R08",
+      "metric": {
+        "metric": "official_score_0_100",
+        "value": 97.27777777777777,
+        "direction": "maximize",
+        "samples": 24,
+        "split": "explicit_public_targets",
+        "official": {
+          "score": 97.27777777777777,
+          "exact_rate": 0.9583333333333334,
+          "mean_similarity": 0.9944444444444445,
+          "valid_rate": 1.0
+        }
+      },
+      "elapsed_seconds": 15.1794753074646,
+      "output": "inverse-translation/R08"
+    },
+    {
+      "run_id": "R09",
+      "metric": {
+        "metric": "official_score_0_100",
+        "value": 100.0,
+        "direction": "maximize",
+        "samples": 24,
+        "split": "explicit_public_targets",
+        "official": {
+          "score": 100.0,
+          "exact_rate": 1.0,
+          "mean_similarity": 1.0,
+          "valid_rate": 1.0
+        }
+      },
+      "elapsed_seconds": 8.287331819534302,
+      "output": "inverse-translation/R09"
+    }
+  ],
+  "source_sha256": {
+    "common.py": "5b12a3027eea264ea4f906b6a5aed336f8c33c737c1d4d855972230b9cccd113",
+    "inverse_translation.py": "032767436aa9894641129d4cbcf1ce8d536d88cdf60995d062ddc1fd85b6f6fd"
+  },
+  "capture_note": "BATCH_RESULT fields read from rendered Kaggle output; not a full stdout export.",
+  "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374816257",
+  "version": 5,
+  "script_version_id": 374816257,
+  "observed_example_checks": 8,
+  "observed_example_checks_all_match": true
+}

@@ -15,3 +15,17 @@ Target text/token IDs và FSMT được đề cung cấp. Đây là tìm input c
 **R09:** khởi tạo từ top1 probe và dùng gradient substitutions ngay; tối đa24 bước. Dù ý tưởng thuộc họ coordinate optimization, code đánh giá toàn bộ single-position proposals rồi thay một vị trí tốt nhất mỗi bước, không phải sweep cập nhật mọi vị trí. Dùng cùng fallback top8.
 
 Giữ canary4 examples, Transformers4.57.1, hook vị trí decoder đã kiểm, bỏ hook trước official evaluator. Không sửa model weights. Báo exact24/24, official score, gradient calls, model calls, candidate evaluations, walltime, peakVRAM. Chỉ kết luận tiết kiệm nếu vẫn100; nếu không thì ghi tradeoff, không gọi nhanh hơn là tốt hơn.
+
+## Kết quả đo và quyết định
+
+Cả hai config hoàn tất trên Tesla T4, source84e9a9efaa6346578162fa12915a8368f18e6485; canary4 examples/run khớp8/8 trong batch. [Version Kaggle](https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374816257) có đủ hai NLP_RUN_RESULT và BATCH_RESULT.
+
+| Run | Official / exact | Kaggle public/private | Candidate evaluations | Search model_calls / gradient_calls | Code | Peak VRAM |
+|---|---|---|---:|---|---:|---:|
+| R06 đối chứng cũ | 100 /24/24 | 100/100 | 7832 | 268 /không gradient | 11.971s | 359.12MiB |
+| R08 | 97.2778 /23/24 | 94.5555/100 | 3083 | 90 /2 | 15.157s | 331.45MiB |
+| R09 | 100 /24/24 | 100/100 | 2600 | 85 /16 | 8.283s | 340.11MiB |
+
+ChọnR09 ở cùng official100 và exact24/24, dựa trên giảm66.8% candidates; public/private chỉ xác nhận sau đóng băng preset. Giảm thời gian30.8% là quan sát một lần khác batch/warm-up, chưa là kiểm định tốc độ. Search counter không gồm46 probe batches, generate/canary hay evaluator. Một backward khác chi phí một forward.
+
+R08 vẫn kẹt row21 với margin0.0113197. Gradient CE chỉ là xấp xỉ first-order và shortlist hữu hạn; nó không bảo đảm tối ưu margin hay tìm nghiệm đúng. R09 đi từ top1, có thể theo trajectory khác; code vẫn fallback top8 khi cần. Chưa instrument số lần fallback, nên không khẳng định R09 là pure gradient hoặc mọi gain đến riêng từ gradient. Không sửa target hay lấy nhãn ngoài đề.

@@ -1,6 +1,6 @@
 # Kết quả vòng research theo paper
 
-8 cấu hình dưới đây đã train/chạy trên T4 và đã nộp Kaggle. Chỉ số trong bảng public/private là điểm Kaggle thật, hiển thị4 chữ số; không phải ước lượng từ validation. Hai cấu hình Inverse gradient đang được xử lý riêng, chưa cộng vào bảng này.
+10 cấu hình dưới đây đã train/chạy trên T4 và đã nộp Kaggle. Chỉ số trong bảng public/private là điểm Kaggle thật, hiển thị4 chữ số; không phải ước lượng từ validation. Inverse R08/R09 đã hoàn tất và được chấm; tổng toàn bộ workflow là51 cấu hình/submission có điểm.
 
 | Bài / run | Thay đổi | Validation | Public | Private | Code T4 |
 |---|---|---:|---:|---:|---:|
@@ -12,6 +12,8 @@
 | Moment R12 | Soft-DTW residual | .694051 | .6456 | .6253 | 86.56s |
 | Word R08 | Accessor-variety spans | NLL5.8020 | .9150 | .9171 | 230.57s |
 | Word R09 | R08 + BPE-dropout .1 | NLL5.7895 | .9145 | .9168 | 244.07s |
+| Inverse R08 | Top8 + gradient fallback | Official97.2778; exact23/24 | 94.5555 | 100.0000 | 15.16s |
+| Inverse R09 | Contextual gradient proposals | Official100; exact24/24 | 100.0000 | 100.0000 | 8.28s |
 
 ## Ý tưởng đáng giữ để học
 
@@ -26,6 +28,10 @@
 **Moment: prior có thể tăng một tập mà không tăng tập khác.** Soft-DTW tăng3/1059 câu val so R04, nhưng private .6253 thấp hơn .6284. Không tuyên bố thắng ổn định. Decomposable attention event-level bị mất local token information qua pooling là một giả thuyết cần kiểm, không phải kết luận đã chứng minh. Tăng attention/depth không tự bảo đảm reasoning.
 
 ## Thời gian và bằng chứng
+
+**Inverse: gradient proposal phải được kiểm tra lại, không chỉ tin surrogate.** R08 bỏ lỡ row21 dù chỉ dùng3083 candidate evaluations. R09 tìm được24/24 với2600 candidates và16 gradient calls, so R06 đạt24/24 với7832 candidates: giảm66.8% số candidate được exact-evaluate. Code8.2827s so11.9711s giảm30.8% trong các lần đo này; khác batch và warm-up nên chưa coi là benchmark tốc độ lặp lại. R09 vẫn có top8 fallback; chưa có counter số lần fallback nên không gán toàn bộ gain cho gradient riêng. Đây là tín hiệu chọn bước nghiên cứu, không là bảo đảm tổng quát ngoài24 target được đề cho.
+
+Counter `model_calls` R08/R09=90/85 là counter search (đã gồm2/16 gradient calls), không bao gồm46 probe batches mỗi run, các lần generate/canary và official evaluator. Gradient call có backward, không ngang chi phí một forward. Không dùng riêng số model_calls để khẳng định tăng tốc.
 
 Lost batch thực tế code186.52s, Word474.64s, Moment151.56s, Alchemy13.95s. Startup/evaluator/queue tách riêng; Word Saved Version hoàn tất8m23s. Alchemy R11 là closed-form compatibility solve dùng T4, không phải một mạng deep learning đã train nhiều epoch; không cộng thành nhiều lượt từ các phép tính bên trong.
 

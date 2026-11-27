@@ -1,0 +1,84 @@
+{
+  "task": "inverse-translation",
+  "run_id": "R09",
+  "config": {
+    "idea": "Contextual gradient coordinate search from top1 probe seeds",
+    "topk": 8,
+    "loss": "margin",
+    "search": "gradient",
+    "restart": 0,
+    "gradient": true,
+    "gradient_topk": 16,
+    "gradient_steps": 24,
+    "probe_batch": 512,
+    "candidate_batch": 64,
+    "budget_seconds": 720
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "tokenizers": "0.22.2",
+    "transformers": "4.57.1"
+  },
+  "status": "completed",
+  "elapsed_seconds": 8.28272008895874,
+  "validation": {
+    "metric": "official_score_0_100",
+    "value": 100.0,
+    "direction": "maximize",
+    "samples": 24,
+    "split": "explicit_public_targets",
+    "official": {
+      "score": 100.0,
+      "exact_rate": 1.0,
+      "mean_similarity": 1.0,
+      "valid_rate": 1.0
+    }
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 24,
+    "token_ranges_valid": true,
+    "lengths_valid": true
+  },
+  "peak_gpu_memory_mb": 340.1103515625,
+  "artifacts": {
+    "probe_seconds": 3.6464951038360596,
+    "probe_batches": 46,
+    "candidate_evaluations": 2600,
+    "model_calls": 85,
+    "gradient_calls": 16,
+    "checkpoint": "provided FSMT only",
+    "targets_sha256": "767bb0e16b63b426bae8ebb48f8cda40711566367322b60e1c1e01ad63eb8162"
+  },
+  "limitations": [
+    "The target outputs are explicitly supplied by the task; this is input optimization.",
+    "Reference already reaches 100; compare cost and robustness at matched score.",
+    "Preserve provided token IDs; an unrelated BPE tokenizer would invalidate the model.",
+    "Single walltime observation with warm-up/batch-order effects; not a repeated benchmark.",
+    "model_calls is the instrumented search counter; the 46 probe batches, example/generation checks and official evaluator are outside this counter."
+  ],
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout.",
+  "leaderboard_public": 100.0,
+  "leaderboard_private": 100.0,
+  "leaderboard_metric": "Competition score",
+  "leaderboard_direction": "maximize",
+  "score_precision": "4 decimals shown by Kaggle UI",
+  "frozen_before_scoring": true,
+  "submission_evidence": {
+    "url": "https://www.kaggle.com/competitions/inverse-translation-aicc-round-10/submissions",
+    "run": "R09",
+    "public": 100.0,
+    "private": 100.0,
+    "version_id": 374816257,
+    "output_file": "inverse-translation/R09/submission.csv",
+    "description_note": "Post-contest practice inverse-translation R09: paper-guided frozen experiment; source/version/path verified; Complete (after deadline)."
+  }
+}

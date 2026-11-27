@@ -1,13 +1,13 @@
 # Kết quả 5 bài NLP
 
-Đã hoàn tất và nộp Kaggle **49 cấu hình T4 duy nhất** trên 5 bài, vượt mức tối thiểu35. Tám cấu hình mới trong bốn batch được thiết kế sau khi lọc [5 paper cho mỗi bài](research_v2/README.md). [Kết quả và bài học vòng2](research_v2/RESULTS.md). Không tính config chạy lặp, lỗi cài package, canary lỗi hay retry thành một thí nghiệm mới. Audit: [AUDIT.json](AUDIT.json).
+Đã hoàn tất và nộp Kaggle **51 cấu hình T4 duy nhất** trên 5 bài, vượt mức tối thiểu35. Mười cấu hình mới trong năm batch được thiết kế sau khi lọc [5 paper cho mỗi bài](research_v2/README.md). [Kết quả và bài học vòng2](research_v2/RESULTS.md). Không tính config chạy lặp, lỗi cài package, canary lỗi hay retry thành một thí nghiệm mới. Audit: [AUDIT.json](AUDIT.json).
 
 | Bài | Số thí nghiệm | Cấu hình chọn | Metric thật | Idea đáng giữ |
 |---|---:|---|---|---|
 | Moment Match | 12 | R12 theo val | Validation **69.41%**; Kaggle **.6456/.6253** | Soft-DTW tăng3/1059 câu val nhưng chưa tăng private; chưa khẳng định ổn định |
 | Lost Interpreter | 10 | R08 | Holdout MAE **15.31**; Kaggle **14.1608/16.7920** | Typed instructions và curriculum mới chưa vượt BiGRU BPE |
 | Word Lookups | 9 | R08 | Boundary F1 **public.9150 / private.9171** | Accessor-variety spans tăng từR07 .9097/.9113 ở cùng LM recipe |
-| Inverse Translation | 7 | R06 | Official **100, exact24/24**; code11.97s | Coordinate search giữ điểm, giảm9624→7832 candidate evaluations |
+| Inverse Translation | 9 | R09 | Official **100, exact24/24**; Kaggle **100/100**; code8.28s | Contextual gradient proposals + exact verification; 2600 candidates so7832 của R06 |
 | Alchemy | 11 | R09 | Holdout **5/30**; Kaggle **.0285/.1142** | Square matching không tăng; 24/30 tên val chưa thấy trong train dù0 UNK |
 
 Các metric khác nhau, không lấy cột số để xếp hạng giữa các bài. Điểm Kaggle ghi public/private; mỗi preset đóng băng trước lần chấm của nó. Inverse đã xác nhận100/100 trên Kaggle. Một seed và30 mẫu Alchemy chưa đủ kết luận chắc. Reference pretrained và random-init là điều kiện riêng; không tuyên bố đạt SOTA. Không dùng private để chọn checkpoint.
@@ -17,7 +17,7 @@ Các metric khác nhau, không lấy cột số để xếp hạng giữa các b
 - **Đừng gộp feature quá sớm:** Moment giữ tương tác token/event. IDF tăng65.44→69.12%, còn chỉ target center giảm49.10%. Context quan trọng, nhưng thêm Transformer hay word-feature fusion không tự tăng điểm.
 - **Kiến trúc mới hơn không luôn hợp hơn:** Lost BiGRU có bias tuần tự phù hợp chương trình; model vẫn lỗi nhiều hơn khi chương trình dài. Không đồng nhất “đọc opcode” với “thực thi chính xác”.
 - **Decoder có thể là nơi đáng cải thiện:** Word PMI tăngpublic0.7559→0.8766 dù NLL LM giữ nguyên. Bản kết hợp đạt0.9097. NLL mỗi BPE token không thay Boundary F1 và không so ngang tokenizer khác nhau.
-- **Cùng điểm, tối ưu chi phí:** Inverse top8/top16 cắt mất proposal cần thiết; CE tốn41,464 candidate evaluations. Coordinate giữ100 với7,832. Restart chưa kích hoạt trên bộ target đã exact nên chưa có bằng chứng hữu ích.
+- **Cùng điểm, tối ưu chi phí:** Inverse R09 giữ100 với2,600 candidate evaluations so7,832 của coordinate R06. R08 gradient fallback sau top8 chỉ đạt23/24, không chọn dù đã giảm candidates. R09 dùng gradient theo ngữ cảnh hiện tại và exact-verify; thời gian8.28s so11.97s là đo một lần, chịu warm-up/khác batch. Restart cũ chưa kích hoạt trên bộ target đã exact nên chưa có bằng chứng hữu ích.
 - **Ràng buộc và representation cùng quan trọng:** Alchemy Hungarian xử lý candidate trùng, symmetry có thể đảm bảo bằng kiến trúc; role tying tăng3/30→5/30 trong lần chạy này. 120 rule train chưa thay thế được kiến thức BERT pretrained.
 
 [LEARNING_GUIDE.md](LEARNING_GUIDE.md) giải thích input→baseline→reference→nâng cấp. [RESEARCH_NEXT.md](RESEARCH_NEXT.md) ghi nguồn paper, giả thuyết và giới hạn. Mỗi `runs/Rxx/LEARNED.md` có số và kết luận riêng. [BEST_CONFIGS.json](BEST_CONFIGS.json) chỉ rõ notebook version, source SHA và đường dẫn submission của các ứng viên đã chọn.

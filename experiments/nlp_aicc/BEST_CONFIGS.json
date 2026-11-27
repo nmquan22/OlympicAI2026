@@ -54,8 +54,8 @@
     "output_file": "word-lookups/R08/submission.csv"
   },
   "inverse-translation": {
-    "run_id": "R06",
-    "selection_criterion": "score100_and_lower_measured_code_cost_among_original_configs",
+    "run_id": "R09",
+    "selection_criterion": "official_score100_exact24of24_with_fewer_measured_candidate_evaluations_than_R06; runtime_single_observation",
     "validation": {
       "metric": "official_score_0_100",
       "value": 100.0,
@@ -71,11 +71,11 @@
     },
     "public_score": 100.0,
     "private_score": 100.0,
-    "source_commit": "ba670dedfc2b101b8c7197e3060a045dc330e62b",
-    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374704969",
-    "notebook_version": 4,
-    "script_version_id": 374704969,
-    "output_file": "inverse-translation/R06/submission.csv"
+    "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374816257",
+    "notebook_version": 5,
+    "script_version_id": 374816257,
+    "output_file": "inverse-translation/R09/submission.csv"
   },
   "alchemy": {
     "run_id": "R09",
