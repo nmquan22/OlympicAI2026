@@ -98,5 +98,23 @@
     "notebook_version": 4,
     "script_version_id": 374715624,
     "output_file": "alchemy/R09/submission.csv"
+  },
+  "tally": {
+    "run_id": "R01",
+    "selection_criterion": "only_completed_configuration_pilot_not_final_selection",
+    "validation": {
+      "metric": "entity_span_micro_F1",
+      "value": 0.4444444444444444,
+      "direction": "maximize",
+      "samples": 10,
+      "split": "fixed_gold_40_train_10_validation_seed42"
+    },
+    "public_score": 0.2971,
+    "private_score": 0.3008,
+    "source_commit": "08c63dcfb7af4f7c08c21bf0487e78dee5ee9585",
+    "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445",
+    "notebook_version": 1,
+    "script_version_id": 374844445,
+    "output_file": "tally/R01/submission.csv"
   }
 }

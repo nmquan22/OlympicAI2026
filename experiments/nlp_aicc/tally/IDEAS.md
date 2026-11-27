@@ -1,6 +1,6 @@
 # Tally · học vị trí thực thể từ nhãn đếm
 
-Đây là bài thứ sáu, được chọn theo yêu cầu ngày 27/11/2026. **Chưa có lượt T4 hoàn tất hoặc submission của Tally.** Năm bài trước có 51 cấu hình hoàn tất; không cộng các kế hoạch bên dưới vào số đó.
+Đây là bài thứ sáu, được chọn theo yêu cầu ngày 27/11/2026. **R01 đã hoàn tất và nộp:** valF1=0.444444 (10câu), Kaggle public0.29710/private0.30080; chưa đạt mục tiêu bảy. Năm bài trước có51 cấu hình; tổng hiện52 kết quả thật. Không cộng kế hoạch hoặc retry.
 
 ## Vì sao bài này đáng học
 
@@ -10,7 +10,7 @@ Một chuỗi `PERSON PERSON O PERSON` có hai tên PERSON, không phải ba. Nh
 
 Đề cho phép ELECTRA nhưng không bắt buộc. Theo điều kiện của Quân, toàn bộ weights khởi tạo ngẫu nhiên, BPE byte-level fit trên train. Không dùng tokenizer ELECTRA, dữ liệu ngoài, nhãn test hoặc nhãn do LLM viết. Dấu câu có thể nằm **bên trong** tên; quy tắc không được bắt đầu/kết thúc bằng dấu câu không đồng nghĩa cấm mọi dấu câu trong span.
 
-## Lượt đầu đã đóng băng về thiết kế, chưa chạy
+## Lượt đầu đã chạy và nộp
 
 `text.split()` → BPE cho từng từ → mean-pool các subword của từ → ghép log tần suất/độ dài từ → packed BiGRU hai lớp → head sáu nhãn IO.
 
@@ -25,7 +25,7 @@ Nguồn chạy: [tally.py](../code/tally.py), qua `run_batch('tally', [1], SOURC
 
 ## Vòng nâng cấp sau khi đọc lỗi thật
 
-Chỉ R01 hiện có cấu hình runnable. Các mục sau là nhánh nghiên cứu, không phải bảy kết quả hoặc bảy cấu hình đã thử.
+R01 đã có bằng chứng. R02/R03 đã chọn theo lỗi đo được: CRF expected counts và CRF count likelihood; xem [kết quả R01](runs/R01/LEARNED.md). Các nhánh khác dưới đây vẫn chỉ là kế hoạch, không tính là kết quả.
 
 | Lỗi quan sát cần có | Câu hỏi | Nâng cấp phù hợp để thử |
 |---|---|---|
@@ -49,4 +49,4 @@ Trước khi có số T4, 480 giây là **trần train cấu hình**, không ph�
 - [Baseline BTC trên Kaggle](https://www.kaggle.com/code/antoningorokva/baseline-tally-aicc-round-11). Trang Code hiển thị score 0.68172; phần đề ghi baseline 0.66/reference 0.83. Đây là số **của nguồn**, chưa xác minh cùng split/weights với scratch và không phải kết quả của chúng ta. Đã đọc source version3 (script355168523): xem [phân tích baseline](BASELINE_REVIEW.md). Viewer đồng thời ghi best score0.67398 ởV2; chưa xác minh vì sao khác listing, không dùng hai số này để kết luận cải thiện.
 - [Correction IOAI](https://ioai.artix.tech/problems/aicc-2026-r11-tally/correction) đang yêu cầu tài khoản thành viên. Chưa đọc được nội dung; không gọi đó là SOTA đã tái lập.
 - [Năm paper và cách chuyển ý tưởng](RESEARCH.md). Chỉ chọn triển khai sau khi đối chiếu lỗi; đọc paper không đồng nghĩa đã chạy phương pháp đó.
-- Đã chấp nhận quy định riêng Tally sau xác nhận “đồng ý hết giúp mình” ngày 27/11/2026 và quan sát thông báo thành công của Kaggle. [R01 Saved Version 1](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445), nguồn `08c63dcfb7af4f7c08c21bf0487e78dee5ee9585`, đang queued T4x2 lúc 20:18 giờ Việt Nam. Không tính lượt queue là kết quả.
+- Đã chấp nhận quy định riêng Tally sau xác nhận “đồng ý hết giúp mình” ngày 27/11/2026 và quan sát thông báo thành công của Kaggle. [R01 Saved Version 1](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445), nguồn `08c63dcfb7af4f7c08c21bf0487e78dee5ee9585`, đã chạy xong và nộp Complete(afterdeadline). Không tính queue/retry là cấu hình mới.

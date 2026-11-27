@@ -1,29 +1,18 @@
 {
   "task": "tally",
   "competition_slug": "tally-aicc-round-11",
-  "status": "queued",
+  "status": "preparing_R02_R03",
   "rules_accepted": true,
-  "successful_unique_experiments": 0,
-  "scored_unique_submissions": 0,
+  "successful_unique_experiments": 1,
+  "scored_unique_submissions": 1,
   "minimum_successful_experiments": 7,
   "runnable_configurations": [
-    "R01"
+    "R01",
+    "R02",
+    "R03"
   ],
-  "active_saved_versions": [
-    {
-      "version": 1,
-      "script_version_id": 374844445,
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445",
-      "run_ids": [
-        "R01"
-      ],
-      "source_commit": "08c63dcfb7af4f7c08c21bf0487e78dee5ee9585",
-      "status": "queued",
-      "accelerator": "GPU T4 x2",
-      "observed_at_utc": "2026-11-27T13:18:47Z"
-    }
-  ],
-  "next_action": "Read R01 measured failures after completion; submit exact frozen output; choose and freeze R02 only after actual error analysis.",
+  "active_saved_versions": [],
+  "next_action": "Freeze and launch R02 CRF expected counts and R03 count composite likelihood; exact DP and finite-gradient canary must pass before each training run. No user adjustment required within authorized scope.",
   "code_verification": "AST plus pure IO-span/grammar and exhaustive independent expected-count canaries passed locally; torch/tokenizers unavailable locally, GPU execution remains unverified.",
   "polling": {
     "unmeasured_train_budget_seconds": 480,
@@ -34,12 +23,27 @@
       60
     ],
     "note": "No training ETA measured yet. Startup, encoding, evaluation and queue delay are separate.",
-    "background_check": "Hourly condition watch created; first scheduled check 21:19 Asia/Saigon on 27/11/2026. No repeated notifications while queued."
+    "background_check": "Hourly condition watch created; first scheduled check 21:19 Asia/Saigon on 27/11/2026. No repeated notifications while queued.",
+    "measured_R01_code_seconds": 148.8752338886261,
+    "measured_R01_kaggle_total_seconds": 175.5,
+    "next_configs_note": "CRF/DP cost is unmeasured; allow up to480s training/config plus startup/eval. Automated condition checks remain hourly."
   },
   "rules_confirmation": {
     "user_message": "đồng ý hết giúp mình",
     "date": "2026-11-27",
     "observed_kaggle_message": "Rules accepted. Good luck!"
   },
-  "automation_title": "Luyện tập Tally NLP"
+  "automation_title": "Luyện tập Tally NLP",
+  "completed_runs": [
+    {
+      "run_id": "R01",
+      "validation_f1": 0.4444444444444444,
+      "public_score": 0.2971,
+      "private_score": 0.3008,
+      "code_seconds": 148.8752338886261,
+      "peak_gpu_memory_mb": 92.43896484375,
+      "version": 1,
+      "script_version_id": 374844445
+    }
+  ]
 }

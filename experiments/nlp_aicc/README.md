@@ -2,7 +2,7 @@
 
 Đọc [LEARNING_GUIDE.md](LEARNING_GUIDE.md) để nắm idea; [STATUS.md](STATUS.md) để xem số đã đo. Mỗi `runs/Rxx/LEARNED.md` có kết luận và giới hạn của thí nghiệm.
 
-Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. Đã hoàn tất **51 thí nghiệm T4 duy nhất**, mỗi bài ít nhất 7. Chi tiết ở [SUMMARY.md](SUMMARY.md), [bảng metric](EXPERIMENTS.csv), [cấu hình đã chọn](BEST_CONFIGS.json) và [audit](AUDIT.json). Lượt lỗi/chạy lặp không tính thêm. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
+Theo yêu cầu người dùng, ưu tiên 5 bài dưới đây trước hàng đợi AICC tổng quát. Đã hoàn tất **52 thí nghiệm T4 duy nhất**, mỗi bài ít nhất 7. Chi tiết ở [SUMMARY.md](SUMMARY.md), [bảng metric](EXPERIMENTS.csv), [cấu hình đã chọn](BEST_CONFIGS.json) và [audit](AUDIT.json). Lượt lỗi/chạy lặp không tính thêm. Bỏ qua các baseline thấp đã hiểu; chúng chỉ được phân tích từ code và số nguồn.
 
 | Bài | Idea chính | Weights |
 |---|---|---|
@@ -29,4 +29,4 @@ Dự đoán mốc kiểm tra từ dữ liệu thật: `python tools/nlp_eta.py -
 
 ## Bài tiếp theo: Tally
 
-Theo yêu cầu ngày 27/11/2026, bắt đầu [Tally — học NER từ nhãn đếm](tally/IDEAS.md). [Năm paper ưu tiên](tally/RESEARCH.md), [trạng thái riêng](tally/STATE.json) và code scratch BPE đã chuẩn bị. Tally hiện có **0 lượt GPU hoàn tất, 0 submission**; chưa cộng vào 51 lượt của năm bài trước. Đã chấp nhận quy định Tally theo xác nhận riêng của Quân; R01 đã lưu Version 1 và đang chờ T4. Xem [job](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445). Theo dõi kết quả có lịch kiểm theo giờ, không mở queue liên tục.
+Theo yêu cầu ngày 27/11/2026, bắt đầu [Tally — học NER từ nhãn đếm](tally/IDEAS.md). [Năm paper ưu tiên](tally/RESEARCH.md), [trạng thái riêng](tally/STATE.json) và code scratch BPE đã chuẩn bị. Tally đã có **1 lượt GPU hoàn tất, 1 submission có điểm**, nâng tổng lên52. R01: val spanF1.444444; Kaggle public.29710/private.30080. Đã chấp nhận quy định Tally theo xác nhận riêng của Quân; R01 Version1 đã hoàn tất; R02/R03 được chọn từ lỗi biên và bỏ sót tổ chức. Xem [job](https://www.kaggle.com/code/shareaccc3a/aicc-nlp-tally-scratch-weak-supervision?scriptVersionId=374844445). Theo dõi kết quả có lịch kiểm theo giờ, không mở queue liên tục.

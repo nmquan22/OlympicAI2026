@@ -1575,15 +1575,38 @@
       "title": "Tally",
       "competition_slug": "tally-aicc-round-11",
       "rules_accepted": true,
-      "status": "queued",
+      "status": "running_experiments",
       "runs": [
         {
           "run_id": "R01",
           "idea": "Scratch byte BPE word pooling + packed BiGRU, gold CE and expected entity-run counts",
-          "status": "queued",
+          "status": "completed",
           "notebook_version": 1,
           "script_version_id": 374844445,
-          "source_commit": "08c63dcfb7af4f7c08c21bf0487e78dee5ee9585"
+          "source_commit": "08c63dcfb7af4f7c08c21bf0487e78dee5ee9585",
+          "metric": {
+            "metric": "entity_span_micro_F1",
+            "value": 0.4444444444444444,
+            "direction": "maximize",
+            "samples": 10,
+            "split": "fixed_gold_40_train_10_validation_seed42"
+          },
+          "report_path": "tally/runs/R01/report.json",
+          "leaderboard_public": 0.2971,
+          "leaderboard_private": 0.3008,
+          "leaderboard_metric": "Entity-span micro F1",
+          "leaderboard_direction": "maximize",
+          "score_precision": "5 decimals shown by Kaggle UI",
+          "frozen_before_scoring": true,
+          "submission_evidence": {
+            "url": "https://www.kaggle.com/competitions/tally-aicc-round-11/submissions",
+            "run": "R01",
+            "public": 0.2971,
+            "private": 0.3008,
+            "version_id": 374844445,
+            "output_file": "tally/R01/submission.csv",
+            "description_note": "Post-contest practice Tally R01: frozen scratch experiment; version1/script374844445. Verified Complete(after deadline)."
+          }
         }
       ],
       "weight_policy": "Random initialization and train-only byte BPE; permitted ELECTRA is not mandatory and is not used.",
@@ -1610,7 +1633,7 @@
     ]
   },
   "phase": "tally_in_progress",
-  "successful_unique_experiments": 51,
+  "successful_unique_experiments": 52,
   "minimum_successful_experiments": 42,
   "saved_versions_observed": 28,
   "counting_note": "Completed unique model/decoder configurations counted from run records; queued jobs, retries and Saved Versions are not additional completed configurations.",

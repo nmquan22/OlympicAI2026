@@ -1,6 +1,6 @@
 # Năm paper ưu tiên theo độ sát Tally
 
-Đây là shortlist theo **mức liên quan**, không phải xếp hạng citation hay năm paper mới nhất. Đã đối chiếu nội dung nguồn chính: GE/Measurements/PR về giám sát gián tiếp, semi-CRF về suy luận span, Lample về biểu diễn và CRF. Các hướng dưới đây là adaptation cho Tally, không nhận là bản tái lập nguyên paper hoặc đã đạt số benchmark của paper. Kết luận thực nghiệm còn trống cho đến khi R01 hoàn tất.
+Đây là shortlist theo **mức liên quan**, không phải xếp hạng citation hay năm paper mới nhất. Đã đối chiếu nội dung nguồn chính: GE/Measurements/PR về giám sát gián tiếp, semi-CRF về suy luận span, Lample về biểu diễn và CRF. Các hướng dưới đây là adaptation cho Tally, không nhận là bản tái lập nguyên paper hoặc đã đạt số benchmark của paper. R01 đã hoàn tất: [lỗi và số đo](runs/R01/LEARNED.md). R02/R03 bên dưới được chọn sau khi đọc lỗi R01; chưa có kết quả của chúng.
 
 | Ưu tiên | Nguồn chính | Điểm lấy được | Điều kiện để đưa vào experiment |
 |---|---|---|---|
@@ -23,3 +23,14 @@
 3. Giữ seed/split/nguồn dữ liệu, log runtime và VRAM. Nếu thay chi phí hay budget phải nêu rõ.
 4. Nộp output chính xác từ Saved Version hoàn tất, đọc public/private score và giữ cả trường hợp thất bại. Không dùng private score để chọn hyperparameter.
 5. Lượt sau lấy lỗi còn lại làm đầu vào. Chỉ sau khi có ít nhất bảy cấu hình hoàn tất mới ghi đạt mục tiêu bảy; nếu không cải thiện thì ghi thất bại và nghiên cứu tiếp trong phạm vi yêu cầu.
+
+
+## Quyết định sau R01
+
+ORGANIZATION đúng0/5, ba gold span cùng loại sai biên, năm không có overlap đúng loại; valF1.4444, public.29710, private.30080. Không có vi phạm biên kiểu punctuation/article được báo, nên chưa ưu tiên grammar-only. `dickett kennelson - mccarl` bị cắt trước dấu gạch: không cấm punctuation nội bộ.
+
+**R02:** cùng byteBPE/BiGRU/split/seed, đổi sang linear-chain CRF: gold NLL chia độ dài từng câu, decode Viterbi, expected count dùng unary ởt0 và pair marginal not-c→c ởt>0. Đây là phép thử cấu trúc chuỗi theo Lample/GE, khác R01 ở phụ thuộc nhãn và gold sequence objective.
+
+**R03:** giữ toàn bộ R02, đổi weak count loss thành -logP(N_c=k_c|x) riêng từng loại qua count-augmented DP, chia k_c+1 rồi lấy trung bình. Đây là weighted composite likelihood; năm count không được ràng buộc đồng thời. Phép thử tách expectation matching với probability mass tại đúng count theo hướng Measurements.
+
+Canary trên T4 sẽ liệt kê27/9chuỗi ở2câu toy, kiểm partition/expectation/count-numerator/Viterbi/padding và finite gradients trước train. Nếu canary lỗi thì không chạy training, ghi failure và retry. Hai cấu hình đều trần480s, batch64,40goldtrain/10val,800weakholdout; runtime thực tế của CRF/DP chưa biết, không suy từ149s của R01.

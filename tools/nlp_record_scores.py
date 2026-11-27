@@ -18,7 +18,7 @@ def record(task, rows, metric, direction, url):
         run=row['run'];public=row['public'];private=row['private']
         fields=dict(leaderboard_public=public,leaderboard_private=private,
             leaderboard_metric=metric,leaderboard_direction=direction,
-            score_precision='4 decimals shown by Kaggle UI',frozen_before_scoring=True,
+            score_precision=('5 decimals shown by Kaggle UI' if task=='tally' else '4 decimals shown by Kaggle UI'),frozen_before_scoring=True,
             submission_evidence=dict(url=url,**row))
         report=BASE/task/'runs'/run/'report.json'
         data=json.loads(report.read_text());data.update(fields)

@@ -46,3 +46,8 @@ Kiểm tra code cuối còn phát hiện regex numeric ở các source cũ có t
 ## Bài thứ sáu đang chạy: Tally
 
 Tổng51 kết quả và51 submissions ở trên thuộc năm bài đã hoàn tất. [Tally](tally/IDEAS.md) mới có R01 Saved Version1 đang queued T4x2, chưa có metric hay submission. Mục tiêu hiện tại là thêm ít nhất7 cấu hình có ý tưởng khác nhau; xem [STATUS.md](STATUS.md) và [trạng thái Tally](tally/STATE.json). Audit đã kiểm bằng chứng51 lượt cũ không có lỗi schema, nhưng mục tiêu toàn workflow còn pending vì Tally chưa đủ bảy. Không cộng job đang queue vào tổng thành công.
+
+
+### Tally R01 có kết quả
+
+R01 đã hoàn tất T4: code148.875s, peak92.439MiB; val spanF1.444444 trên10câu (TP6/FP6/FN9), Kaggle public.29710/private.30080, Complete(afterdeadline). Tổng hiện52 cấu hình hoàn tất/scored; Tally mới1/7. Lỗi chính: bỏ tổ chức, hụt biên tên; weak countMAE.22375 và31.5% đúng vector. [Nhật ký R01](tally/runs/R01/LEARNED.md); R02/R03 sẽ thử CRF pair expectations và count composite likelihood sau canary. Các đoạn51 phía trên là snapshot năm bài cũ.
