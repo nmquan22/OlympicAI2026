@@ -258,9 +258,17 @@
         {
           "run_id": "R02",
           "idea": "Surprisal hai chiều",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 5.802002440784768,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct",
+            "boundary_f1": null
+          },
+          "report_path": "word-lookups/runs/R02/report.json"
         },
         {
           "run_id": "R03",
