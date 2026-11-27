@@ -1,6 +1,6 @@
 # Tiến độ thực nghiệm NLP
 
-**38 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**39 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
@@ -8,7 +8,7 @@
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 8/7 | R08: 15.30885 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 7/7 | R07: public 0.9097, private 0.9113 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 7/7 | R01: 100.00000 official_score_0_100 |
-| [Alchemy](alchemy/IDEAS.md) | 7/7 | R02: 0.13333 bijective_holdout_accuracy |
+| [Alchemy](alchemy/IDEAS.md) | 8/7 | R02: 0.13333 bijective_holdout_accuracy |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -75,4 +75,4 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R05 | Trung bình xác suất hai thứ tự thay trung bình logits | 0.06667 bijective_holdout_accuracy | [Đọc](alchemy/runs/R05/LEARNED.md) |
 | R06 | Sinkhorn loss để học cạnh tranh toàn cục trước Hungarian | 0.10000 bijective_holdout_accuracy | [Đọc](alchemy/runs/R06/LEARNED.md) |
 | R07 | Kết hợp hard negatives + full-list CE + probability averaging | 0.06667 bijective_holdout_accuracy | [Đọc](alchemy/runs/R07/LEARNED.md) |
-| R08 | Composer a+b / |a-b| / a*b có tính giao hoán sẵn | planned | Chưa có kết quả |
+| R08 | Composer a+b / |a-b| / a*b có tính giao hoán sẵn | 0.10000 bijective_holdout_accuracy | [Đọc](alchemy/runs/R08/LEARNED.md) |

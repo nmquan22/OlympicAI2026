@@ -570,7 +570,7 @@
       "competition_slug": "alchemy-aicc-round-4",
       "rules_accepted": true,
       "source_notebook": "round-4/alchemy.ipynb",
-      "status": "researching_extensions",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -701,9 +701,20 @@
         {
           "run_id": "R08",
           "idea": "Composer a+b / |a-b| / a*b có tính giao hoán sẵn",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 3,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.1,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.1,
+            "independent_accuracy": 0.03333333333333333,
+            "greedy_accuracy": 0.03333333333333333,
+            "duplicate_argmax_count": 12
+          },
+          "report_path": "alchemy/runs/R08/report.json"
         }
       ],
       "weight_policy": "Random initialization and train-only BPE; allowed BERT is not mandatory.",
