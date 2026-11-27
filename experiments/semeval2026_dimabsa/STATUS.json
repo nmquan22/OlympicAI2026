@@ -7,12 +7,45 @@
   "weights_policy": "random initialization; no pretrained weights or tokenizer",
   "max_concurrent_kaggle_versions": 2,
   "github_connected": true,
-  "kaggle_authenticated": false,
-  "kaggle_dataset_uploaded": false,
+  "kaggle_authenticated": true,
+  "kaggle_dataset_uploaded": true,
   "gpu_runs_started": 0,
   "cpu_controls_completed": 3,
   "test_evaluated": false,
-  "blocker": "Google device verification pending user completion",
-  "neural_validation": "syntax checked only; forward/backward not yet executed",
-  "next": "Verify Kaggle signed-in state, inspect active sessions, upload private training dataset, launch R01 and R02 within two-session cap"
+  "blocker": null,
+  "neural_validation": "notebook cells and script syntax checked; saved versions waiting for worker; forward/backward not yet verified",
+  "next": "Read R01/R02 GPU logs and official dev scores; compare accuracy, runtime and error groups before selecting upgrades",
+  "kaggle_username": "quannguyen0501",
+  "gpu_runs_submitted": 2,
+  "dataset_url": "https://www.kaggle.com/datasets/quannguyen0501/dimabsa-2026-english-restaurant-scratch-training",
+  "dataset_version": 1,
+  "dataset_bundle_sha256": "2184fadaf9e10c357585aba273394d236eade639a974652662cba44edfeb76f9",
+  "runs": [
+    {
+      "run": "R01",
+      "architecture": "2-layer BiLSTM with aspect-conditioned attention",
+      "encoder": "lstm",
+      "layers": 2,
+      "width": 192,
+      "learning_rate": 0.002,
+      "state": "submitted_waiting_worker",
+      "version": 1,
+      "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r01-scratch-bilstm-aspect-attention/edit"
+    },
+    {
+      "run": "R02",
+      "architecture": "4-layer pre-norm Transformer with aspect-conditioned attention",
+      "encoder": "transformer",
+      "layers": 4,
+      "width": 192,
+      "learning_rate": 0.0005,
+      "state": "submitted_waiting_worker",
+      "version": 1,
+      "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-r02-scratch-prenorm-transformer/edit"
+    }
+  ],
+  "abandoned_before_execution": [
+    "plain BiGRU control",
+    "BiGRU attention control"
+  ]
 }

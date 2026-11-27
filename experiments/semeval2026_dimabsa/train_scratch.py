@@ -22,18 +22,18 @@ from prepare_data import SOURCE_COMMIT, task1_splits
 @dataclass
 class Config:
     run: str = "R01"
-    encoder: str = "gru"
-    pooling: str = "meanmax"
+    encoder: str = "lstm"
+    pooling: str = "attention"
     loss: str = "mse"
     seed: int = 42
     vocab: int = 3000
     max_length: int = 160
-    width: int = 128
+    width: int = 192
     layers: int = 2
-    dropout: float = 0.25
+    dropout: float = 0.2
     batch_size: int = 32
-    epochs: int = 40
-    patience: int = 6
+    epochs: int = 60
+    patience: int = 10
     lr: float = 0.002
     seconds: int = 1200
 
@@ -51,7 +51,7 @@ def fit_tokenizer(examples, vocab_size):
     tokenizer.decoder = decoders.ByteLevel()
     trainer = trainers.BpeTrainer(vocab_size=vocab_size, min_frequency=2,
                                  special_tokens=["[PAD]", "[UNK]", "[CLS]", "[SEP]"],
-                                 initial_alphabet=pre_tokenizers.ByteLevel.alphabet())
+                                 initial_alphabet=sorted(pre_tokenizers.ByteLevel.alphabet()))
     tokenizer.train_from_iterator((e["text"].lower() for e in examples), trainer=trainer)
     return tokenizer
 
@@ -101,8 +101,8 @@ class ScratchRegressor(nn.Module):
         self.cfg = cfg
         self.embedding = nn.Embedding(vocab_size, cfg.width, padding_idx=0)
         self.dropout = nn.Dropout(cfg.dropout)
-        if cfg.encoder == "gru":
-            self.encoder = nn.GRU(cfg.width, cfg.width // 2, num_layers=cfg.layers,
+        if cfg.encoder == "lstm":
+            self.encoder = nn.LSTM(cfg.width, cfg.width // 2, num_layers=cfg.layers,
                                   bidirectional=True, batch_first=True, dropout=cfg.dropout)
         else:
             self.position = nn.Embedding(cfg.max_length, cfg.width)
@@ -111,6 +111,10 @@ class ScratchRegressor(nn.Module):
                                                batch_first=True, norm_first=True, activation="gelu")
             self.encoder = nn.TransformerEncoder(block, cfg.layers, norm=nn.LayerNorm(cfg.width),
                                                  enable_nested_tensor=False)
+            for layer in self.encoder.layers:
+                for parameter in layer.parameters():
+                    if parameter.ndim > 1:
+                        nn.init.xavier_uniform_(parameter)
         pooled_width = cfg.width * (4 if cfg.pooling == "attention" else 3)
         self.head = nn.Sequential(nn.Linear(pooled_width, cfg.width), nn.GELU(),
                                   nn.Dropout(cfg.dropout), nn.Linear(cfg.width, 2))
@@ -122,7 +126,7 @@ class ScratchRegressor(nn.Module):
     def forward(self, ids, context, query, segment):
         hidden = self.dropout(self.embedding(ids))
         padding = ids.eq(0)
-        if self.cfg.encoder == "gru":
+        if self.cfg.encoder == "lstm":
             packed = pack_padded_sequence(hidden, (~padding).sum(1).cpu(), batch_first=True, enforce_sorted=False)
             packed, _ = self.encoder(packed)
             hidden, _ = pad_packed_sequence(packed, batch_first=True, total_length=ids.shape[1])
@@ -175,7 +179,14 @@ def train(cfg, data, output):
     weights = [p for name, p in model.named_parameters() if name != "log_variance"]
     optimizer = torch.optim.AdamW([{"params": weights, "lr": cfg.lr, "weight_decay": 0.01},
                                    {"params": [model.log_variance], "lr": 0.01, "weight_decay": 0.0}])
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, cfg.epochs)
+    total_steps = cfg.epochs * len(train_loader)
+    warmup = max(1, int(total_steps * 0.1))
+    def schedule(step):
+        if step < warmup:
+            return (step + 1) / warmup
+        progress = min(1.0, (step - warmup) / max(1, total_steps - warmup))
+        return 0.1 + 0.9 * 0.5 * (1.0 + math.cos(math.pi * progress))
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, schedule)
     best, stale, best_epoch, best_state = float("inf"), 0, 0, None
     for epoch in range(1, cfg.epochs + 1):
         model.train()
@@ -188,8 +199,8 @@ def train(cfg, data, output):
             loss.backward()
             nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
+            scheduler.step()
             losses.append(float(loss.detach()))
-        scheduler.step()
         scores = metrics(y_dev, predict(model, dev_loader, device))
         entry = {"epoch": epoch, "train_loss": float(np.mean(losses)), "seconds": time.monotonic() - start,
                  "log_variance": model.log_variance.detach().cpu().tolist(), **scores}
@@ -200,6 +211,7 @@ def train(cfg, data, output):
         if score < best:
             best, best_epoch, stale = score, epoch, 0
             best_state = {name: tensor.detach().cpu().clone() for name, tensor in model.state_dict().items()}
+            torch.save({"config": asdict(cfg), "state_dict": best_state}, output / "best.pt")
         else:
             stale += 1
         if stale >= cfg.patience or time.monotonic() - start >= cfg.seconds:
@@ -208,6 +220,11 @@ def train(cfg, data, output):
     pred = predict(model, dev_loader, device)
     export_predictions(dev_rows, dev_examples, pred, output / "dev_predictions.jsonl")
     torch.save({"config": asdict(cfg), "state_dict": best_state}, output / "best.pt")
+    groups = {"valence_below_5": y_dev[:, 0] < 5, "valence_at_least_5": y_dev[:, 0] >= 5,
+              "arousal_below_6": y_dev[:, 1] < 6, "arousal_at_least_6": y_dev[:, 1] >= 6,
+              "text_over_30_words": np.array([len(e["text"].split()) > 30 for e in dev_examples])}
+    error_groups = {name: {"count": int(mask.sum()), **metrics(y_dev[mask], pred[mask])}
+                    for name, mask in groups.items() if mask.any()}
     report = {"status": "completed", "config": asdict(cfg), "pretrained_weights": False,
               "tokenizer_fit": "clean train text only", "source_commit": SOURCE_COMMIT,
               "train_aspects": len(train_examples), "dev_aspects": len(dev_examples),
@@ -215,6 +232,7 @@ def train(cfg, data, output):
               "parameters": sum(p.numel() for p in model.parameters()), "seconds": time.monotonic() - start,
               "device": torch.cuda.get_device_name() if device.type == "cuda" else "cpu",
               "torch_version": torch.__version__, "test_evaluated": False,
+              "error_groups": error_groups,
               "tokenizer_sha256": hashlib.sha256((output / "tokenizer.json").read_bytes()).hexdigest(),
               **metrics(y_dev, pred)}
     (output / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -226,14 +244,16 @@ def main():
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--run", default="R01")
-    parser.add_argument("--encoder", choices=["gru", "transformer"], default="gru")
-    parser.add_argument("--pooling", choices=["meanmax", "attention"], default="meanmax")
+    parser.add_argument("--encoder", choices=["lstm", "transformer"], default="lstm")
+    parser.add_argument("--pooling", choices=["meanmax", "attention"], default="attention")
     parser.add_argument("--loss", choices=["mse", "uncertainty"], default="mse")
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--epochs", type=int, default=40)
+    parser.add_argument("--epochs", type=int, default=60)
     parser.add_argument("--seconds", type=int, default=1200)
+    parser.add_argument("--layers", type=int, default=2)
+    parser.add_argument("--lr", type=float, default=0.002)
     args = parser.parse_args()
-    config_keys = ("run", "encoder", "pooling", "loss", "seed", "epochs", "seconds")
+    config_keys = ("run", "encoder", "pooling", "loss", "seed", "epochs", "seconds", "layers", "lr")
     cfg = Config(**{key: getattr(args, key) for key in config_keys})
     if (args.out / "epochs.jsonl").exists():
         raise FileExistsError("Use a new output directory for an independent experiment.")

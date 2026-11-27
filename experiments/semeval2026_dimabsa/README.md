@@ -7,7 +7,7 @@ Phạm vi Quân chọn ngày 27/11/2026: **Track A, tiếng Anh–restaurant; b�
 - GitHub đã kết nối, có quyền ghi repo.
 - Đã tải train/dev/test từ commit BTC `bdc93be1224106ae7d3eb95739c02a76ed4ae8a1`; [manifest](DATA_MANIFEST.json) có SHA256 trên bản chuẩn hóa newline LF.
 - **Đã chạy ba control CPU trên dữ liệu thật**, đã đối chiếu bằng scorer BTC. Xem [report](runs/cpu_controls/report.json), [log scorer](runs/cpu_controls/C02_official_scorer.log).
-- **Chưa upload Kaggle, chưa khởi chạy GPU.** Đang chờ người dùng hoàn tất xác minh đăng nhập Google. Code neural mới được kiểm tra cú pháp, chưa kiểm thử forward/backward hay đo GPU.
+- **Kaggle đã kết nối: `QuanNguyen0501`. Dataset private đã tạo, hai Saved Version T4 đã gửi.** Đang chờ worker; chưa có metric neural. Hai bản BiGRU cũ đã bỏ trước khi chạy theo yêu cầu của Quân. [Trạng thái + link job](STATUS.json).
 - Chưa chấm test và chưa nộp Codabench. Điểm dưới đây là **official dev split, chấm cục bộ bằng scorer BTC**; không phải leaderboard.
 
 ## Control CPU để biết GPU cần vượt mốc nào
@@ -37,12 +37,12 @@ Các thứ hạng/điểm trong bảng này là **kết quả tác giả dưới
 
 | Run | Kiến trúc | So sánh muốn trả lời | Trạng thái |
 |---|---|---|---|
-| R01 | BPE train-only → embedding random → 2-layer BiGRU → mean/max text + aspect pool → head VA | Encoder có học được composition hơn n-gram không? | prepared, chưa chạy |
-| R02 | R01 + attention context dùng aspect làm query | Tập trung bằng query aspect có giúp câu nhiều aspect không? | prepared, chưa chạy |
-| R03 | Thay BiGRU bằng Transformer nhỏ pre-norm random init | Self-attention có lợi trên tập nhỏ trong cùng budget không? | planned, chưa chạy |
+| R01 | BPE train-only → embedding 192 random → 2-layer BiLSTM → mean/max text + aspect pool + aspect-conditioned attention → head VA | Cấu trúc recurrent với attention học composition và chọn ngữ cảnh theo aspect thế nào? | Saved Version 1 đã gửi, chờ worker |
+| R02 | BPE train-only → embedding 192 random → 4-layer Transformer pre-norm, 4 heads → mean/max + aspect-conditioned attention → head VA | Transformer có vượt BiLSTM attention trong cùng ngân sách thời gian không? | Saved Version 1 đã gửi, chờ worker |
+| R03 | Nâng cấp nhánh được chọn sau R01/R02 | Chỉ chọn theo lỗi và chi phí thực tế; bỏ nhánh yếu rõ ràng | chưa chọn cấu hình |
 | R04 | Encoder được chọn + learned log-variance trên hai loss | Điều chỉnh gradient V/A có tốt hơn MSE bằng nhau không? | planned, chưa chạy |
 
-Mỗi lượt dùng cùng split/seed, fit lại tokenizer bằng train sạch và khởi tạo mới model/optimizer. R01/R02 dùng MSE, output `1 + 8*sigmoid(logit)` và chọn epoch theo RMSE_VA dev. Giới hạn mặc định 40 epoch, patience 6, khoảng 20 phút/lượt; có thể dừng sau epoch hiện tại nên không phải hard timeout. R03/R04 chỉ quyết định sau khi đọc R01/R02 và nhóm lỗi; không mặc định chạy hết mọi tổ hợp.
+Mỗi lượt dùng cùng split/seed, fit lại tokenizer bằng train sạch và khởi tạo mới model/optimizer. R01/R02 dùng MSE, output `1 + 8*sigmoid(logit)` và chọn epoch theo RMSE_VA dev. BiLSTM LR 0.002; Transformer LR 0.0005. Giới hạn mặc định 60 epoch, patience 10, warmup 10% + cosine theo step, khoảng 20 phút/lượt; có thể dừng sau epoch hiện tại nên không phải hard timeout. R03/R04 chỉ quyết định sau khi đọc R01/R02 và nhóm lỗi; không mặc định chạy hết mọi tổ hợp. Giữ cả hai trong lần so đầu; nhánh thua rõ về dev và chi phí sẽ không được cấp thêm lượt chỉ để thử thay đổi nhỏ. Một seed chưa đủ kết luận kiến trúc nào luôn tốt hơn.
 
 Khi đã chọn xong kiến trúc trên dev, mới chạy inference test, chấm bằng gold test cục bộ và ghi riêng kết quả. Mở rộng ST2: encoder → span aspect/opinion → liên kết cặp → head VA; ST3 thêm head category. Phải có scorer cF1 và phân tích phần mất điểm do span, liên kết, category, VA trước khi thêm kiến trúc phức tạp. Các phần ST2/ST3 **chưa implement**.
 
@@ -57,8 +57,8 @@ Khi đã chọn xong kiến trúc trên dev, mới chạy inference test, chấm
 ```bash
 python experiments/semeval2026_dimabsa/prepare_data.py --download --out /tmp/dimabsa_data --manifest /tmp/dimabsa_manifest.json
 python experiments/semeval2026_dimabsa/cpu_baselines.py --data /tmp/dimabsa_data --out /tmp/dimabsa_cpu
-python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data --out /tmp/dimabsa_R01 --run R01
-python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data --out /tmp/dimabsa_R02 --run R02 --pooling attention
+python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data --out /tmp/dimabsa_R01 --run R01 --encoder lstm --pooling attention --layers 2 --lr 0.002
+python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data --out /tmp/dimabsa_R02 --run R02 --encoder transformer --pooling attention --layers 4 --lr 0.0005
 ```
 
 Neural cần `torch`, `tokenizers`, `numpy`, `scipy`, `scikit-learn`. Chưa khóa phiên bản Kaggle vì chưa có runtime GPU thực tế; mỗi report sẽ ghi torch version, GPU, tokenizer hash, số parameter, thời gian, epoch, config, split và score. Scorer BTC tải từ `evaluation_script/metrics_subtask_1_2_3.py` cùng source commit; không thay công thức chấm. Không commit dataset thô, API token hoặc checkpoint lớn vào repo.
