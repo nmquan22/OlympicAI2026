@@ -332,9 +332,22 @@
         {
           "run_id": "R02",
           "idea": "Top-8 để đo recall–cost",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 4,
+          "metric": {
+            "metric": "official_score_0_100",
+            "value": 94.6111111111111,
+            "direction": "maximize",
+            "samples": 24,
+            "split": "explicit_public_targets",
+            "official": {
+              "score": 94.6111111111111,
+              "exact_rate": 0.9166666666666666,
+              "mean_similarity": 0.9902777777777777,
+              "valid_rate": 1.0
+            }
+          },
+          "report_path": "inverse-translation/runs/R02/report.json"
         },
         {
           "run_id": "R03",
