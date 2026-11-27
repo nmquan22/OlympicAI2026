@@ -126,6 +126,8 @@ class MomentMatcher(nn.Module):
             ws=ws.masked_fill(~wvalid,-1e4)
             wl=(ws.amax(-1)*wtm[:,None,:,None,:]).sum(-1)/wtm[:,None,:,None,:].sum(-1).clamp(min=1)
             wr=(ws.amax(-2)*wcm[:,:,None,:,:]).sum(-1)/wcm[:,:,None,:,:].sum(-1).clamp(min=1)
+            event_valid=wtm.any(-1)[:,None,:,None]&wcm.any(-1)[:,:,None,:]
+            wl=wl.masked_fill(~event_valid,0);wr=wr.masked_fill(~event_valid,0)
             grids=torch.cat([grids,torch.stack([wl,wr],dim=2)],dim=2)
         if self.config["center"]:
             keep=torch.zeros(5,device=targets.device);keep[2]=1
@@ -185,6 +187,15 @@ def run_moment(run_id):
     train_data=TensorDataset(*encoded["train"],torch.as_tensor(labels["train"],dtype=torch.long))
     loader=DataLoader(train_data,batch_size=config["batch_size"],shuffle=True,num_workers=0)
     model=MomentMatcher(initial,idf,config,word_vectors=word_vectors).to(DEVICE)
+    if config.get("word_view",False):
+        model.eval()
+        with torch.inference_mode(),torch.autocast("cuda",dtype=torch.float16):
+            canary=[v[:2].to(DEVICE) for v in encoded["validation"]]
+            normal=model(*canary)
+            canary[2]=torch.zeros_like(canary[2]);canary[3]=torch.zeros_like(canary[3])
+            no_word=model(*canary)
+            assert torch.isfinite(normal).all() and torch.isfinite(no_word).all()
+        print("WORD_VIEW_CANARY_PASS "+json.dumps(dict(word_ids_shifted=1,empty_word_view_finite=True)),flush=True)
     optimizer=torch.optim.AdamW(model.parameters(),lr=8e-4,weight_decay=1e-4)
     history=[];best=-1;best_state=None;bad=0;tick=time.time()
     def infer(split):
