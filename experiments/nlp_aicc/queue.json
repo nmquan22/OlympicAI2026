@@ -390,9 +390,20 @@
         {
           "run_id": "R02",
           "idea": "Hard negative mining từ train",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.13333333333333333,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.13333333333333333,
+            "independent_accuracy": 0.0,
+            "greedy_accuracy": 0.03333333333333333,
+            "duplicate_argmax_count": 23
+          },
+          "report_path": "alchemy/runs/R02/report.json"
         },
         {
           "run_id": "R03",

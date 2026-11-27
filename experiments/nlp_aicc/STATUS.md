@@ -1,6 +1,6 @@
 # Tiến độ thực nghiệm NLP
 
-**14/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**15/35 lượt T4 thành công đã được lưu bằng chứng.** Lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
@@ -8,7 +8,7 @@
 | [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 1/7 | R01: 6.10684 BPE_LM_NLL_proxy |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 0/7 | Chưa có kết quả |
-| [Alchemy](alchemy/IDEAS.md) | 1/7 | R01: 0.10000 bijective_holdout_accuracy |
+| [Alchemy](alchemy/IDEAS.md) | 2/7 | R02: 0.13333 bijective_holdout_accuracy |
 
 Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các metric khác nhau. Không so điểm ngang giữa các bài; không gọi NLL là Boundary F1.
 
@@ -23,6 +23,8 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R05 | Giảm nhiệt độ soft alignment | 0.66100 accuracy | [Đọc](moment-match/runs/R05/LEARNED.md) |
 | R06 | Chỉ giữ sự kiện trung tâm để đo vai trò ngữ cảnh | 0.49103 accuracy | [Đọc](moment-match/runs/R06/LEARNED.md) |
 | R07 | Kết hợp token attention + IDF, dựa trên R03/R04 | 0.66478 accuracy | [Đọc](moment-match/runs/R07/LEARNED.md) |
+| R08 | IDF + prior căn chỉnh đơn điệu khả vi | planned | Chưa có kết quả |
+| R09 | IDF + max alignment gần reference | planned | Chưa có kết quả |
 
 ## Lost Interpreter
 
@@ -35,6 +37,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R05 | Auxiliary loss dự đoán số lệnh | 37.60918 MAE | [Đọc](lost-interpreter/runs/R05/LEARNED.md) |
 | R06 | Signed-log target để kiểm tra outlier | planned | Chưa có kết quả |
 | R07 | Kết hợp structure + numeric + query + auxiliary | planned | Chưa có kết quả |
+| R08 | BPE BiGRU + packed masking + SmoothL1 theo cùng holdout | planned | Chưa có kết quả |
 
 ## Word Lookups
 
@@ -65,7 +68,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | Run | Ý tưởng | Kết quả | Nhật ký |
 |---|---|---|---|
 | R01 | Cross-encoder + symmetry consistency | 0.10000 bijective_holdout_accuracy | [Đọc](alchemy/runs/R01/LEARNED.md) |
-| R02 | Hard negative mining từ train | planned | Chưa có kết quả |
+| R02 | Hard negative mining từ train | 0.13333 bijective_holdout_accuracy | [Đọc](alchemy/runs/R02/LEARNED.md) |
 | R03 | Candidate-list CE thay sampled negatives | planned | Chưa có kết quả |
 | R04 | Bốn encoder layers từ đầu thay vì hai | planned | Chưa có kết quả |
 | R05 | Trung bình xác suất hai thứ tự thay trung bình logits | planned | Chưa có kết quả |
