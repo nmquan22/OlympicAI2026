@@ -69,6 +69,8 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R05 | Coarse-to-fine top-8→32 | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R05/LEARNED.md) |
 | R06 | Coordinate sweep thay full replacement grid | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R06/LEARNED.md) |
 | R07 | Restart chỉ cho case chưa exact, đo tổng chi phí | 100.00000 official_score_0_100; Kaggle 100.0000/100.0000 Competition score (public/private) | [Đọc](inverse-translation/runs/R07/LEARNED.md) |
+| R08 | Top8 exact search with contextual HotFlip fallback | queued | Chưa có kết quả |
+| R09 | Contextual gradient coordinate search from top1 probe seeds | queued | Chưa có kết quả |
 
 ## Alchemy
 

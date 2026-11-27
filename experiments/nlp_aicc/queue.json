@@ -1115,9 +1115,37 @@
             "output_file": "inverse-translation/R07/submission.csv",
             "description_note": "Source version/output verified; description is correct."
           }
+        },
+        {
+          "run_id": "R08",
+          "idea": "Top8 exact search with contextual HotFlip fallback",
+          "status": "queued",
+          "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+          "notebook_version": 5,
+          "script_version_id": 374816257
+        },
+        {
+          "run_id": "R09",
+          "idea": "Contextual gradient coordinate search from top1 probe seeds",
+          "status": "queued",
+          "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+          "notebook_version": 5,
+          "script_version_id": 374816257
         }
       ],
-      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683"
+      "notebook_url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683",
+      "pending_research_batch": {
+        "observed_status": "Queued",
+        "gpu": "T4 x2",
+        "source_commit": "84e9a9efaa6346578162fa12915a8368f18e6485",
+        "script_version_id": 374816257,
+        "url": "https://www.kaggle.com/code/shareaccc3a/notebook28ae3a7683?scriptVersionId=374816257",
+        "runs": [
+          "R08",
+          "R09"
+        ],
+        "followup": "Hourly conditional check, submit both outputs when completed, record measured results and push Git; stop when done; maximum8 checks."
+      }
     },
     {
       "order": 5,
