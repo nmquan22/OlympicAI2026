@@ -462,9 +462,20 @@
         {
           "run_id": "R06",
           "idea": "Sinkhorn loss để học cạnh tranh toàn cục trước Hungarian",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "bijective_holdout_accuracy",
+            "value": 0.1,
+            "direction": "maximize",
+            "samples": 30,
+            "split": "fixed_result_disjoint_train_holdout",
+            "hungarian_accuracy": 0.1,
+            "independent_accuracy": 0.06666666666666667,
+            "greedy_accuracy": 0.06666666666666667,
+            "duplicate_argmax_count": 19
+          },
+          "report_path": "alchemy/runs/R06/report.json"
         },
         {
           "run_id": "R07",
