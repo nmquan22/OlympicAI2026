@@ -1,0 +1,39 @@
+{
+  "task": "moment-match",
+  "run_id": "R08",
+  "config": {
+    "idea": "IDF plus a differentiable monotonic subsequence alignment prior",
+    "vocab": 2048,
+    "token_layers": 0,
+    "event_context": false,
+    "soft": true,
+    "temperature": 0.2,
+    "idf": true,
+    "center": false,
+    "epochs": 30,
+    "budget_seconds": 240,
+    "batch_size": 48,
+    "monotonic": true
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "d062d09407e3449cd49c95fcada87f1b13b49ac7",
+  "status": "completed",
+  "elapsed_seconds": 79.94639086723328,
+  "peak_gpu_memory_mb": 211.65576171875,
+  "validation": {
+    "metric": "accuracy",
+    "value": 0.6893295561850803,
+    "direction": "maximize",
+    "samples": 1059,
+    "split": "provided_validation"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 1970,
+    "labels_valid": true
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}

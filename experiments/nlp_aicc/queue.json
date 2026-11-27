@@ -11,7 +11,7 @@
       "competition_slug": "moment-match-aicc-round-10",
       "rules_accepted": true,
       "source_notebook": "round-10/moment-match.ipynb",
-      "status": "researching_extensions",
+      "status": "completed",
       "runs": [
         {
           "run_id": "R01",
@@ -114,9 +114,16 @@
         {
           "run_id": "R08",
           "idea": "IDF + prior căn chỉnh đơn điệu khả vi",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 9,
+          "metric": {
+            "metric": "accuracy",
+            "value": 0.6893295561850803,
+            "direction": "maximize",
+            "samples": 1059,
+            "split": "provided_validation"
+          },
+          "report_path": "moment-match/runs/R08/report.json"
         },
         {
           "run_id": "R09",
