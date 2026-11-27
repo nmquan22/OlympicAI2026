@@ -303,9 +303,17 @@
         {
           "run_id": "R05",
           "idea": "DP với prior độ dài từ",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 2,
+          "metric": {
+            "metric": "BPE_LM_NLL_proxy",
+            "value": 6.1068441094658725,
+            "direction": "minimize",
+            "samples": 3709,
+            "split": "train_only_10pct",
+            "boundary_f1": null
+          },
+          "report_path": "word-lookups/runs/R05/report.json"
         },
         {
           "run_id": "R06",
