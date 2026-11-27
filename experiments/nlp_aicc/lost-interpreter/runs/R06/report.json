@@ -1,0 +1,44 @@
+{
+  "task": "lost-interpreter",
+  "run_id": "R06",
+  "config": {
+    "idea": "Signed-log target tests outlier compression under MAE",
+    "structure": true,
+    "numeric": false,
+    "attention": false,
+    "aux": false,
+    "target": "signed_log",
+    "layers": 2,
+    "epochs": 45,
+    "budget_seconds": 300,
+    "batch_size": 128,
+    "bpe_vocab": 2048,
+    "max_length": 192
+  },
+  "seed": 42,
+  "device": "Tesla T4",
+  "gpu_count": 2,
+  "source_commit": "d062d09407e3449cd49c95fcada87f1b13b49ac7",
+  "status": "completed",
+  "elapsed_seconds": 62.94709587097168,
+  "peak_gpu_memory_mb": 242.05078125,
+  "validation": {
+    "metric": "MAE",
+    "value": 38.02839660644531,
+    "direction": "minimize",
+    "samples": 3000,
+    "split": "fixed_train_holdout_15pct"
+  },
+  "submission_checks": {
+    "ids_unique": true,
+    "schema_valid": true,
+    "row_count": 5000,
+    "ids_match": true,
+    "finite": true
+  },
+  "artifacts": {
+    "pretrained_weights": false,
+    "tokenizer": "train-only BPE"
+  },
+  "capture_note": "Measured summary fields read from rendered Kaggle output; not a complete exported notebook/stdout."
+}

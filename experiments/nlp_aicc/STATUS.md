@@ -1,11 +1,11 @@
 # Tiến độ thực nghiệm NLP
 
-**35 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
+**36 thí nghiệm T4 thành công đã lưu bằng chứng; mục tiêu tối thiểu 35 (7/bài).** Số thí nghiệm khác số Saved Version; lượt lỗi không được tính. Tối đa hai Saved Version đang chạy.
 
 | Bài | Đã hoàn tất | Tốt nhất trong điều kiện đã chạy |
 |---|---:|---|
 | [Moment Match](moment-match/IDEAS.md) | 9/7 | R04: 0.69122 accuracy |
-| [Lost Interpreter](lost-interpreter/IDEAS.md) | 5/7 | R01: 36.26026 MAE |
+| [Lost Interpreter](lost-interpreter/IDEAS.md) | 6/7 | R01: 36.26026 MAE |
 | [Word Lookups](word-lookups/IDEAS.md) | 7/7 | R07: public 0.9097, private 0.9113 Boundary F1 |
 | [Inverse Translation](inverse-translation/IDEAS.md) | 7/7 | R01: 100.00000 official_score_0_100 |
 | [Alchemy](alchemy/IDEAS.md) | 7/7 | R02: 0.13333 bijective_holdout_accuracy |
@@ -25,6 +25,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R07 | Kết hợp token attention + IDF, dựa trên R03/R04 | 0.66478 accuracy | [Đọc](moment-match/runs/R07/LEARNED.md) |
 | R08 | IDF + prior căn chỉnh đơn điệu khả vi | 0.68933 accuracy | [Đọc](moment-match/runs/R08/LEARNED.md) |
 | R09 | IDF + max alignment gần reference | 0.67705 accuracy | [Đọc](moment-match/runs/R09/LEARNED.md) |
+| R10 | BPE view + nguyên word-vector feature view được cấp | planned | Chưa có kết quả |
 
 ## Lost Interpreter
 
@@ -35,7 +36,7 @@ Accuracy/MAE trên validation, LM NLL proxy và official inverse score là các 
 | R03 | Nhánh thống kê số fit trên train | 37.66859 MAE | [Đọc](lost-interpreter/runs/R03/LEARNED.md) |
 | R04 | Learned query attention pooling | 37.77339 MAE | [Đọc](lost-interpreter/runs/R04/LEARNED.md) |
 | R05 | Auxiliary loss dự đoán số lệnh | 37.60918 MAE | [Đọc](lost-interpreter/runs/R05/LEARNED.md) |
-| R06 | Signed-log target để kiểm tra outlier | planned | Chưa có kết quả |
+| R06 | Signed-log target để kiểm tra outlier | 38.02840 MAE | [Đọc](lost-interpreter/runs/R06/LEARNED.md) |
 | R07 | Kết hợp structure + numeric + query + auxiliary | planned | Chưa có kết quả |
 | R08 | BPE BiGRU + packed masking + SmoothL1 theo cùng holdout | planned | Chưa có kết quả |
 
