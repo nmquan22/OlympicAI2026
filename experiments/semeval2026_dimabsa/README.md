@@ -61,7 +61,7 @@ python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data
 python experiments/semeval2026_dimabsa/train_scratch.py --data /tmp/dimabsa_data --out /tmp/dimabsa_R02 --run R02 --encoder transformer --pooling attention --layers 4 --lr 0.0005
 ```
 
-Neural cần `torch`, `tokenizers`, `numpy`, `scipy`, `scikit-learn`. Chưa khóa phiên bản Kaggle vì chưa có runtime GPU thực tế; mỗi report sẽ ghi torch version, GPU, tokenizer hash, số parameter, thời gian, epoch, config, split và score. Scorer BTC tải từ `evaluation_script/metrics_subtask_1_2_3.py` cùng source commit; không thay công thức chấm. Không commit dataset thô, API token hoặc checkpoint lớn vào repo.
+Neural cần `torch`, `tokenizers`, `numpy`, `scipy`, `scikit-learn`. Runtime hai lượt đầu: `torch 2.11.0+cu130`, GPU Tesla T4. Mỗi report ghi torch version, GPU, tokenizer hash, số parameter, thời gian, epoch, config, split và score. Scorer BTC tải từ `evaluation_script/metrics_subtask_1_2_3.py` cùng source commit; không thay công thức chấm. Không commit dataset thô, API token hoặc checkpoint lớn vào repo.
 
 ## Kết quả mới và quyết định
 
@@ -69,3 +69,7 @@ Neural cần `torch`, `tokenizers`, `numpy`, `scipy`, `scikit-learn`. Chưa khó
 - [R02 Transformer](runs/R02/LEARNED.md): **1.62459**, bỏ cấu hình hiện tại vì overfit và lỗi sentiment âm.
 - Gộp cố định 50/50 Ridge + R01 bằng cache: **1.39469**, [scorer BTC](runs/C03_cached_ensemble/official_scorer.log); không tốn lượt train mới, chưa chấm test.
 - S01: BPE trung bình trong từng word → BiLSTM → span aspect/opinion → pair linking → VA + category. Span dự đoán trong train làm hard negative; không nạp checkpoint của R01. Joint model dùng idea từ [Span-ASTE, ACL 2021](https://aclanthology.org/2021.acl-long.367/), không phải tái lập paper.
+
+### Lỗi pipeline S01 v1
+
+Lượt đầu dừng ở preprocessing, chưa train, do hàm tạo ví dụ dev chuyển category gold qua vocabulary train. Dev có `RESTAURANT#STYLE_OPTIONS` chưa xuất hiện trong train. Đã sửa inference chỉ dựng tensor từ văn bản; gold dev đi riêng tới scorer. Đã kiểm tra 200 câu dev có cùng input khi thay toàn bộ nhãn. Không thêm category từ nhãn dev vào vocabulary. [Chi tiết lỗi](failures/S01_v1.md). Cùng kiến trúc chạy lại ở v2.

@@ -27,6 +27,10 @@ def build_example(row, tokenizer, categories, training=False, max_words=96, max_
     spans = [(start, end) for start in range(len(words))
              for end in range(start, min(len(words), start + max_span))]
     index = {span: i for i, span in enumerate(spans)}
+    if not training:
+        return {"id": row["ID"], "text": text, "offsets": offsets, "pieces": pieces,
+                "spans": spans, "relations": {}, "dropped": 0,
+                "gold": row.get("Quadruplet", []), "training": False}
     starts = {start: i for i, (start, end) in enumerate(offsets)}
     ends = {end: i for i, (start, end) in enumerate(offsets)}
     pairs = defaultdict(list)

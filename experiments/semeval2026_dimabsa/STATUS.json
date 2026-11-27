@@ -9,14 +9,14 @@
   "github_connected": true,
   "kaggle_authenticated": true,
   "kaggle_dataset_uploaded": true,
-  "gpu_runs_started": 2,
+  "gpu_runs_started": 4,
   "cpu_controls_completed": 3,
   "test_evaluated": false,
   "blocker": null,
   "neural_validation": "R01 and R02 completed on Tesla T4; official dev scorers verified; same train-only tokenizer hash",
-  "next": "Build joint aspect/opinion span and pair model for Subtasks 2 and 3; keep current Transformer configuration deprioritized",
+  "next": "Collect S01 v2 outputs and verify Subtask 2/3 cF1; analyze span, link, category, and VA losses before choosing another training run",
   "kaggle_username": "quannguyen0501",
-  "gpu_runs_submitted": 3,
+  "gpu_runs_submitted": 4,
   "dataset_url": "https://www.kaggle.com/datasets/quannguyen0501/dimabsa-2026-english-restaurant-scratch-training",
   "dataset_version": 1,
   "dataset_bundle_sha256": "2184fadaf9e10c357585aba273394d236eade639a974652662cba44edfeb76f9",
@@ -63,9 +63,9 @@
     "run": "S01",
     "architecture": "BiLSTM span/pair linking + category + VA joint model",
     "state": "running",
-    "version": 1,
-    "script_version_id": 374895892,
-    "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-s01-scratch-joint-span-pair-va?scriptVersionId=374895892",
+    "version": 2,
+    "script_version_id": 374897225,
+    "url": "https://www.kaggle.com/code/quannguyen0501/dimabsa-s01-scratch-joint-span-pair-va/edit/run/374897225",
     "pretrained_weights": false
   },
   "selected_subtask_1_dev_recipe": {
@@ -79,5 +79,16 @@
     ],
     "official_dev_RMSE_VA": 1.3946892970458036,
     "test_evaluated": false
-  }
+  },
+  "failed_attempts": [
+    {
+      "run": "S01",
+      "version": 1,
+      "script_version_id": 374895892,
+      "stage": "preprocessing before training",
+      "error": "KeyError: RESTAURANT#STYLE_OPTIONS",
+      "fix": "inference examples do not encode gold categories",
+      "log": "failures/S01_v1.md"
+    }
+  ]
 }
