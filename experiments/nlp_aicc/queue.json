@@ -259,9 +259,16 @@
         {
           "run_id": "R08",
           "idea": "BPE BiGRU + packed masking + SmoothL1 theo cùng holdout",
-          "status": "planned",
-          "notebook_version": null,
-          "metric": null
+          "status": "completed",
+          "notebook_version": 7,
+          "metric": {
+            "metric": "MAE",
+            "value": 15.30885124206543,
+            "direction": "minimize",
+            "samples": 3000,
+            "split": "fixed_train_holdout_15pct"
+          },
+          "report_path": "lost-interpreter/runs/R08/report.json"
         }
       ],
       "notebook_url": "https://www.kaggle.com/code/shareaccc3a/aicc-nlp-lost-interpreter-learning-experiments"
